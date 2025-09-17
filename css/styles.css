@@ -98,17 +98,18 @@ button {
 
 h2 {
     font-family: 'VT323', monospace;
-    font-size: 3em;
-    margin-top: 60px;
-    width: 100%;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    margin-top: 3rem;
+    text-align: center;
+    padding: 2rem 1rem;
     text-shadow: -1px 2px 0px #2A475E; /* soft dark shadow */
 }
 
 h3 {
-    padding: 0 20px;
     font-family: 'VT323', monospace;
-    font-size: 2em;
-    line-height: 1em;
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    padding: 0 1rem;
+    line-height: 1.3;
     text-shadow: -1px 2px 0px #2A475E;
 }
 
@@ -125,27 +126,32 @@ section {
 
 /* Intro section image */
 #intro {
-    color: #FFEB99; /* warm light yellow text */
-    background-color: #2A475E; /* dark teal-blue */
-    padding: 30vh 10%;
-    font-size: 2.5vh;
     display: flex;
-    min-height: 100vh;
-    text-shadow: -1px 2px 0px #0F1A25; /* contrast shadow */
+    flex-direction: row; /* side-by-side on desktop */
+    align-items: center; /* vertical center */
+    justify-content: center; /* horizontal center */
+    gap: 2rem;
+    flex-wrap: wrap; /* allow stacking on small screens */
+    padding: 10vh 5%;
+    background-color: #2A475E;
+    color: #FFEB99;
+    text-align: center;
 }
 
     #intro #intro_bio {
-        width: 50%;
+        flex: 1 1 300px; /* flexible + responsive */
+        min-width: 280px;
     }
 
     #intro #hello {
-        font-size: 6vh;
-        line-height: 8vh;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        line-height: 1.2;
+        margin-bottom: 1rem;
         font-family: 'VT323', monospace;
     }
 
     #intro #hello_email {
-        font-size: 2.5vh;
+        font-size: clamp(1rem, 2vw, 1.5rem);
         padding-top: 1vh;
     }
 
@@ -154,12 +160,13 @@ section {
     }
 
     #intro #bioPic {
-        width: 30vh;
-        height: 30vh;
-        margin: 0px 40px;
+        flex: 0 0 200px;
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
-        border: 5px solid #FF915F; /* coral border */
-        transition: all 0.5s;
+        border: 5px solid #FF915F;
+        object-fit: cover; /* ensure image fills the circle */
+        transition: transform 0.5s;
     }
 
         #intro #bioPic:hover {
@@ -168,33 +175,42 @@ section {
 
 .projects-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* adaptive columns */
+    gap: 20px;
     gap: 40px;
     width: 100%;
+    /*padding: 0rem 0.05rem;*/
+    box-sizing: border-box;
+    /*border: 5px solid green;*/ /* coral border */
+    /*margin: 0 auto;*/ /* center it on large screens */
 }
 
 
 .project.full-width {
     grid-column: span 4;
+    padding: 1vh;
 }
 
 .project.max-width {
     grid-column: span 4; /* same as full-width */
     width: 100%; /* slightly smaller than container/window */
-    height: 150vh !important; /* scale relative to viewport, force override */
+    /*height: 150vh !important;*/ /* scale relative to viewport, force override */
     margin: 10px auto; /* center horizontally */
     border: 7px ridge #FF915F; /* keep separate from full-width border */
     border-radius: 14px;
     padding: 15px;
     box-sizing: border-box;
+    min-height: 60vh; /* set a floor if you want */
+    max-height: none; /* allow content to grow */
+    height: auto; /* natural height based on content */
 }
 
 .project {
-    grid-column: span 2;
+    width: 100%;
     min-height: 200px;
-    border: 5px ridge #FF915F; /* coral border */
     border-radius: 14px;
     box-sizing: border-box;
+    border: 7px ridge #FF915F;
 }
 
     .project.quarter-width {
@@ -266,15 +282,19 @@ footer {
     }
 
 .video-container-full {
-    width: 60%; /* take full available width */
-    max-width: 1000px; /* make bigger than 640px, adjust as needed */
-    aspect-ratio: 16 / 9; /* keep perfect ratio */
+    width: 70%;
+    max-width: 70%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 10px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: left;
 }
 
     .video-container-full video {
         width: 100%;
         height: 100%;
-        display: block;
         object-fit: contain; /* no cropping */
     }
 
@@ -302,12 +322,16 @@ footer {
 
 .image-container {
     position: relative;
-    width: 100%; /* can also be fixed px if you want */
-    max-width: 1000px; /* optional max size */
+    min-width: 75%;
+    max-width: 70%;
     aspect-ratio: 16 / 9; /* forces perfect 16:9 height */
     overflow: hidden;
-    border: 5px solid black;
+    /*border: 5px solid black;*/
+    border-radius: 10px;
+    margin: 0 auto;
     box-sizing: border-box;
+    display: flex;
+    flex: 3;
 }
 
 /* TRACK + SLIDES */
@@ -367,11 +391,25 @@ footer {
 
 .media-container {
     display: flex;
-    /*border: 5px groove #FF915F;*/
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
     border: 5px groove #FF915F;
-    border-radius: 6px;
-    gap: 20px;
-    align-items: flex-start;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.media-container-noborder {
+    display: flex;
+    /*border: 5px groove #FF915F;*/
+    grid-template-columns: repeat(2, 1fr);
+    align-items: start;
+    flex-direction: row;
+    gap: 2rem;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .prev, .next {
@@ -398,9 +436,11 @@ footer {
 .codeDescription-container {
     flex: 1;
     max-width: 400px;
-    height: 500px; /* match carousel height */
-    overflow: hidden;
-    position: relative;
+    min-width: 0;
+    height: auto;
+    overflow: auto;
+    font-size: 1rem;
+    box-sizing: border-box;
 }
 
     .codeDescription-container p {
@@ -415,11 +455,19 @@ footer {
             display: block; /* show only the current one */
         }
 
-
 .tech-container {
     display: flex;
+    flex-direction: column;
+}
+
+.tech-container h4{
+    margin: 0;
+}
+
+.tech-skill {
+    display: flex;
     flex-wrap: wrap;
-    margin: 20px;
+    margin: 10px 0 0 0; /* Only top margin if needed */
     gap: 10px; /* space between tech boxes */
 }
 
@@ -435,7 +483,42 @@ footer {
     background-color: transparent;
 }
 
-@media only screen and (max-width: 991px) {
+@media (max-width: 1800px) {
+    .sidebar {
+        display: none;
+    }
+    projects-container {
+        width: 100vw;     /* Full viewport width */
+        max-width: none;  /* Remove the 1800px max */
+        padding: 0 1vh;  /* Optional: reduce side padding */
+        box-sizing: border-box;
+    }
+}
+
+/*@media (max-width: 1200px) {
+    .media-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .image-container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .codeDescription-container {
+        width: 100%;
+        max-width: 100%;
+        font-size: 0.9rem;
+    }
+
+    .sidebar {
+        display: none;
+    }
+}*/
+
+
+/*@media only screen and (max-width: 991px) {
 
     .main-nav {
         min-height: 20px;
@@ -459,7 +542,7 @@ footer {
     .main-body {
         display: flex;
         flex-direction: column;
-        margin-left: 200px; /* give space for the sidebar */
+        margin-left: 200px;  give space for the sidebar 
         padding: 20px;
     }
 
@@ -554,7 +637,127 @@ footer {
         footer p {
             width: 100%;
         }
-}
+}*/
+/*@media only screen and (max-width: 991px) {
+
+    .main-nav {
+        min-height: 20px;
+        font-size: 100%;
+    }
+
+    .nav {
+        flex-direction: column;
+    }
+
+        .nav .name {
+            width: 100%;
+        }
+
+        .nav li {
+            width: 100%
+        }
+
+
+
+    .main-body {
+        display: flex;
+        flex-direction: column;
+        margin-left: 200px;  give space for the sidebar 
+        padding: 20px;
+    }
+
+    #intro {
+        order: 1;
+        padding: 16vh 10%;
+        font-size: 2.2vh;
+        display: flex;
+        height: 120vh;
+        justify-content: center;
+    }
+
+        #intro #intro_bio {
+            width: 100%;
+        }
+
+        #intro #hello {
+            font-size: 5vh;
+            line-height: 6vh;
+            font-family: 'VT323', monospace;
+        }
+
+        #intro #hello_email {
+            font-size: 2.5vh;
+            padding-top: 1vh;
+        }
+
+    #bio {
+        order: 3;
+    }
+
+    #portfolio {
+        order: 2;
+    }
+
+    #intro a:hover {
+        color: #4472C4;
+    }
+
+    .projects-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+    }
+
+
+    .project.full-width {
+        grid-column: span 2;
+        width: 100%;
+    }
+
+    .project {
+        grid-column: span 2;
+        width: 100%;
+    }
+
+        .project.quarter-width {
+            grid-column: span 2;
+        }
+
+    h2 {
+        margin-top: 100px;
+        font-size: 2.5em;
+    }
+
+    h3 {
+        margin: 5px 20px;
+        font-size: 1.8em;
+        line-height: 1.8em;
+    }
+
+    .project img {
+        margin: 5%;
+        width: 90%;
+        border-radius: 10px;
+    }
+
+    .project.white-back img {
+        margin: 5%;
+        width: 90%;
+        border-radius: 10px;
+    }
+
+    .video-container {
+        width: 90%;
+        padding-bottom: 56.25%;
+    }
+
+    footer {
+        flex-direction: column;
+    }
+
+        footer p {
+            width: 100%;
+        }
+}*/
 .sidebar {
     position: fixed;
     top: 80px; /* adjust to match navbar height */
@@ -565,6 +768,7 @@ footer {
     border-radius: 10px;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
     z-index: 5;
+    
 }
 
     /* Sidebar list */
@@ -630,12 +834,8 @@ footer {
 
 @media (max-width: 768px) {
     .sidebar {
-        position: relative;
-        width: 100%;
-        margin-bottom: 20px;
-        border-radius: 0;
-        border: none;
-        box-shadow: none;
+        display: none;
+
     }
 
         .sidebar ul {
@@ -651,5 +851,42 @@ footer {
 
     .content {
         margin-left: 0;
+        padding: 1rem;
     }
+
+    .main-nav {
+        font-size: 1rem;
+        padding: 10px 0;
+    }
+
+    .nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .nav li {
+            width: 100%;
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+    .media-container {
+        flex-direction: column;
+    }
+
+    .codeDescription-container,
+    .image-container {
+        font-size: clamp(0.9rem, 1.5vw, 1rem);
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #intro {
+        flex-direction: column;
+        text-align: center;
+    }
+
+        #intro #bioPic {
+            margin: 2rem 0;
+        }
 }
