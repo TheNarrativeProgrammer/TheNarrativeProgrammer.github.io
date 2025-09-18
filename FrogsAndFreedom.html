@@ -45,370 +45,373 @@
 
     <div class="main-body">
 
-        <section id="EncounterSystem">
+        <section id="intro">
             <h2>Frogs And Freedom</h2>
+        </section>
 
-            <div class="projects-container">
-                <div class="project max-width">
-                    <h3>Encounter System</h3>
-                    <div class="media-container">
+            <section id="EncounterSystem">
 
-                        <div class="image-container">
-                            <button class="prev">&#10094;</button>
-                            <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                <div class="projects-container">
+                    <div class="project max-width">
+                        <h3>Encounter System</h3>
+                        <div class="media-container">
+
+                            <div class="image-container">
+                                <button class="prev">&#10094;</button>
+                                <div class="carousel-track">
+                                    <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                                </div>
+                                <button class="next">&#10095;</button>
                             </div>
-                            <button class="next">&#10095;</button>
+
+                            <div class="codeDescription-container">
+                                <p>
+                                    1.  Although the collision presets are set to ignore everything except the player, an interface that only the player has is used to confirm the overlapping actor is the player.
+
+                                    <br></br>The EncounterData property is a data asset that contains the enemy type, quantity and event trigger for each wave of the encounter.
+                                </p>
+                                <p>
+                                    2. Because designers were constantly iterating on the number of patrol routes and spawn locations, I used EQS instead of manually require designers to update arrays.
+
+                                    <br></br> PopulatArraysInPatrolRouteManager calls RunEqsFindPatrolRoutes() which lives on another component. RunEqsFindActorSpawners lives on this component.
+
+                                    <br></br> CanWaveSpawn and HasWaveSpawned are properties in the DataAsset not exposed to designers that are updated during gameplay. The for loop uses a reference
+                                    of the wave data for each wave to reset the values to their default of false.
+                                </p>
+                                <p>
+                                    3. Designers assign gameplay tags 'wave.#' to the children of the ActorSpawner. Each element in the dataAsset's array has a 'wave' tag.
+                                    The CurrentlyActiveWave is the tag of current wave.
+
+                                    <br></br> The CurrentlyActiveEncounterTrigger is a box that encloses the entire encounter space.
+                                    The EQS query finds all the actors of the object ype 'ActorSpawner' within the bounds of the encounter.
+
+                                    <br></br> If the returned actors have a tag that matches the
+                                    current wave, then they are added to the array of possible spawn locations.
+
+                                </p>
+                                <p>
+                                    4. This EQS takes in the EncounterTrigger as the context. The dimensions of the trigger component are used to set the bounds for a Box Multi Trace.
+
+                                    <br></br>ObjectTypesToSearchFor is an instance editable array that is exposed to the EQS. In this example, the object type passed in is ActorSpawner.
+
+                                    <br></br>Each ActorSpawner in the encounter is added to the AddGeneratedActors function, which is the array on actors the EQS returns.
+
+                                </p>
+                                <p>
+                                    5. For each encounter, could add up to ten waves to the array of a DA_Encounter. Each encounter trigger had one of these assets.
+
+                                    <br></br>Quantity Spawned in Wave: total number of a given enemy type to spawn
+
+                                    <br></br>Batch size: number of actors to spawn at a single spawn location (ActorSpawner class). If the Quanity=6 and the Batch-size = 2, then
+                                    3 batches, each with 2 enemies, would spawn.
+
+                                    <br></br> If there were 3 ActorSpawners with a match wave.# gameplaytag, the 3 batches would all spawn at different locations. If there were fewer than 3,
+                                    the array of possible spawn locations loops back to index 0.
+
+                                    <br></br>Wave Trigger: designers could chose between Encounter-Start, Objective or Enemy-Population as s means to trigger a wave.
+                                </p>
+                                <p>
+                                    6. A unit test was used to automate the process of ensuring the correct data was entered.
+
+                                    <br></br>When a new EncounterTrigger child was created, it couldn't be save until a DA_EncounterData was assigned to it's member variable.
+
+                                    <br></br>When a new DA_EncounterData was created, it could be saved until the gameplay tags and values were properly set.
+
+                                </p>
+                            </div>
                         </div>
 
-                        <div class="codeDescription-container">
-                            <p>
-                                1.  Although the collision presets are set to ignore everything except the player, an interface that only the player has is used to confirm the overlapping actor is the player.
 
-                                <br></br>The EncounterData property is a data asset that contains the enemy type, quantity and event trigger for each wave of the encounter.
-                            </p>
-                            <p>
-                                2. Because designers were constantly iterating on the number of patrol routes and spawn locations, I used EQS instead of manually require designers to update arrays.
+                        <h4></h4>
+                        <div class="media-container-noborder">
+                            <div class="video-container-full">
+                                <video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
+                                    <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
+                                </video>
+                            </div>
 
-                                <br></br> PopulatArraysInPatrolRouteManager calls RunEqsFindPatrolRoutes() which lives on another component. RunEqsFindActorSpawners lives on this component.
+                            <div class="tech-container">
 
-                                <br></br> CanWaveSpawn and HasWaveSpawned are properties in the DataAsset not exposed to designers that are updated during gameplay. The for loop uses a reference
-                                of the wave data for each wave to reset the values to their default of false.
-                            </p>
-                            <p>
-                                3. Designers assign gameplay tags 'wave.#' to the children of the ActorSpawner. Each element in the dataAsset's array has a 'wave' tag.
-                                The CurrentlyActiveWave is the tag of current wave.
-
-                                <br></br> The CurrentlyActiveEncounterTrigger is a box that encloses the entire encounter space.
-                                The EQS query finds all the actors of the object ype 'ActorSpawner' within the bounds of the encounter.
-
-                                <br></br> If the returned actors have a tag that matches the
-                                current wave, then they are added to the array of possible spawn locations.
-
-                            </p>
-                            <p>
-                                4. This EQS takes in the EncounterTrigger as the context. The dimensions of the trigger component are used to set the bounds for a Box Multi Trace.
-
-                                <br></br>ObjectTypesToSearchFor is an instance editable array that is exposed to the EQS. In this example, the object type passed in is ActorSpawner.
-
-                                <br></br>Each ActorSpawner in the encounter is added to the AddGeneratedActors function, which is the array on actors the EQS returns.
-
-                            </p>
-                            <p>
-                                5. For each encounter, could add up to ten waves to the array of a DA_Encounter. Each encounter trigger had one of these assets.
-
-                                <br></br>Quantity Spawned in Wave: total number of a given enemy type to spawn
-
-                                <br></br>Batch size: number of actors to spawn at a single spawn location (ActorSpawner class). If the Quanity=6 and the Batch-size = 2, then
-                                3 batches, each with 2 enemies, would spawn.
-
-                                <br></br> If there were 3 ActorSpawners with a match wave.# gameplaytag, the 3 batches would all spawn at different locations. If there were fewer than 3,
-                                the array of possible spawn locations loops back to index 0.
-
-                                <br></br>Wave Trigger: designers could chose between Encounter-Start, Objective or Enemy-Population as s means to trigger a wave.
-                            </p>
-                            <p>
-                                6. A unit test was used to automate the process of ensuring the correct data was entered.
-
-                                <br></br>When a new EncounterTrigger child was created, it couldn't be save until a DA_EncounterData was assigned to it's member variable.
-
-                                <br></br>When a new DA_EncounterData was created, it could be saved until the gameplay tags and values were properly set.
-
-                            </p>
+                                <h4>Tech </h4>
+                                <div class="tech-skill">
+                                    <div class="tech-box">Custom EQS Test</div>
+                                    <div class="tech-box">Gameplay-tags</div>
+                                    <div class="tech-box">Unit Tests</div>
+                                    <div class="tech-box">Data Assets</div>
+                                </div>
+                            </div>
                         </div>
+
+
                     </div>
+                </div>
+            </section>
 
 
-                    <h4></h4>
-                    <div class="media-container-noborder">
+
+            <section id="AIBehaviour">
+                <h2></h2>
+                <div class="projects-container">
+                    <div class="project max-width">
+                        <h3>AI Behaviour</h3>
+                        <div class="media-container">
+
+                            <div class="image-container">
+                                <button class="prev">&#10094;</button>
+                                <div class="carousel-track">
+                                    <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                                </div>
+                                <button class="next">&#10095;</button>
+                            </div>
+
+                            <div class="codeDescription-container">
+                                <p>
+                                    1.  .... Work in progress
+
+                                    <br></br>...
+                                </p>
+                                <p>
+                                    2. ...
+
+                                    <br></br> ...
+
+                                    <br></br> ...
+                                </p>
+                                <p>
+                                    3. ...
+
+                                    <br></br> ...
+
+                                    <br></br> ...
+
+                                </p>
+                                <p>
+                                    4. ...
+
+                                    <br></br>...
+
+                                    <br></br>...
+
+                                </p>
+                                <p>
+                                    5. ...
+
+                                    <br></br>...
+
+                                    <br></br>...
+
+                                    <br></br> ...
+
+                                    <br></br>...
+                                </p>
+                                <p>
+                                    6. ...
+
+                                    <br></br>...
+
+                                    <br></br>...
+
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <h4></h4>
                         <div class="video-container-full">
-                            <video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
+                            <video class="autoplay-video-lower-threshhold" muted loop playsinline>
                                 <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
                             </video>
                         </div>
 
-                        <div class="tech-container">
-
-                            <h4>Tech </h4>
-                            <div class="tech-skill">
-                                <div class="tech-box">Custom EQS Test</div>
-                                <div class="tech-box">Gameplay-tags</div>
-                                <div class="tech-box">Unit Tests</div>
-                                <div class="tech-box">Data Assets</div>
-                            </div>
+                        <h4>Tech </h4>
+                        <div class="tech-skill">
+                            <div class="tech-box">Custom EQS Test</div>
+                            <div class="tech-box">Gameplay-tags</div>
+                            <div class="tech-box">Unit Tests</div>
+                            <div class="tech-box">Data Assets</div>
                         </div>
-                    </div>
-                    
 
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
 
+            <section id="Objectives">
+                <h2></h2>
+                <div class="projects-container">
+                    <div class="project max-width">
+                        <h3>Objective System</h3>
+                        <div class="media-container">
 
-        <section id="AIBehaviour">
-            <h2></h2>
-            <div class="projects-container">
-                <div class="project max-width">
-                    <h3>AI Behaviour</h3>
-                    <div class="media-container">
-
-                        <div class="image-container">
-                            <button class="prev">&#10094;</button>
-                            <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                            <div class="image-container">
+                                <button class="prev">&#10094;</button>
+                                <div class="carousel-track">
+                                    <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                                </div>
+                                <button class="next">&#10095;</button>
                             </div>
-                            <button class="next">&#10095;</button>
-                        </div>
 
-                        <div class="codeDescription-container">
-                            <p>
-                                1.  .... Work in progress
+                            <div class="codeDescription-container">
+                                <p>
+                                    1.  .... Work in progress
 
-                                <br></br>...
-                            </p>
-                            <p>
-                                2. ...
+                                    <br></br>...
+                                </p>
+                                <p>
+                                    2. ...
 
-                                <br></br> ...
+                                    <br></br> ...
 
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
+                                    <br></br> ...
+                                </p>
+                                <p>
+                                    3. ...
 
-                                <br></br> ...
+                                    <br></br> ...
 
-                                <br></br> ...
+                                    <br></br> ...
 
-                            </p>
-                            <p>
-                                4. ...
+                                </p>
+                                <p>
+                                    4. ...
 
-                                <br></br>...
+                                    <br></br>...
 
-                                <br></br>...
+                                    <br></br>...
 
-                            </p>
-                            <p>
-                                5. ...
+                                </p>
+                                <p>
+                                    5. ...
 
-                                <br></br>...
+                                    <br></br>...
 
-                                <br></br>...
+                                    <br></br>...
 
-                                <br></br> ...
+                                    <br></br> ...
 
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
+                                    <br></br>...
+                                </p>
+                                <p>
+                                    6. ...
 
-                                <br></br>...
+                                    <br></br>...
 
-                                <br></br>...
+                                    <br></br>...
 
-                            </p>
-                        </div>
-                    </div>
-
-
-                    <h4></h4>
-                    <div class="video-container-full">
-                        <video class="autoplay-video-lower-threshhold" muted loop playsinline>
-                            <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
-                        </video>
-                    </div>
-
-                    <h4>Tech </h4>
-                    <div class="tech-skill">
-                        <div class="tech-box">Custom EQS Test</div>
-                        <div class="tech-box">Gameplay-tags</div>
-                        <div class="tech-box">Unit Tests</div>
-                        <div class="tech-box">Data Assets</div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-
-        <section id="Objectives">
-            <h2></h2>
-            <div class="projects-container">
-                <div class="project max-width">
-                    <h3>Objective System</h3>
-                    <div class="media-container">
-
-                        <div class="image-container">
-                            <button class="prev">&#10094;</button>
-                            <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                                </p>
                             </div>
-                            <button class="next">&#10095;</button>
                         </div>
 
-                        <div class="codeDescription-container">
-                            <p>
-                                1.  .... Work in progress
 
-                                <br></br>...
-                            </p>
-                            <p>
-                                2. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                            <p>
-                                5. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                        </div>
-                    </div>
-
-
-                    <h4></h4>
-                    <!--<div class="video-container-full">
+                        <h4></h4>
+                        <!--<div class="video-container-full">
                         <video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
                             <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
                         </video>
                     </div>-->
 
-                    <h4>Tech </h4>
-                    <div class="tech-skill">
-                        <div class="tech-box">Custom EQS Test</div>
-                        <div class="tech-box">Gameplay-tags</div>
-                        <div class="tech-box">Unit Tests</div>
-                        <div class="tech-box">Data Assets</div>
+                        <h4>Tech </h4>
+                        <div class="tech-skill">
+                            <div class="tech-box">Custom EQS Test</div>
+                            <div class="tech-box">Gameplay-tags</div>
+                            <div class="tech-box">Unit Tests</div>
+                            <div class="tech-box">Data Assets</div>
+                        </div>
+
                     </div>
-
-                </div>
-        </section>
+            </section>
 
 
 
-        <section id="EventBus">
-            <h2></h2>
-            <div class="projects-container">
-                <div class="project max-width">
-                    <h3>Event Bus - Mediator Pattern</h3>
-                    <div class="media-container">
+            <section id="EventBus">
+                <h2></h2>
+                <div class="projects-container">
+                    <div class="project max-width">
+                        <h3>Event Bus - Mediator Pattern</h3>
+                        <div class="media-container">
 
-                        <div class="image-container">
-                            <button class="prev">&#10094;</button>
-                            <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                            <div class="image-container">
+                                <button class="prev">&#10094;</button>
+                                <div class="carousel-track">
+                                    <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                                </div>
+                                <button class="next">&#10095;</button>
                             </div>
-                            <button class="next">&#10095;</button>
+
+                            <div class="codeDescription-container">
+                                <p>
+                                    1.  .... Work in progress
+
+                                    <br></br>...
+                                </p>
+                                <p>
+                                    2. ...
+
+                                    <br></br> ...
+
+                                    <br></br> ...
+                                </p>
+                                <p>
+                                    3. ...
+
+                                    <br></br> ...
+
+                                    <br></br> ...
+
+                                </p>
+                                <p>
+                                    4. ...
+
+                                    <br></br>...
+
+                                    <br></br>...
+
+                                </p>
+                                <p>
+                                    5. ...
+
+                                    <br></br>...
+
+                                    <br></br>...
+
+                                    <br></br> ...
+
+                                    <br></br>...
+                                </p>
+                                <p>
+                                    6. ...
+
+                                    <br></br>...
+
+                                    <br></br>...
+
+                                </p>
+                            </div>
                         </div>
 
-                        <div class="codeDescription-container">
-                            <p>
-                                1.  .... Work in progress
 
-                                <br></br>...
-                            </p>
-                            <p>
-                                2. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                            <p>
-                                5. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                        </div>
-                    </div>
-
-
-                    <h4></h4>
-                    <!--<div class="video-container-full">
+                        <h4></h4>
+                        <!--<div class="video-container-full">
                         <video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
                             <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
                         </video>-->
@@ -423,189 +426,189 @@
                     </div>
 
                 </div>
-        </section>
+            </section>
 
 
-        <section id="Shaders">
-            <h2></h2>
-            <div class="projects-container">
-                <div class="project max-width">
-                    <h3>Shaders</h3>
-                    <div class="media-container">
+            <section id="Shaders">
+                <h2></h2>
+                <div class="projects-container">
+                    <div class="project max-width">
+                        <h3>Shaders</h3>
+                        <div class="media-container">
 
-                        <div class="image-container">
-                            <button class="prev">&#10094;</button>
-                            <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                            <div class="image-container">
+                                <button class="prev">&#10094;</button>
+                                <div class="carousel-track">
+                                    <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                                </div>
+                                <button class="next">&#10095;</button>
                             </div>
-                            <button class="next">&#10095;</button>
-                        </div>
 
-                        <div class="codeDescription-container">
-                            <p>
-                                1.  .... Work in progress
+                            <div class="codeDescription-container">
+                                <p>
+                                    1.  .... Work in progress
 
-                                <br></br>...
-                            </p>
-                            <p>
-                                2. ...
+                                    <br></br>...
+                                </p>
+                                <p>
+                                    2. ...
 
-                                <br></br> ...
+                                    <br></br> ...
 
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
+                                    <br></br> ...
+                                </p>
+                                <p>
+                                    3. ...
 
-                                <br></br> ...
+                                    <br></br> ...
 
-                                <br></br> ...
+                                    <br></br> ...
 
-                            </p>
-                            <p>
-                                4. ...
+                                </p>
+                                <p>
+                                    4. ...
 
-                                <br></br>...
+                                    <br></br>...
 
-                                <br></br>...
+                                    <br></br>...
 
-                            </p>
-                            <p>
-                                5. ...
+                                </p>
+                                <p>
+                                    5. ...
 
-                                <br></br>...
+                                    <br></br>...
 
-                                <br></br>...
+                                    <br></br>...
 
-                                <br></br> ...
+                                    <br></br> ...
 
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
+                                    <br></br>...
+                                </p>
+                                <p>
+                                    6. ...
 
-                                <br></br>...
+                                    <br></br>...
 
-                                <br></br>...
+                                    <br></br>...
 
-                            </p>
-                        </div>
-                    </div>
-
-
-                    <h4></h4>
-                    <div class="video-container-full">
-                        <video class="autoplay-video-lower-threshhold" muted loop playsinline>
-                            <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
-                        </video>
-                    </div>
-
-                    <h4>Tech </h4>
-                    <div class="tech-skill">
-                        <div class="tech-box">Custom EQS Test</div>
-                        <div class="tech-box">Gameplay-tags</div>
-                        <div class="tech-box">Unit Tests</div>
-                        <div class="tech-box">Data Assets</div>
-                    </div>
-
-                </div>
-        </section>
-
-
-        <section id="Dialogue">
-            <h2></h2>
-            <div class="projects-container">
-                <div class="project max-width">
-                    <h3>Dialogue Subsystem with Data Tables</h3>
-                    <div class="media-container">
-
-                        <div class="image-container">
-                            <button class="prev">&#10094;</button>
-                            <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                                </p>
                             </div>
-                            <button class="next">&#10095;</button>
                         </div>
 
-                        <div class="codeDescription-container">
-                            <p>
-                                1.  .... Work in progress
 
-                                <br></br>...
-                            </p>
-                            <p>
-                                2. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                            <p>
-                                5. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
+                        <h4></h4>
+                        <div class="video-container-full">
+                            <video class="autoplay-video-lower-threshhold" muted loop playsinline>
+                                <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
+                            </video>
                         </div>
+
+                        <h4>Tech </h4>
+                        <div class="tech-skill">
+                            <div class="tech-box">Custom EQS Test</div>
+                            <div class="tech-box">Gameplay-tags</div>
+                            <div class="tech-box">Unit Tests</div>
+                            <div class="tech-box">Data Assets</div>
+                        </div>
+
                     </div>
+            </section>
 
 
-                    <h4></h4>
-                    <div class="video-container-full">
-                        <!--<video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
+            <section id="Dialogue">
+                <h2></h2>
+                <div class="projects-container">
+                    <div class="project max-width">
+                        <h3>Dialogue Subsystem with Data Tables</h3>
+                        <div class="media-container">
+
+                            <div class="image-container">
+                                <button class="prev">&#10094;</button>
+                                <div class="carousel-track">
+                                    <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
+                                    <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                                </div>
+                                <button class="next">&#10095;</button>
+                            </div>
+
+                            <div class="codeDescription-container">
+                                <p>
+                                    1.  .... Work in progress
+
+                                    <br></br>...
+                                </p>
+                                <p>
+                                    2. ...
+
+                                    <br></br> ...
+
+                                    <br></br> ...
+                                </p>
+                                <p>
+                                    3. ...
+
+                                    <br></br> ...
+
+                                    <br></br> ...
+
+                                </p>
+                                <p>
+                                    4. ...
+
+                                    <br></br>...
+
+                                    <br></br>...
+
+                                </p>
+                                <p>
+                                    5. ...
+
+                                    <br></br>...
+
+                                    <br></br>...
+
+                                    <br></br> ...
+
+                                    <br></br>...
+                                </p>
+                                <p>
+                                    6. ...
+
+                                    <br></br>...
+
+                                    <br></br>...
+
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <h4></h4>
+                        <div class="video-container-full">
+                            <!--<video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
                             <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
                         </video>-->
-                    </div>
+                        </div>
 
-                    <h4>Tech </h4>
-                    <div class="tech-skill">
-                        <div class="tech-box">Custom EQS Test</div>
-                        <div class="tech-box">Gameplay-tags</div>
-                        <div class="tech-box">Unit Tests</div>
-                        <div class="tech-box">Data Assets</div>
-                    </div>
+                        <h4>Tech </h4>
+                        <div class="tech-skill">
+                            <div class="tech-box">Custom EQS Test</div>
+                            <div class="tech-box">Gameplay-tags</div>
+                            <div class="tech-box">Unit Tests</div>
+                            <div class="tech-box">Data Assets</div>
+                        </div>
 
-                </div>
-        </section>
+                    </div>
+            </section>
 
 
 

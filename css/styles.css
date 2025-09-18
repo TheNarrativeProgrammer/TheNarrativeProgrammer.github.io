@@ -67,6 +67,8 @@ button {
     min-height: 30px;
     padding: 10px;
     position: fixed;
+    top: 0;
+    left: 0;
     text-align: center;
     background: #0F1A25; /* very dark blue navbar */
     font-family: 'VT323', monospace;
@@ -99,9 +101,9 @@ button {
 h2 {
     font-family: 'VT323', monospace;
     font-size: clamp(1.8rem, 5vw, 3rem);
-    margin-top: 3rem;
-    text-align: center;
-    padding: 2rem 1rem;
+    /*margin-top: 1rem;*/
+    text-align: left;
+    /*padding: 1rem 2rem;*/
     text-shadow: -1px 2px 0px #2A475E; /* soft dark shadow */
 }
 
@@ -120,19 +122,20 @@ h4 {
 section {
     width: 100%;
     padding: 0 10% 5vh;
-    display: flex;
-    flex-wrap: wrap;
+    /*display: flex;
+    flex-wrap: wrap;*/
 }
 
 /* Intro section image */
 #intro {
     display: flex;
+    width: 100%;
     flex-direction: row; /* side-by-side on desktop */
     align-items: center; /* vertical center */
     justify-content: center; /* horizontal center */
     gap: 2rem;
     flex-wrap: wrap; /* allow stacking on small screens */
-    padding: 10vh 5%;
+    padding: 5vh 5%;
     background-color: #2A475E;
     color: #FFEB99;
     text-align: center;
@@ -405,7 +408,7 @@ footer {
     /*border: 5px groove #FF915F;*/
     grid-template-columns: repeat(2, 1fr);
     align-items: start;
-    flex-direction: column;
+    flex-direction: row;
     gap: 2rem;
     flex-wrap: nowrap;
     justify-content: space-between;
@@ -862,9 +865,23 @@ footer {
 }
 
 @media (max-width: 768px) {
+
+    section{
+        padding: 1px;
+    }
+    .project.max-width {
+        border: 5px solid green;
+        margin: 10px 10px; /* center horizontally */
+        border: 7px ridge #FF915F; /* keep separate from full-width border */
+        border-radius: 14px;
+        padding: 15px;
+    }
+
+   /* .media-container {
+        border: 50px solid green;
+    }*/
     .sidebar {
         display: none;
-
     }
 
         .sidebar ul {
@@ -903,8 +920,9 @@ footer {
         flex-direction: column;
     }
 
-    .video-container-full {
-        max-width: 100%;
+    .media-container-noborder {
+        flex-direction: column;
+
     }
 
     .codeDescription-container,
