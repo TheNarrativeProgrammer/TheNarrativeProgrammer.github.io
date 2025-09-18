@@ -103,7 +103,7 @@ h2 {
     font-size: clamp(1.8rem, 5vw, 3rem);
     /*margin-top: 1rem;*/
     text-align: left;
-    /*padding: 1rem 2rem;*/
+    /*padding: 0rem 0.5rem;*/
     text-shadow: -1px 2px 0px #2A475E; /* soft dark shadow */
 }
 
@@ -196,7 +196,7 @@ section {
 }
 
 .project.max-width {
-    grid-column: span 4; /* same as full-width */
+    grid-column: 1 / -1; /* same as full-width */
     width: 100%; /* slightly smaller than container/window */
     /*height: 150vh !important;*/ /* scale relative to viewport, force override */
     margin: 10px auto; /* center horizontally */
@@ -869,13 +869,13 @@ footer {
 @media (max-width: 768px) {
 
     section{
-        padding: 1px;
+        padding: 25px;
+        /*border: 15px solid green;*/
+
     }
     .project.max-width {
         /*border: 5px solid green;*/
-        margin: 10px 10px; /* center horizontally */
-        border: 7px ridge #FF915F; /* keep separate from full-width border */
-        border-radius: 14px;
+       
         padding: 15px;
     }
 
