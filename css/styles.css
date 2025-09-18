@@ -400,6 +400,7 @@ footer {
     flex-wrap: wrap;
     gap: 1rem;
     border: 5px groove #FF915F;
+    border-radius: 14px;
     padding: 1rem;
     box-sizing: border-box;
 }
