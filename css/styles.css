@@ -184,13 +184,14 @@ section {
     width: 100%;
     /*padding: 0rem 0.05rem;*/
     box-sizing: border-box;
-    /*border: 5px solid green;*/ /* coral border */
+    border: 5px solid green; /* coral border */
     /*margin: 0 auto;*/ /* center it on large screens */
 }
 
 
 .project.full-width {
-    grid-column: span 4;
+    grid-column: 1 / -1; /* span from first to last column */
+    width: 100%; 
     padding: 1vh;
 }
 
