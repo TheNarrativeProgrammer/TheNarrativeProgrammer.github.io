@@ -262,19 +262,20 @@ section {
 
 footer {
     display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center;
     color: #FFEB99;
     background-color: #2A475E;
-    padding: 10vh;
-    justify-content: right;
-    text-align: right;
-    align-items: center; /* vertically align */
-    gap: 0.4rem; /* small space between text and icons */
+    padding: 10vh 2rem;
+    gap: 1rem;
 }
 
     footer p {
-        width: 40%;
-        margin: 0; /* remove default margins */
-        padding: 0; /* remove default padding */
+        margin: 0;
+        padding: 0;
+        font-size: 1.2rem;
     }
 
     footer a:hover {
@@ -282,8 +283,8 @@ footer {
     }
 
 .video-container-full {
-    width: 70%;
-    max-width: 70%;
+    width: 100%;
+    max-width: 50%;
     aspect-ratio: 16 / 9;
     overflow: hidden;
     border-radius: 10px;
@@ -404,7 +405,7 @@ footer {
     /*border: 5px groove #FF915F;*/
     grid-template-columns: repeat(2, 1fr);
     align-items: start;
-    flex-direction: row;
+    flex-direction: column;
     gap: 2rem;
     flex-wrap: nowrap;
     justify-content: space-between;
@@ -832,6 +833,34 @@ footer {
         color: #0077b5; /* LinkedIn blue, or another hover color */
     }
 
+.contact-text p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.contact-icons {
+    display: flex;
+    flex-direction: column; /* stack icons */
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+    .contact-icons a {
+        color: inherit;
+        font-size: 1.8rem;
+        transition: color 0.3s ease;
+    }
+
+        .contact-icons a:hover {
+            color: #0077b5; /* LinkedIn blue or any hover color */
+        }
+
+@media (min-width: 768px) {
+    .contact-icons {
+        flex-direction: row;
+    }
+}
+
 @media (max-width: 768px) {
     .sidebar {
         display: none;
@@ -872,6 +901,10 @@ footer {
 
     .media-container {
         flex-direction: column;
+    }
+
+    .video-container-full {
+        max-width: 100%;
     }
 
     .codeDescription-container,
