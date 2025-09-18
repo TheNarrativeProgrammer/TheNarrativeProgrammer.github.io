@@ -184,7 +184,7 @@ section {
     width: 100%;
     /*padding: 0rem 0.05rem;*/
     box-sizing: border-box;
-    border: 5px solid green; /* coral border */
+    /*border: 5px solid green;*/ /* coral border */
     /*margin: 0 auto;*/ /* center it on large screens */
 }
 
@@ -766,7 +766,7 @@ footer {
 }*/
 .sidebar {
     position: fixed;
-    top: 80px; /* adjust to match navbar height */
+    top: 300px; /* adjust to match navbar height */
     width: 180px; /* slightly smaller */
     background-color: #1e3a5f; /* your palette */
     padding: 15px 10px;
@@ -872,7 +872,7 @@ footer {
         padding: 1px;
     }
     .project.max-width {
-        border: 5px solid green;
+        /*border: 5px solid green;*/
         margin: 10px 10px; /* center horizontally */
         border: 7px ridge #FF915F; /* keep separate from full-width border */
         border-radius: 14px;
