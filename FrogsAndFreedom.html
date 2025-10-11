@@ -33,7 +33,9 @@
     <nav class="sidebar">
         <ul>
             <li><a href="#EncounterSystem">Encounter System</a></li>
+            <li><a href="#AIPerecption">AI Perecption</a></li>
             <li><a href="#AIBehaviour">AI Behaviour</a></li>
+            <li><a href="#AttackTokens">Attack Tokens</a></li>
             <li><a href="#Objectives">Objective System</a></li>
             <li><a href="#EventBus">EventBus</a></li>
             <li><a href="#Shaders">Shaders</a></li>
@@ -49,372 +51,204 @@
             <h2>Frogs And Freedom</h2>
         </section>
 
-            <section id="EncounterSystem">
+        <section id="EncounterSystem">
 
-                <div class="projects-container">
-                    <div class="project max-width">
-                        <h3>Encounter System</h3>
-                        <div class="media-container">
+            <div class="projects-container">
+                <div class="project max-width">
+                    <h3>Encounter System</h3>
+                    <div class="media-container">
 
-                            <div class="image-container">
-                                <button class="prev">&#10094;</button>
-                                <div class="carousel-track">
-                                    <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
-                                </div>
-                                <button class="next">&#10095;</button>
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/EncounterTriggerRegister1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/EncounterManagerRegister2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/EncounterManagerEQSInBP3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/EncounterManagerEQSTest5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/EncounterManagerDataAsset3V2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/EncoutnerTriggerUnitTest6.png" alt=""></div>
                             </div>
-
-                            <div class="codeDescription-container">
-                                <p>
-                                    1.  Although the collision presets are set to ignore everything except the player, an interface that only the player has is used to confirm the overlapping actor is the player.
-
-                                    <br></br>The EncounterData property is a data asset that contains the enemy type, quantity and event trigger for each wave of the encounter.
-                                </p>
-                                <p>
-                                    2. Because designers were constantly iterating on the number of patrol routes and spawn locations, I used EQS instead of manually require designers to update arrays.
-
-                                    <br></br> PopulatArraysInPatrolRouteManager calls RunEqsFindPatrolRoutes() which lives on another component. RunEqsFindActorSpawners lives on this component.
-
-                                    <br></br> CanWaveSpawn and HasWaveSpawned are properties in the DataAsset not exposed to designers that are updated during gameplay. The for loop uses a reference
-                                    of the wave data for each wave to reset the values to their default of false.
-                                </p>
-                                <p>
-                                    3. Designers assign gameplay tags 'wave.#' to the children of the ActorSpawner. Each element in the dataAsset's array has a 'wave' tag.
-                                    The CurrentlyActiveWave is the tag of current wave.
-
-                                    <br></br> The CurrentlyActiveEncounterTrigger is a box that encloses the entire encounter space.
-                                    The EQS query finds all the actors of the object ype 'ActorSpawner' within the bounds of the encounter.
-
-                                    <br></br> If the returned actors have a tag that matches the
-                                    current wave, then they are added to the array of possible spawn locations.
-
-                                </p>
-                                <p>
-                                    4. This EQS takes in the EncounterTrigger as the context. The dimensions of the trigger component are used to set the bounds for a Box Multi Trace.
-
-                                    <br></br>ObjectTypesToSearchFor is an instance editable array that is exposed to the EQS. In this example, the object type passed in is ActorSpawner.
-
-                                    <br></br>Each ActorSpawner in the encounter is added to the AddGeneratedActors function, which is the array on actors the EQS returns.
-
-                                </p>
-                                <p>
-                                    5. For each encounter, could add up to ten waves to the array of a DA_Encounter. Each encounter trigger had one of these assets.
-
-                                    <br></br>Quantity Spawned in Wave: total number of a given enemy type to spawn
-
-                                    <br></br>Batch size: number of actors to spawn at a single spawn location (ActorSpawner class). If the Quanity=6 and the Batch-size = 2, then
-                                    3 batches, each with 2 enemies, would spawn.
-
-                                    <br></br> If there were 3 ActorSpawners with a match wave.# gameplaytag, the 3 batches would all spawn at different locations. If there were fewer than 3,
-                                    the array of possible spawn locations loops back to index 0.
-
-                                    <br></br>Wave Trigger: designers could chose between Encounter-Start, Objective or Enemy-Population as s means to trigger a wave.
-                                </p>
-                                <p>
-                                    6. A unit test was used to automate the process of ensuring the correct data was entered.
-
-                                    <br></br>When a new EncounterTrigger child was created, it couldn't be save until a DA_EncounterData was assigned to it's member variable.
-
-                                    <br></br>When a new DA_EncounterData was created, it could be saved until the gameplay tags and values were properly set.
-
-                                </p>
-                            </div>
+                            <button class="next">&#10095;</button>
                         </div>
 
+                        <div class="codeDescription-container">
+                            <p>
+                                1.  Although the collision presets are set to ignore everything except the player, an interface that only the player has is used to confirm the overlapping actor is the player.
 
-                        <h4></h4>
-                        <div class="media-container-noborder">
-                            <div class="video-container-full">
-                                <video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
-                                    <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
-                                </video>
-                            </div>
+                                <br></br>The EncounterData property is a data asset that contains the enemy type, quantity and event trigger for each wave of the encounter.
+                            </p>
+                            <p>
+                                2. Because designers were constantly iterating on the number of patrol routes and spawn locations, I used EQS instead of manually require designers to update arrays.
 
-                            <div class="tech-container">
+                                <br></br> PopulatArraysInPatrolRouteManager calls RunEqsFindPatrolRoutes() which lives on another component. RunEqsFindActorSpawners lives on this component.
 
-                                <h4>Tech </h4>
-                                <div class="tech-skill">
-                                    <div class="tech-box">Custom EQS Test</div>
-                                    <div class="tech-box">Gameplay-tags</div>
-                                    <div class="tech-box">Unit Tests</div>
-                                    <div class="tech-box">Data Assets</div>
-                                </div>
-                            </div>
+                                <br></br> CanWaveSpawn and HasWaveSpawned are properties in the DataAsset not exposed to designers that are updated during gameplay. The for loop uses a reference
+                                of the wave data for each wave to reset the values to their default of false.
+                            </p>
+                            <p>
+                                3. Designers assign gameplay tags 'wave.#' to the children of the ActorSpawner. Each element in the dataAsset's array has a 'wave' tag.
+                                The CurrentlyActiveWave is the tag of current wave.
+
+                                <br></br> The CurrentlyActiveEncounterTrigger is a box that encloses the entire encounter space.
+                                The EQS query finds all the actors of the object ype 'ActorSpawner' within the bounds of the encounter.
+
+                                <br></br> If the returned actors have a tag that matches the
+                                current wave, then they are added to the array of possible spawn locations.
+
+                            </p>
+                            <p>
+                                4. This EQS takes in the EncounterTrigger as the context. The dimensions of the trigger component are used to set the bounds for a Box Multi Trace.
+
+                                <br></br>ObjectTypesToSearchFor is an instance editable array that is exposed to the EQS. In this example, the object type passed in is ActorSpawner.
+
+                                <br></br>Each ActorSpawner in the encounter is added to the AddGeneratedActors function, which is the array on actors the EQS returns.
+
+                            </p>
+                            <p>
+                                5. For each encounter, could add up to ten waves to the array of a DA_Encounter. Each encounter trigger had one of these assets.
+
+                                <br></br>Quantity Spawned in Wave: total number of a given enemy type to spawn
+
+                                <br></br>Batch size: number of actors to spawn at a single spawn location (ActorSpawner class). If the Quanity=6 and the Batch-size = 2, then
+                                3 batches, each with 2 enemies, would spawn.
+
+                                <br></br> If there were 3 ActorSpawners with a match wave.# gameplaytag, the 3 batches would all spawn at different locations. If there were fewer than 3,
+                                the array of possible spawn locations loops back to index 0.
+
+                                <br></br>Wave Trigger: designers could chose between Encounter-Start, Objective or Enemy-Population as s means to trigger a wave.
+                            </p>
+                            <p>
+                                6. A unit test was used to automate the process of ensuring the correct data was entered.
+
+                                <br></br>When a new EncounterTrigger child was created, it couldn't be save until a DA_EncounterData was assigned to it's member variable.
+
+                                <br></br>When a new DA_EncounterData was created, it could be saved until the gameplay tags and values were properly set.
+
+                            </p>
                         </div>
-
-
                     </div>
-                </div>
-            </section>
 
 
-
-            <section id="AIBehaviour">
-                <h2></h2>
-                <div class="projects-container">
-                    <div class="project max-width">
-                        <h3>AI Behaviour</h3>
-                        <div class="media-container">
-
-                            <div class="image-container">
-                                <button class="prev">&#10094;</button>
-                                <div class="carousel-track">
-                                    <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
-                                </div>
-                                <button class="next">&#10095;</button>
-                            </div>
-
-                            <div class="codeDescription-container">
-                                <p>
-                                    1.  .... Work in progress
-
-                                    <br></br>...
-                                </p>
-                                <p>
-                                    2. ...
-
-                                    <br></br> ...
-
-                                    <br></br> ...
-                                </p>
-                                <p>
-                                    3. ...
-
-                                    <br></br> ...
-
-                                    <br></br> ...
-
-                                </p>
-                                <p>
-                                    4. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                </p>
-                                <p>
-                                    5. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                    <br></br> ...
-
-                                    <br></br>...
-                                </p>
-                                <p>
-                                    6. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                </p>
-                            </div>
-                        </div>
-
-
-                        <h4></h4>
+                    <h4></h4>
+                    <div class="media-container-noborder">
                         <div class="video-container-full">
-                            <video class="autoplay-video-lower-threshhold" muted loop playsinline>
+                            <video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
                                 <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
                             </video>
                         </div>
 
-                        <h4>Tech </h4>
-                        <div class="tech-skill">
-                            <div class="tech-box">Custom EQS Test</div>
-                            <div class="tech-box">Gameplay-tags</div>
-                            <div class="tech-box">Unit Tests</div>
-                            <div class="tech-box">Data Assets</div>
-                        </div>
+                        <div class="tech-container">
 
+                            <h4>Tech </h4>
+                            <div class="tech-skill">
+                                <div class="tech-box">Custom EQS Test</div>
+                                <div class="tech-box">Gameplay-tags</div>
+                                <div class="tech-box">Unit Tests</div>
+                                <div class="tech-box">Data Assets</div>
+                            </div>
+                        </div>
                     </div>
+
+
                 </div>
-            </section>
+            </div>
+        </section>
 
 
-            <section id="Objectives">
-                <h2></h2>
-                <div class="projects-container">
-                    <div class="project max-width">
-                        <h3>Objective System</h3>
-                        <div class="media-container">
 
-                            <div class="image-container">
-                                <button class="prev">&#10094;</button>
-                                <div class="carousel-track">
-                                    <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
-                                </div>
-                                <button class="next">&#10095;</button>
+        <section id="AIPerecption">
+            <h2></h2>
+            <div class="projects-container">
+                <div class="project max-width">
+                    <h3>AI Perecption</h3>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/Frogs/AI/AIPerceptionOnPossessImg1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AI/AIPerceptionGetTeamAttitudeImg2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AI/AIPerceptionTargetPerceptionUpdatedImg3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AI/AIPerceptionIsUpdatedSenseOfActorOfAGivenTypeImg4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AI/AIPerceptionHandleSenseImg5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AI/AIPerceptionTargetPerceptionForgottenImg6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AI/AIPerceptionGetLastStimulusImg7.png" alt=""></div>
                             </div>
-
-                            <div class="codeDescription-container">
-                                <p>
-                                    1.  .... Work in progress
-
-                                    <br></br>...
-                                </p>
-                                <p>
-                                    2. ...
-
-                                    <br></br> ...
-
-                                    <br></br> ...
-                                </p>
-                                <p>
-                                    3. ...
-
-                                    <br></br> ...
-
-                                    <br></br> ...
-
-                                </p>
-                                <p>
-                                    4. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                </p>
-                                <p>
-                                    5. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                    <br></br> ...
-
-                                    <br></br>...
-                                </p>
-                                <p>
-                                    6. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                </p>
-                            </div>
+                            <button class="next">&#10095;</button>
                         </div>
 
+                        <div class="codeDescription-container">
+                            <p>
+                                1.  Get the TeamID of the possessed Character. The TeamID uses the IGenericTeamAgentInterface, with overridden functions shown in the next slide.
 
-                        <h4></h4>
-                        <!--<div class="video-container-full">
-                        <video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
+                                <br></br>Bind to the OnTargetPerceptionUpdated delegate, which is fired when a stimulus is perceived.
+
+                                <br></br>Bind to the delegate OnTargetPerceptionForgotten, which is fired when the stimulus age is greater than the maxAge property.
+
+                                <br></br>OnTargetPerceptionUpdated is only called if the property bForgetStaleActors is set to true. This is only accessible in the Default.ini
+                            </p>
+                            <p>
+                                2. The IGenericTeamAgentInterface is implemented on the ACharacterBase class, which the enemy class and player class both inherit from. The AIController class already has this interface.
+
+                                <br></br> GetTeamAttitudeTowards() is overriden to check if the AActor passed in from a perception source has the same TeamID as the ACharacterBase this controller possesses. It
+                                returns ETeamAttitude as either 'Hostile, Friendly or Neutral.'
+
+                                <br></br>
+                            </p>
+                            <p>
+                                3. The AIPerceptionComponent is confirured to have sight, hearing, and damage senses. The ACharacterBasePlayer class is sensable using sight and damage sense, while AGeneratorBase is sensable over the hearing sense.
+
+                                <br></br>IsUpdatedSenseOfActorOfAGivenType() checks the type of stimulus and then calls the corresponding handle function for that sense.
+
+
+                                <br></br>
+
+                            </p>
+                            <p>
+                                4. EAISense is a enum defined in the AAIControllerMobileFrogBase class which tracks the type of sense/stimulus. However, Stimulus.Type is a FAISenseID so the locally
+                                defined EAISense can't be used to check the stimulus type.
+
+                                <br></br>GetSenseIDofSenseAsEnum() converts the local enum EAISense to the unreal stimulus type FAISenseID so it can be compared to the Stimulus parameter.
+
+                            </p>
+                            <p>
+                                5. To avoid casting, the CharacterBasePlayer class implements the UPlayerCharacterable interface, which is used to check if an actor is the player.
+
+                                <br></br>HandleSenseSight(), changes the 'state' blackboard-key to Attacking. A check on the current state is doen to avoid unnecessary changes. HandleSenseHearing() and HandleSenseDamage() work similiarly but set a different 'state.'
+
+                                <br></br>GetAICurrentState(), UEnums in the blackboard are stored as int8, a static_cast is used to cast to the EAIStates type.
+
+                                <br></br>SetBBkeyTargetAndState(), when NewState is EAIStates::Attacking or EAIStates::Investigate, it takes in the sensed AActor as the AttackTarget. When NewState is EAIStates::Passive, AttackTarget is nullptr.
+                            </p>
+                            <p>
+                                6. When the age of the AI's hearing or damage perception exceeds it's maxLife, it might still have sight perception. The player is the only AActor that can be perceived with the sight sense.
+
+                                <br></br> GetLastStimulus(), checks if the AI still has sight info on the player and if it doesn't, the 'state' is set to EAIState::Passive and the 'TargetObject' is set to nullptr.  This function is shown on the next slide
+
+                                <br></br> The token system is gone over in more detail in the 'Token System' section below. The enemy character class, CharacterBaseOwner, implements the IAttackTokenRequesterable interface and the
+                                player character class implements the IAttackTokenGivererable interface.
+
+                            </p>
+
+                            <p>
+                                7. The perception info on the player character is searched for and returned in the references bSensedSuccessfully and OutStimulus.
+
+                                <br></br>GetActorsPerception() takes a reference of the struct FActorPerceptionBlueprintInfo which holds perception info for a sensed AActor.
+
+                                <br></br> GetSenseIDofSenseAsEnum(), checks if the AI has sight perception info on the player character.
+
+                                <br></br>
+
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <h4></h4>
+                    <div class="video-container-full">
+                        <video class="autoplay-video-lower-threshhold" muted loop playsinline>
                             <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
                         </video>
-                    </div>-->
-
-                        <h4>Tech </h4>
-                        <div class="tech-skill">
-                            <div class="tech-box">Custom EQS Test</div>
-                            <div class="tech-box">Gameplay-tags</div>
-                            <div class="tech-box">Unit Tests</div>
-                            <div class="tech-box">Data Assets</div>
-                        </div>
-
-                    </div>
-            </section>
-
-
-
-            <section id="EventBus">
-                <h2></h2>
-                <div class="projects-container">
-                    <div class="project max-width">
-                        <h3>Event Bus - Mediator Pattern</h3>
-                        <div class="media-container">
-
-                            <div class="image-container">
-                                <button class="prev">&#10094;</button>
-                                <div class="carousel-track">
-                                    <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
-                                </div>
-                                <button class="next">&#10095;</button>
-                            </div>
-
-                            <div class="codeDescription-container">
-                                <p>
-                                    1.  .... Work in progress
-
-                                    <br></br>...
-                                </p>
-                                <p>
-                                    2. ...
-
-                                    <br></br> ...
-
-                                    <br></br> ...
-                                </p>
-                                <p>
-                                    3. ...
-
-                                    <br></br> ...
-
-                                    <br></br> ...
-
-                                </p>
-                                <p>
-                                    4. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                </p>
-                                <p>
-                                    5. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                    <br></br> ...
-
-                                    <br></br>...
-                                </p>
-                                <p>
-                                    6. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                </p>
-                            </div>
-                        </div>
-
-
-                        <h4></h4>
-                        <!--<div class="video-container-full">
-                        <video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
-                            <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
-                        </video>-->
                     </div>
 
                     <h4>Tech </h4>
@@ -426,189 +260,641 @@
                     </div>
 
                 </div>
-            </section>
+            </div>
+        </section>
 
 
-            <section id="Shaders">
-                <h2></h2>
-                <div class="projects-container">
-                    <div class="project max-width">
-                        <h3>Shaders</h3>
-                        <div class="media-container">
+        <section id="AIBehaviour">
+            <h2></h2>
+            <div class="projects-container">
+                <div class="project max-width">
+                    <h3>AI Behvaiour</h3>
+                    <div class="media-container">
 
-                            <div class="image-container">
-                                <button class="prev">&#10094;</button>
-                                <div class="carousel-track">
-                                    <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
-                                </div>
-                                <button class="next">&#10095;</button>
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBehBehaviourTreeImg1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBehGetPatrolRouteRunEQSImg2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBehEQSFrogDestinationImg3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBehJumpToDestinationImg4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBehAttackTokenImg5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBehAttackFunctionImg6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIPerceptionGetLastStimulusImg7.png" alt=""></div>
                             </div>
-
-                            <div class="codeDescription-container">
-                                <p>
-                                    1.  .... Work in progress
-
-                                    <br></br>...
-                                </p>
-                                <p>
-                                    2. ...
-
-                                    <br></br> ...
-
-                                    <br></br> ...
-                                </p>
-                                <p>
-                                    3. ...
-
-                                    <br></br> ...
-
-                                    <br></br> ...
-
-                                </p>
-                                <p>
-                                    4. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                </p>
-                                <p>
-                                    5. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                    <br></br> ...
-
-                                    <br></br>...
-                                </p>
-                                <p>
-                                    6. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                </p>
-                            </div>
+                            <button class="next">&#10095;</button>
                         </div>
 
+                        <div class="codeDescription-container">
+                            <p>
+                                1. To avoid casting, the interface IFrogAIable is used to call behaviour functions like attack and jump as well as bind and unbind events in
+                                Tasks.
 
-                        <h4></h4>
-                        <div class="video-container-full">
-                            <video class="autoplay-video-lower-threshhold" muted loop playsinline>
-                                <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
-                            </video>
+                                <br></br> The behaviour tree is event driven. Execution is controlled by bind to events and only continuing once a message is received.
+                                Here, GetPatrolRouteAndSetDestinationLocation() is called when the enemy has landed, ensuring execution stop when the AI is jumping.
+
+                                <br></br>Bind to the delegate OnTargetPerceptionForgotten, which is fired when the stimulus age is greater than the maxAge property.
+
+                                <br></br>OnTargetPerceptionUpdated is only called if the property bForgetStaleActors is set to true. This is only accessible in the Default.ini
+                            </p>
+                            <p>
+                                2. GetPatrolRoute() returns a spline that is assigned to AI when it's pulled from the pool.
+
+                                <br></br> To avoid collisions, an EQS is run at the world location of the current index along the spine. The EQS returns an unoccupied location that it has line of sight to.
+
+                                <br></br>
+                            </p>
+                            <p>
+                                3. UFrogDestinationTest gather the 'destination' positions stored in each AI's blackboard, then scores every EQS candidate point by the average distance from that point to all the current positions of AI's. The score is the
+                                mean distance to every enemy AI's location.
+
+                                <br></br>The bb_key 'DestinationLocation' is stored as the local variable, DestinationLocationName. The Position array is populated with the vector value held within each AI's blackboard.
+
+
+                                <br></br> FEnvQueryInstance::ItemIterator loops over each EQS candidate item being tested. GetItemLocation(QueryInstance, It.GetIndex() gets the world location of the EQS item. For every element in the Positions array, the
+                                distance is calculated and added to the DistanceLengths array.
+
+                                <br></br> It.SetScore() sets the score the EQS candidate based on the average distance.
+
+                            </p>
+                            <p>
+                                4. OnLandedFinishedExecute() is bound to the LandedDelegate, meaning the behaviour tree stays in this task until the AI lands.
+
+                                <br></br>JumpSpecialToDestination() is an interface function that calls a custom jump function, JumpToDestination().
+
+                                <br></br> JumpToDestination() finds the vector between the AI's current location and it's destination and launches the possessed character along that vector. The AI can jump to any location the EQS returns.
+
+                            </p>
+                            <p>
+                                5. The task, BTT_RequestAttackToken first checks if the controlled Pawn already has claimed a token from the AttackTarget. If it hasn't, then it request one via the interface function RequestAttackToken().
+
+                                <br></br>See the 'Attack Token System' section for more details on the token system.
+
+                                <br></br>The behaviour tree shown here is the 'attack' state side of the tree. This slide shows the task BTT_RequestAttackToken and the next slide shows BTT_AttackFlusher.
+
+                            </p>
+                            <p>
+                                6. AttackFinishedExecuteSuccessful() is bound to a delegate, AttackBehaviourFinishedDelegate, using a helper function on the FrogAIable interface, BindToAttackBehaviourFinishedDelegate().
+
+                                <br></br> Functions controlling behaviour such as IdealBehaviour(), InvestigateBehaviour() and AttackBehaviour(), and functions for binding and unbinding to delegates that broadcast when this behaviour finishes is all owned by the
+                                FrogAIable interface. The base enemy class, ACharacterBaseFrog, implements the FrogAIable interface.
+
+                                <br></br> AttackBehaviour() is called on the controlled pawn, which calls Attack() with the BP_CharacterFrogFlusher class, a child of ACharacterBaseFrog.
+
+                                <br></br> If the attack is successful, ReturnAttackTokens() is called and AttackBehaviourFinishedDelegate is broadcast.
+
+                            </p>
+
+                            <p>
+                                7. The perception info on the player character is searched for and returned in the references bSensedSuccessfully and OutStimulus.
+
+                                <br></br>GetActorsPerception() takes a reference of the struct FActorPerceptionBlueprintInfo which holds perception info for a sensed AActor.
+
+                                <br></br> GetSenseIDofSenseAsEnum(), checks if the AI has sight perception info on the player character.
+
+                                <br></br>
+
+                            </p>
                         </div>
-
-                        <h4>Tech </h4>
-                        <div class="tech-skill">
-                            <div class="tech-box">Custom EQS Test</div>
-                            <div class="tech-box">Gameplay-tags</div>
-                            <div class="tech-box">Unit Tests</div>
-                            <div class="tech-box">Data Assets</div>
-                        </div>
-
                     </div>
-            </section>
 
 
-            <section id="Dialogue">
-                <h2></h2>
-                <div class="projects-container">
-                    <div class="project max-width">
-                        <h3>Dialogue Subsystem with Data Tables</h3>
-                        <div class="media-container">
-
-                            <div class="image-container">
-                                <button class="prev">&#10094;</button>
-                                <div class="carousel-track">
-                                    <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                    <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
-                                </div>
-                                <button class="next">&#10095;</button>
-                            </div>
-
-                            <div class="codeDescription-container">
-                                <p>
-                                    1.  .... Work in progress
-
-                                    <br></br>...
-                                </p>
-                                <p>
-                                    2. ...
-
-                                    <br></br> ...
-
-                                    <br></br> ...
-                                </p>
-                                <p>
-                                    3. ...
-
-                                    <br></br> ...
-
-                                    <br></br> ...
-
-                                </p>
-                                <p>
-                                    4. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                </p>
-                                <p>
-                                    5. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                    <br></br> ...
-
-                                    <br></br>...
-                                </p>
-                                <p>
-                                    6. ...
-
-                                    <br></br>...
-
-                                    <br></br>...
-
-                                </p>
-                            </div>
-                        </div>
-
-
-                        <h4></h4>
-                        <div class="video-container-full">
-                            <!--<video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
+                    <h4></h4>
+                    <div class="video-container-full">
+                        <video class="autoplay-video-lower-threshhold" muted loop playsinline>
                             <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
-                        </video>-->
-                        </div>
-
-                        <h4>Tech </h4>
-                        <div class="tech-skill">
-                            <div class="tech-box">Custom EQS Test</div>
-                            <div class="tech-box">Gameplay-tags</div>
-                            <div class="tech-box">Unit Tests</div>
-                            <div class="tech-box">Data Assets</div>
-                        </div>
-
+                        </video>
                     </div>
-            </section>
+
+                    <h4>Tech </h4>
+                    <div class="tech-skill">
+                        <div class="tech-box">Custom EQS Test</div>
+                        <div class="tech-box">Gameplay-tags</div>
+                        <div class="tech-box">Unit Tests</div>
+                        <div class="tech-box">Data Assets</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <section id="AttackTokens">
+            <h2></h2>
+            <div class="projects-container">
+                <div class="project max-width">
+                    <h3>Attack Tokens</h3>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/TokensClassHeaderImg1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Tokens_RequesterComponentInterfaceAndImplementationImg2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_HasAttackTokenImg3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_RequestAttackTokenImg4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_HandleReserveTokenRequestImg5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReserveAttackTokenAndStoreInMapIm6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReturnTokensPerceptionForgottenImg7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReturnTokensAttackFinishedImg8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReturnTokensAttackFinishedFunctionsImg9.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReturnAllTokensPoolActorDeactivatedImg10.png" alt=""></div>
+                            </div>
+                            <button class="next">&#10095;</button>
+                        </div>
+
+                        <div class="codeDescription-container">
+                            <p>
+                                1. To avoid casting, the interface IFrogAIable is used to call behaviour functions like attack and jump as well as bind and unbind events in
+                                Tasks.
+
+                                <br></br> The behaviour tree is event driven. Execution is controlled by bind to events and only continuing once a message is received.
+                                Here, GetPatrolRouteAndSetDestinationLocation() is called when the enemy has landed, ensuring execution stop when the AI is jumping.
+
+                                <br></br>Bind to the delegate OnTargetPerceptionForgotten, which is fired when the stimulus age is greater than the maxAge property.
+
+                                <br></br>OnTargetPerceptionUpdated is only called if the property bForgetStaleActors is set to true. This is only accessible in the Default.ini
+                            </p>
+                            <p>
+                                2. GetPatrolRoute() returns a spline that is assigned to AI when it's pulled from the pool.
+
+                                <br></br> To avoid collisions, an EQS is run at the world location of the current index along the spine. The EQS returns an unoccupied location that it has line of sight to.
+
+                                <br></br>
+                            </p>
+                            <p>
+                                3. UFrogDestinationTest gather the 'destination' positions stored in each AI's blackboard, then scores every EQS candidate point by the average distance from that point to all the current positions of AI's. The score is the
+                                mean distance to every enemy AI's location.
+
+                                <br></br>The bb_key 'DestinationLocation' is stored as the local variable, DestinationLocationName. The Position array is populated with the vector value held within each AI's blackboard.
+
+
+                                <br></br> FEnvQueryInstance::ItemIterator loops over each EQS candidate item being tested. GetItemLocation(QueryInstance, It.GetIndex() gets the world location of the EQS item. For every element in the Positions array, the
+                                distance is calculated and added to the DistanceLengths array.
+
+                                <br></br> It.SetScore() sets the score the EQS candidate based on the average distance.
+
+                            </p>
+                            <p>
+                                4. OnLandedFinishedExecute() is bound to the LandedDelegate, meaning the behaviour tree stays in this task until the AI lands.
+
+                                <br></br>JumpSpecialToDestination() is an interface function that calls a custom jump function, JumpToDestination().
+
+                                <br></br> JumpToDestination() finds the vector between the AI's current location and it's destination and launches the possessed character along that vector. The AI can jump to any location the EQS returns.
+
+                            </p>
+                            <p>
+                                5. The task, BTT_RequestAttackToken first checks if the controlled Pawn already has claimed a token from the AttackTarget. If it hasn't, then it request one via the interface function RequestAttackToken().
+
+                                <br></br>See the 'Attack Token System' section for more details on the token system.
+
+                                <br></br>The behaviour tree shown here is the 'attack' state side of the tree. This slide shows the task BTT_RequestAttackToken and the next slide shows BTT_AttackFlusher.
+
+                            </p>
+                            <p>
+                                6. AttackFinishedExecuteSuccessful() is bound to a delegate, AttackBehaviourFinishedDelegate, using a helper function on the FrogAIable interface, BindToAttackBehaviourFinishedDelegate().
+
+                                <br></br> Functions controlling behaviour such as IdealBehaviour(), InvestigateBehaviour() and AttackBehaviour(), and functions for binding and unbinding to delegates that broadcast when this behaviour finishes is all owned by the
+                                FrogAIable interface. The base enemy class, ACharacterBaseFrog, implements the FrogAIable interface.
+
+                                <br></br> AttackBehaviour() is called on the controlled pawn, which calls Attack() with the BP_CharacterFrogFlusher class, a child of ACharacterBaseFrog.
+
+                                <br></br> If the attack is successful, ReturnAttackTokens() is called and AttackBehaviourFinishedDelegate is broadcast.
+
+                            </p>
+
+                            <p>
+                                7. The perception info on the player character is searched for and returned in the references bSensedSuccessfully and OutStimulus.
+
+                                <br></br>GetActorsPerception() takes a reference of the struct FActorPerceptionBlueprintInfo which holds perception info for a sensed AActor.
+
+                                <br></br> GetSenseIDofSenseAsEnum(), checks if the AI has sight perception info on the player character.
+
+                                <br></br>
+
+                            </p>
+
+                            <p>
+                                8. ...
+
+                                <br></br>GetActorsPerception() takes a reference of the struct FActorPerceptionBlueprintInfo which holds perception info for a sensed AActor.
+
+                                <br></br> GetSenseIDofSenseAsEnum(), checks if the AI has sight perception info on the player character.
+
+                                <br></br>
+
+                            </p>
+
+                            <p>
+                                9. ...
+
+                                <br></br>GetActorsPerception() takes a reference of the struct FActorPerceptionBlueprintInfo which holds perception info for a sensed AActor.
+
+                                <br></br> GetSenseIDofSenseAsEnum(), checks if the AI has sight perception info on the player character.
+
+                                <br></br>
+
+                            </p>
+
+                            <p>
+                                10. ...
+
+                                <br></br>GetActorsPerception() takes a reference of the struct FActorPerceptionBlueprintInfo which holds perception info for a sensed AActor.
+
+                                <br></br> GetSenseIDofSenseAsEnum(), checks if the AI has sight perception info on the player character.
+
+                                <br></br>
+
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <h4></h4>
+                    <div class="video-container-full">
+                        <video class="autoplay-video-lower-threshhold" muted loop playsinline>
+                            <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <h4>Tech </h4>
+                    <div class="tech-skill">
+                        <div class="tech-box">Custom EQS Test</div>
+                        <div class="tech-box">Gameplay-tags</div>
+                        <div class="tech-box">Unit Tests</div>
+                        <div class="tech-box">Data Assets</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <section id="Objectives">
+            <h2></h2>
+            <div class="projects-container">
+                <div class="project max-width">
+                    <h3>Objective System</h3>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                            </div>
+                            <button class="next">&#10095;</button>
+                        </div>
+
+                        <div class="codeDescription-container">
+                            <p>
+                                1.  .... Work in progress
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                2. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+                            </p>
+                            <p>
+                                3. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+
+                            </p>
+                            <p>
+                                4. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                            <p>
+                                5. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                                <br></br> ...
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                6. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <h4></h4>
+                    <!--<div class="video-container-full">
+                    <video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
+                        <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
+                    </video>
+                </div>-->
+
+                    <h4>Tech </h4>
+                    <div class="tech-skill">
+                        <div class="tech-box">Custom EQS Test</div>
+                        <div class="tech-box">Gameplay-tags</div>
+                        <div class="tech-box">Unit Tests</div>
+                        <div class="tech-box">Data Assets</div>
+                    </div>
+
+                </div>
+        </section>
+
+
+
+        <section id="EventBus">
+            <h2></h2>
+            <div class="projects-container">
+                <div class="project max-width">
+                    <h3>Event Bus - Mediator Pattern</h3>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                            </div>
+                            <button class="next">&#10095;</button>
+                        </div>
+
+                        <div class="codeDescription-container">
+                            <p>
+                                1.  .... Work in progress
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                2. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+                            </p>
+                            <p>
+                                3. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+
+                            </p>
+                            <p>
+                                4. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                            <p>
+                                5. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                                <br></br> ...
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                6. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <h4></h4>
+                    <!--<div class="video-container-full">
+                <video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
+                    <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
+                </video>-->
+                </div>
+
+                <h4>Tech </h4>
+                <div class="tech-skill">
+                    <div class="tech-box">Custom EQS Test</div>
+                    <div class="tech-box">Gameplay-tags</div>
+                    <div class="tech-box">Unit Tests</div>
+                    <div class="tech-box">Data Assets</div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section id="Shaders">
+            <h2></h2>
+            <div class="projects-container">
+                <div class="project max-width">
+                    <h3>Shaders</h3>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                            </div>
+                            <button class="next">&#10095;</button>
+                        </div>
+
+                        <div class="codeDescription-container">
+                            <p>
+                                1.  .... Work in progress
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                2. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+                            </p>
+                            <p>
+                                3. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+
+                            </p>
+                            <p>
+                                4. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                            <p>
+                                5. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                                <br></br> ...
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                6. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <h4></h4>
+                    <div class="video-container-full">
+                        <video class="autoplay-video-lower-threshhold" muted loop playsinline>
+                            <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <h4>Tech </h4>
+                    <div class="tech-skill">
+                        <div class="tech-box">Custom EQS Test</div>
+                        <div class="tech-box">Gameplay-tags</div>
+                        <div class="tech-box">Unit Tests</div>
+                        <div class="tech-box">Data Assets</div>
+                    </div>
+
+                </div>
+        </section>
+
+
+        <section id="Dialogue">
+            <h2></h2>
+            <div class="projects-container">
+                <div class="project max-width">
+                    <h3>Dialogue Subsystem with Data Tables</h3>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                            </div>
+                            <button class="next">&#10095;</button>
+                        </div>
+
+                        <div class="codeDescription-container">
+                            <p>
+                                1.  .... Work in progress
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                2. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+                            </p>
+                            <p>
+                                3. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+
+                            </p>
+                            <p>
+                                4. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                            <p>
+                                5. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                                <br></br> ...
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                6. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <h4></h4>
+                    <div class="video-container-full">
+                        <!--<video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
+                        <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
+                    </video>-->
+                    </div>
+
+                    <h4>Tech </h4>
+                    <div class="tech-skill">
+                        <div class="tech-box">Custom EQS Test</div>
+                        <div class="tech-box">Gameplay-tags</div>
+                        <div class="tech-box">Unit Tests</div>
+                        <div class="tech-box">Data Assets</div>
+                    </div>
+
+                </div>
+        </section>
 
 
 

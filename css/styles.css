@@ -869,7 +869,7 @@ footer {
 @media (max-width: 768px) {
 
     section{
-        padding: 25px;
+        padding: 1px 1px;
         /*border: 15px solid green;*/
 
     }
