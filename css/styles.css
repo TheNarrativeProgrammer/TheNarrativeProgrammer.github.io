@@ -376,7 +376,7 @@ footer {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0,0,0,0.35);
+    background: rgba(255,225,131,0.35);
     color: #fff;
     border: none;
     padding: 10px 12px;
