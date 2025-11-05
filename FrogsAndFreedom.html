@@ -38,7 +38,6 @@
             <li><a href="#AttackTokens">Attack Tokens</a></li>
             <li><a href="#Objectives">Objective System</a></li>
             <li><a href="#UI">UI</a></li>
-            <li><a href="#GameEvents">Game Events</a></li>
             <li><a href="#EventBus">EventBus</a></li>
             <li><a href="#Shaders">Shaders</a></li>
             <li><a href="#Dialogue">Dialogue subsystem</a></li>
@@ -883,6 +882,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_InitializeAndStartTimerRestartTimer_Img3.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_BroadcastOnSecondElapsedTimeRemaining_Img4.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_TurnPowerOn_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_TurnPowerOff_Img5pt5.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_BroadcastObjectiveCompleteGeneratorTimer_Img6.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_OnGameOverClearTimer_Img7.png" alt=""></div>
                             </div>
@@ -1048,7 +1048,7 @@
 
 
 
-                    <h4>Iteration, Tutorial and Dialogue</h4>
+                    <h4>Interaction, Tutorial and Dialogue</h4>
                     <div class="media-container">
 
                         <div class="image-container">
@@ -1255,7 +1255,7 @@
 
 
 
-                    
+
 
                     <h4>Tech </h4>
                     <div class="tech-skill">
@@ -1271,29 +1271,29 @@
 
 
 
-        <section id="GameEvents">
+        <section id="EventBus">
             <h2></h2>
             <div class="projects-container">
                 <div class="project max-width">
-                    <h3>Objective System</h3>
+                    <h3>Event Bus</h3>
 
-                    <h4>Object Actor Base Class, Base Logic and Child Class Reach Point</h4>
+                    <h4>Game State Event Manager and Binding Component</h4>
                     <div class="media-container">
 
                         <div class="image-container">
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_EncounterTriggerImg1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_EncounterTriggerMultiObjectivesImg2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_RegisterEncounterAndCallStartObjectivesImg3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_StartObjectsInObjectiveCompleteImg4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_StartObjectsOverrideImg5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_CompleteObjectiveReachPointImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_CompleteObjectiveReachPointImg6pt5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_StartSubobjectivesImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_CompleteObjectiveBroadcastAndIfAllObjectiveCompleteImg8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_CompleteObjectiveImg10.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_IfAllObjectiveCompleteImg10.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_HeaderOverview_Img1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_BindingComponetBaseClass_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_BindComponent_Generator_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_GeneratorAddingBindingComponent_Img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_GeneratorHealthWidget_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_SetIDAndCheckForceFieldIDMatchesOwner_Img6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_ForceFieldHealthChangeAndDeath_Img7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_OnObjectiveTimerCompleteStopSoundTimer_Img8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_ForceFieldBinding_Img9.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/Objectives_CompleteObjectiveImg10.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/Objectives_IfAllObjectiveCompleteImg10.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
@@ -1397,21 +1397,21 @@
 
 
 
-                    <h4>Child Class Turn On All Generators</h4>
+                    <h4>Health Component</h4>
                     <div class="media-container">
 
                         <div class="image-container">
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_HeaderTurnOnGeneratorsImg1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_StartObjectiveIsObjectiveCompletImg2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_OnIneractGeneratorImg3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_SetIsFirstIterationCompleteAndBroadcastUIUpdateImg4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_DisplayTextImg5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_OnTimerFinishedSetToTrueImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_ForceFieldDeathReversalImg8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_BroadcastReversalAndUIWidgetImg9.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_InitAndTakeDamage_Img1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_RequestHealth_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_TakeDamageUpdateHealthBar_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_DamageInterface_Img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_ForceField_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_OnTimerFinishedSetToTrueImg7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_ForceFieldDeathReversalImg8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_BroadcastReversalAndUIWidgetImg9.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
@@ -1495,20 +1495,20 @@
                     </div>
 
 
-                    <h4>Child Class Defend Gen Time</h4>
+                    <h4>Game Events - Power Cords</h4>
                     <div class="media-container">
 
                         <div class="image-container">
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChild_HeaderGenTimeImg1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_StartObjectiveIsObjectiveCompletImg2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_UpdateTimeRemaingElaspedTimeDelegateImg3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_UpdateTimeRemainingAndBroadCastImg4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_DisplayTextImg5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_PowerMgmr_ArrayOfCordsImg1.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_HeaderAndOnOffFunctions_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_BindingComp_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_UpdateTimeRemainingAndBroadCastImg4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_DisplayTextImg5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
@@ -1592,21 +1592,21 @@
 
 
 
-                    <h4>Gen Time Manager</h4>
+                    <h4>Game Events - Progress Lights</h4>
                     <div class="media-container">
 
                         <div class="image-container">
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_Header_Img1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_CallStartTimerOrRestartTimer_Img2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_InitializeAndStartTimerRestartTimer_Img3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_BroadcastOnSecondElapsedTimeRemaining_Img4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/ObjectivesChildTime_DisplayTextImg5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/ObjectivesChildTime_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/ObjectChidTime_TimeManagerPauseTimerImg9.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_Img1.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_LightData_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_AddLightsToLightDatas_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_OnEncounterStartDelegate_Img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_SendTotalTimeAndAssignTime_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_CheckIfLightCanTurnOn_Img6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/ObjectChidTime_TimeManagerPauseTimerImg9.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
@@ -1792,95 +1792,6 @@
 
 
 
-        <section id="EventBus">
-            <h2></h2>
-            <div class="projects-container">
-                <div class="project max-width">
-                    <h3>Event Bus - Mediator Pattern</h3>
-                    <div class="media-container">
-
-                        <div class="image-container">
-                            <button class="prev">&#10094;</button>
-                            <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
-                            </div>
-                            <button class="next">&#10095;</button>
-                        </div>
-
-                        <div class="codeDescription-container">
-                            <p>
-                                1.  .... Work in progress
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                2. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                            <p>
-                                5. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                        </div>
-                    </div>
-
-
-                    <h4></h4>
-                    <!--<div class="video-container-full">
-                <video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
-                    <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
-                </video>-->
-                </div>
-
-                <h4>Tech </h4>
-                <div class="tech-skill">
-                    <div class="tech-box">Custom EQS Test</div>
-                    <div class="tech-box">Gameplay-tags</div>
-                    <div class="tech-box">Unit Tests</div>
-                    <div class="tech-box">Data Assets</div>
-                </div>
-
-            </div>
-        </section>
 
 
         <section id="Shaders">
@@ -1888,17 +1799,24 @@
             <div class="projects-container">
                 <div class="project max-width">
                     <h3>Shaders</h3>
+
+                    <h4>Game State Event Manager and Binding Component</h4>
                     <div class="media-container">
 
                         <div class="image-container">
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_HeaderOverview_Img1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_BindingComponetBaseClass_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_BindComponent_Generator_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_GeneratorAddingBindingComponent_Img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_GeneratorHealthWidget_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_SetIDAndCheckForceFieldIDMatchesOwner_Img6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_ForceFieldHealthChangeAndDeath_Img7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_OnObjectiveTimerCompleteStopSoundTimer_Img8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_ForceFieldBinding_Img9.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/Objectives_CompleteObjectiveImg10.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/Objectives_IfAllObjectiveCompleteImg10.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
@@ -1951,45 +1869,72 @@
                                 <br></br>...
 
                             </p>
+
+                            <p>
+                                7. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                8. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                9. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                10. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                11. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
                         </div>
                     </div>
 
 
-                    <h4></h4>
-                    <div class="video-container-full">
-                        <video class="autoplay-video-lower-threshhold" muted loop playsinline>
-                            <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
-                        </video>
-                    </div>
-
-                    <h4>Tech </h4>
-                    <div class="tech-skill">
-                        <div class="tech-box">Custom EQS Test</div>
-                        <div class="tech-box">Gameplay-tags</div>
-                        <div class="tech-box">Unit Tests</div>
-                        <div class="tech-box">Data Assets</div>
-                    </div>
-
-                </div>
-        </section>
 
 
-        <section id="Dialogue">
-            <h2></h2>
-            <div class="projects-container">
-                <div class="project max-width">
-                    <h3>Dialogue Subsystem with Data Tables</h3>
+                    <h4>Health Component</h4>
                     <div class="media-container">
 
                         <div class="image-container">
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/EncounterTriggerRegister1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerRegister2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSInBP3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerEQSTest5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncounterManagerDataAsset3V2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/EncoutnerTriggerUnitTest6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_InitAndTakeDamage_Img1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_RequestHealth_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_TakeDamageUpdateHealthBar_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_DamageInterface_Img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_ForceField_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_OnTimerFinishedSetToTrueImg7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_ForceFieldDeathReversalImg8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_BroadcastReversalAndUIWidgetImg9.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
@@ -2042,16 +1987,320 @@
                                 <br></br>...
 
                             </p>
+
+                            <p>
+                                7. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                8. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                9. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
                         </div>
                     </div>
 
 
-                    <h4></h4>
-                    <div class="video-container-full">
-                        <!--<video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
-                        <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
-                    </video>-->
+                    <h4>Game Events - Power Cords</h4>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_PowerMgmr_ArrayOfCordsImg1.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_HeaderAndOnOffFunctions_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_BindingComp_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_UpdateTimeRemainingAndBroadCastImg4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_DisplayTextImg5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
+                            </div>
+                            <button class="next">&#10095;</button>
+                        </div>
+
+                        <div class="codeDescription-container">
+                            <p>
+                                1.  .... Work in progress
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                2. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+                            </p>
+                            <p>
+                                3. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+
+                            </p>
+                            <p>
+                                4. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                            <p>
+                                5. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                                <br></br> ...
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                6. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                7. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                8. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                            <p>
+                                9. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                        </div>
                     </div>
+
+
+
+                    <h4>Game Events - Progress Lights</h4>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_Img1.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_LightData_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_AddLightsToLightDatas_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_OnEncounterStartDelegate_Img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_SendTotalTimeAndAssignTime_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_CheckIfLightCanTurnOn_Img6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/ObjectChidTime_TimeManagerPauseTimerImg9.png" alt=""></div>
+                            </div>
+                            <button class="next">&#10095;</button>
+                        </div>
+
+                        <div class="codeDescription-container">
+                            <p>
+                                1.  .... Work in progress
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                2. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+                            </p>
+                            <p>
+                                3. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+
+                            </p>
+                            <p>
+                                4. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                            <p>
+                                5. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                                <br></br> ...
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                6. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                7. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                8. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                9. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <h4>UI Display Objective Text</h4>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChild_HeaderGenTimeImg1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_StartObjectiveIsObjectiveCompletImg2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_UpdateTimeRemaingElaspedTimeDelegateImg3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_UpdateTimeRemainingAndBroadCastImg4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_DisplayTextImg5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_TimeManagerPauseTimerImg9.png" alt=""></div>
+                            </div>
+                            <button class="next">&#10095;</button>
+                        </div>
+
+                        <div class="codeDescription-container">
+                            <p>
+                                1.  .... Work in progress
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                2. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+                            </p>
+                            <p>
+                                3. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+
+                            </p>
+                            <p>
+                                4. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                            <p>
+                                5. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                                <br></br> ...
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                6. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                7. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                8. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                        </div>
+                    </div>
+
 
                     <h4>Tech </h4>
                     <div class="tech-skill">
@@ -2063,6 +2312,10 @@
 
                 </div>
         </section>
+
+
+
+
 
 
 
