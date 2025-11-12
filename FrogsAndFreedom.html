@@ -32,6 +32,7 @@
 
     <nav class="sidebar">
         <ul>
+            <li><a href="#Shaders">Shaders</a></li>
             <li><a href="#EncounterSystem">Encounter System</a></li>
             <li><a href="#AIPerecption">AI Perecption</a></li>
             <li><a href="#AIBehaviour">AI Behaviour</a></li>
@@ -39,7 +40,6 @@
             <li><a href="#Objectives">Objective System</a></li>
             <li><a href="#UI">UI</a></li>
             <li><a href="#EventBus">EventBus</a></li>
-            <li><a href="#Shaders">Shaders</a></li>
             <li><a href="#Dialogue">Dialogue subsystem</a></li>
         </ul>
     </nav>
@@ -52,6 +52,369 @@
             <h2>Frogs And Freedom</h2>
         </section>
 
+
+
+        <section id="Shaders">
+            <h2></h2>
+            <div class="projects-container">
+                <div class="project max-width">
+                    <h3>Shaders</h3>
+
+                    <h4>Ghost Buster Style Laser</h4>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_Example_Img1.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_Overview_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_ParamsAndTexCoordOffsetPan_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_DisplacementGradientPan_Img4.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_DisplacementGradientPanLockAxis_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_DisplaceAxisMappedToGradient_Img6.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_WorldPositionOffset_Img7.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_MaskDisplaceClampEdge_img8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_MaskColors_img9.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_ColorsMaskApplied_Img10.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_ColorFinalBaseColor_img11.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_EmissiveAndOpacity_img12.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_FinalAndMesh_Img13.gif" alt=""></div>
+                            </div>
+                            <button class="next">&#10095;</button>
+                        </div>
+
+                        <div class="codeDescription-container">
+                            <p>
+                                1.The Tank Frog’s laser uses a custom vertex and pixel shader applied to a high-poly static mesh composed of three cylinders.
+
+                                <br></br>Each cylinder uses a unique material instance for visual variation. The beam’s length is dynamically scaled along the X-axis through a parameter controlled by the particle system.
+                            </p>
+                            <p>
+                                2. The vertex shader uses two panning gradient masks to control displacement—one along the Y-axis for horizontal movement and one along the Z-axis for vertical motion.
+
+                                <br></br>Additional masking restricts motion to the beam’s center, keeping the ends stable.
+
+                                <br></br>The pixel shader applies three blended colors to create the appearance of a glowing, high-energy beam with translucent edges that prevent visual obstruction.
+                            </p>
+                            <p>
+                                3.The Params section organizes shader inputs for clarity and modularity. TexCoord offsets adjust which parts of the gradient masks are used.
+
+                                <br></br>Time scaling controls the beam’s wave frequency, while UVScalar fine-tunes the sharpness of the waveform—lower values produce smoother “U”-shaped motion, and higher values yield sharper “V”-shaped displacement.
+
+
+                            </p>
+                            <p>
+                                4.Offset TexCoords are fed into two gradient textures—one for vertical and one for horizontal displacement.
+                                NoiseScale parameters determine where the distortion occurs: values near 1 isolate movement to one side of the beam, while higher values spread the effect symmetrically.
+
+                                <br></br>This allows flexible artistic control over the laser’s directional distortion.
+
+
+                            </p>
+                            <p>
+                                5.DisplacementAmounts generate axis-specific Vector3 values, isolating movement to a single axis for precise directional control.
+
+
+                            </p>
+                            <p>
+                                6.The vertical and horizontal displacement gradients are normalized to a -1 to 1 range to match standard normal map values.
+                                These gradients are multiplied by their respective Vector3 masks, isolating movement along the Z-axis (blue channel) and Y-axis (green channel).
+
+                                <br></br>The teal nodes represent the completed vertex shader stage.
+
+
+                            </p>
+
+                            <p>
+                                7. The axis masks are combined with a center-weighted mask that restricts displacement to the beam’s middle. The resulting local-space displacement data is converted to world-space and output as the final vertex offset.
+
+                            </p>
+
+                            <p>
+                                8.Two gradients are multiplied to produce a mask that transitions from black edges to a bright center.
+                                This mask drives a lerp between EndScale (edge darkness) and CentreSwell (center brightness), allowing independent control of how much the center and edges animate.
+
+                            </p>
+
+                            <p>
+                                8.CentreSwell and DisplacementAmounts define the scale and direction of displacement. CentreSwell determines how much of the mask is affected (0 disables movement).
+                                
+                                DisplacementAmounts generate axis-specific Vector3 values, isolating movement to a single axis for precise directional control.
+
+                            </p>
+
+                            <p>
+                                9. Three separate masks control the beam’s color layers. An inverted mask corrects the texture format, while Fresnel and inverse Fresnel effects assign distinct colors to the beam’s edges and center.
+                                The SizeOfCentreColor parameter adjusts color dominance, blending between center-heavy or edge-heavy illumination.
+
+                            </p>
+
+                            <p>
+                                10. Each mask feeds into color parameters defining the beam’s primary hues. The colors are blended and normalized for the base color output.
+
+                            </p>
+
+                            <p>
+                                11. An enhanced mask refines emissive intensity and opacity for a luminous effect.
+
+                            </p>
+
+                            <p>
+                                12. Each cylinder in the static mesh uses a unique material instance to create the final stylized, Ghostbusters-inspired laser beam.
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <h4>Tune Shader</h4>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneShader/Shaders_TuneShader_BeforeAfter_Img1.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneShader/Shaders_TuneShader_ShaderOverview_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneShader/Shaders_TuneShader_Phong_Img3.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneShader/Shaders_TuneShader_Stripes_Img4.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneShader/Shaders_TuneShader_TextureParams_Img5.gif" alt=""></div>
+                                
+                            </div>
+                            <button class="next">&#10095;</button>
+                        </div>
+
+                        <div class="codeDescription-container">
+                            <p>
+                                1. A toon-style pixel shader was developed to create consistent material instances across multiple environment actors. 
+                                This unified visual style maintained artistic cohesion and supported flexible parameter adjustments for different materials.
+                            </p>
+                            <p>
+                                2. The shader combines a Phong lighting calculation with a greyscale striping function.
+
+                                <br></br> These two layers are summed and then multiplied by a base texture, allowing lighting and shading variations to dynamically influence the final texture output.
+                            </p>
+                            <p>
+                                3. A standard Phong model computes diffuse, ambient, and specular components, giving the surface its stylized lighting response while maintaining a simplified, toon-inspired look.
+                            </p>
+                            <p>
+                                4.A dot product is used to calculate light direction and shadow falloff.
+
+                                <br></br>The range is adjusted so the darkest shadows fall near the object’s base. By flooring the range and scaling by a fractional constant (e.g., 0.16), the shader creates discrete grey bands, producing the stylized cel-shaded striping effect.
+
+
+                            </p>
+                            <p>
+                                5. The resulting striped mask is applied to the material’s texture parameter, allowing each material instance to define its own variation while maintaining the same toon-shaded lighting structure.
+
+                            </p>
+                            
+                        </div>
+                    </div>
+
+
+
+
+                    <h4>Postprocessing Tune Outline</h4>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneOutline/Shaders_TuneOutline_BeforeAfter_Img1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneOutline/Shaders_TuneOutline_Overview_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneOutline/Shaders_TuneOutline_DetectEdges_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneOutline/Shaders_TuneOutline_WhiteEdges_Img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneOutline/Shaders_TuneOutline_WhiteEdgesGreyScale_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneOutline/Shaders_TuneOutline_BlackEdges_Img6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneOutline/Shaders_TuneOutline_WhiteEdgesDepth_Img7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneOutline/Shaders_TuneOutline_FoundEdgesDepth_Img8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneOutline/Shaders_TuneOutline_Final_Img9.png" alt=""></div>
+                            </div>
+                            <button class="next">&#10095;</button>
+                        </div>
+
+                        <div class="codeDescription-container">
+                            <p>
+                                1. A black outline effect is achieved through a post-processing pixel shader using two edge detection techniques.
+                                The first compares normal differences between neighboring pixels, and the second measures variations in scene depth.
+
+                                <br></br> The maximum value between both methods determines the final outline intensity, producing clean and dynamic edges.
+                            </p>
+                            <p>
+                                2. The shader first samples the surrounding pixels, then calculates normal and depth differences for each neighboring pixel. 
+                                These calculations feed into the two edge detection passes—one based on normals and one based on scene depth.
+
+                            </p>
+                            <p>
+                                3. Four Vector2 offsets define pixel sampling positions (up, down, left, and right). These are scaled by a line thickness parameter and normalized by the screen resolution to represent one pixel in UV space.
+
+                                <br></br> Sampling SceneTexture:WorldNormal at these UVs retrieves normal data for the neighboring pixels, used in edge comparison.
+
+                            </p>
+                            <p>
+                                4. Normal vectors are remapped from a -1–1 range to 0–1 for accurate comparison.
+
+                                <br></br>The differences between opposing samples (top-bottom and left-right) are calculated, their absolute values summed, and the result highlights strong normal variations as white edges.
+
+                            </p>
+                            <p>
+                                5. The shader isolates edges by selecting the maximum channel value among the RGB components, converting the result to greyscale.
+
+                                <br></br> A SmoothStep function thresholds the output between 0.2 and 0.7, eliminating mid-range values to produce a clean black-and-white edge mask, removing noise from curved surfaces.
+                            </p>
+                            <p>
+                                6. The resulting FoundEdgeNormals mask now contains clean white outlines derived from normal differences.
+
+                                <br></br> This mask is used as the alpha in a lerp between black and the unaltered scene texture, overlaying black outlines onto the render.
+
+                                <br></br> This concludes the first edge detection technique.
+
+                            </p>
+
+                            <p>
+                                7. The same offset UVs are used to sample SceneDepth, comparing neighboring pixels to detect significant depth changes.
+
+                                <br></br> The max of all four depths is calculated and passed as LargestDepth. 
+
+                            </p>
+
+                            <p>
+                                8. Divide WhiteEdgeDepth is divided by LargestDepth to normalize the result making the differences in depth relative to the deepest depth in scene.
+
+                                <br></br>A smooth step gives clean separation of the lines.
+
+                            </p>
+
+                            <p>
+                                9. The normal-based and depth-based edge masks are combined using a max function, ensuring all detected edges are included in the final outline.
+
+
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <h4>Acid Bubble Attack</h4>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_ShaderExample_Img1.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_Overview_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_TexCoordsParamsCallBubble_Img3.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_BubbleAnimOverview_Img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_BubbleAnimNormalsRange_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_BubbleAnim_MaskAnim_Img6.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_BubbleAnim_MaskAnimStatic_Img7.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_BubbleAnim_MaskTopOnly_Img8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_BubbleAnim_Output_Img9.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_Normals_Img10.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_PurpleWeb_Img11.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_Final_Img12.gif" alt=""></div>
+                            </div>
+                            <button class="next">&#10095;</button>
+                        </div>
+
+                        <div class="codeDescription-container">
+                            <p>
+                                1. The “Pinner” frog’s acid bubble uses a custom vertex and pixel shader.
+
+                                <br></br> A shared material function drives the bubbling animation, creating the illusion of surface tension and popping bubbles. This function is also reused in the Acid Liquid shader for consistent visual behavior.
+                            </p>
+                            <p>
+                                2. The left section defines shader parameters and two independently panned TexCoords.
+
+                                <br></br> The central code handles bubble animation through the shared material function, while the right section generates the purple subsurface web and emissive color.
+
+                                <br></br> The lower nodes enhance normal intensity for popping bubbles and drive vertex displacement for side wave motion.
+                            </p>
+                            <p>
+                                3. TexCoords are tiled using BubbleTileAmount and animated diagonally at a rate set by RotationSpeed. These coordinates drive normal and noise textures that determine bubble pop timing.
+
+                                <br></br> ...
+
+                                <br></br> ...
+
+                            </p>
+                            <p>
+                                4. The upper-left section generates the animated normal map.
+
+                                <br></br> The middle-left portion builds the dynamic bubble pop mask, while the lower-left code defines which bubbles remain static versus animated.
+
+                                <br></br> On the right, a separate mask restricts the effect to the top of the object, with a selector controlling whether bubbles appear only on the surface top or across the entire mesh.
+
+                            </p>
+                            <p>
+                                5. The red and green texture channels store normal map data, which are combined into a Vector2 and remapped from a 0–1 to a -1–1 range for accurate normal calculation.
+                            </p>
+                            <p>
+                                6. The blue and alpha channels store two animation masks.
+
+                                <br></br> The blue mask is animated using time subtraction and a Frac function to maintain a 0–1 range, then multiplied by the alpha mask to create the final composite animation mask controlling bubble visibility.
+
+                            </p>
+
+                            <p>
+                                7. A static filter mask excludes specific bubbles from the animation cycle.
+
+                                <br></br> This static mask is then added with the animated mask to determine which bubbles remain static and which animate dynamically.
+
+                            </p>
+
+                            <p>
+                                8. A top-only bubble mask is generated by isolating vertex normals pointing upward, using the blue channel of the normal map to confine the effect to surfaces facing the world’s Z-axis.
+
+
+                            </p>
+                            <p>
+                                9. The ApplyTopOnly parameter switches between full-surface and top-only masks.
+
+                                <br></br> The SmoothDrop control blends between a default bubble intensity of 1 and a smoother, more diffused transition to soften the bubble edges.
+
+                            </p>
+
+                            <p>
+                                10. The bubble normal map (V3NormalsMapBlueChannelEmpty) is scaled by BubbleNormalScalar to amplify bubble extrusion.
+
+                                <br></br> This result is blended with animated normals and flattened to produce the final composite normal map.
+
+                                <br></br> A gradient mask restricts vertex displacement to the sphere’s center.
+
+                                <br></br>A panning NoiseMap, multiplied by this mask and scaled by WaveHeight, offsets each vertex along its normal, creating subtle surface waves forming the WorldPositionOffset output.
+
+                            </p>
+
+                            <p>
+                                11. A secondary texture generates a purple web pattern beneath the surface using independently offset and rotated TexCoords to layer the effect.
+
+                                <br></br> This PurpleWeb texture is tiled and color-tinted, then blended with the bubble base color and emissive texture generated by MF_BubbleAnimation, forming the BaseColorAndEmissive output.
+
+                            </p>
+
+                            <p>
+                                12. The final material produces a rotating, bubbling acid sphere with subtle surface waves.
+
+                                <br></br> The same MF_BubbleAnimation and layering principles were reused for M_AcidLiquid, enhanced with a custom-built Gerstner wave function to simulate fluid surface motion.
+
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <h4>Tech </h4>
+                    <div class="tech-skill">
+                        <div class="tech-box">Vertex Shader</div>
+                        <div class="tech-box">Pixel Shader</div>
+                        <div class="tech-box">Material Functions</div>
+                    </div>
+
+                </div>
+        </section>
+
+
+
+
+
         <section id="EncounterSystem">
 
             <div class="projects-container">
@@ -62,15 +425,16 @@
                         <div class="image-container">
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_EncounterTriggerImg0.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Encounter/EncounterTriggerRegister1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Encounter/EncounterManagerRegisterEncounter2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_StartObjectives_Img3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_RunEQSInBPFindSpawnersAndRoute_Img4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Encounter/EncounterManagerEQSTest5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_OnEQSCompleteStartFirstSpawn_img6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_DataAssetWave1_Img7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_DataAssetWave2n3_Img8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_EncounterTrigger_Img1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_EncounterTrigger_BindTriggerBoxAndSetCount_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_EncounterTrigger_OnEncounterBegin_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_EncounterManager_RegisterEncounter_img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_StartObjectives_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_ActorSpawnerAndPatrolRoutes_Img6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_RunEQSInBPFindSpawnersAndRoute_Img7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_EQSTestFindSpawnLocationAndFindPatrolRoutes_Img8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_OnEQSCompleteStartFirstSpawn_img9.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_DataAssetSpawnExample_Img10.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Encounter/Encoutner_EncounterDataUnitTest_Img9.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Encounter/Encoutner_EncounterTriggerUnitTest_Img10.png" alt=""></div>
                             </div>
@@ -79,58 +443,99 @@
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  Although the collision presets are set to ignore everything except the player, an interface that only the player has is used to confirm the overlapping actor is the player.
+                                1. Encounters are coordinated by the BP_EncounterTrigger and EncounterManagerComponent classes.
 
-                                <br></br>The EncounterData property is a data asset that contains the enemy type, quantity and event trigger for each wave of the encounter.
-                            </p>
-                            <p>
-                                2. Because designers were constantly iterating on the number of patrol routes and spawn locations, I used EQS instead of manually require designers to update arrays.
+                                <br></br> BP_EncounterTrigger, derived from EncounterTrigger, stores an array of objectives and references a DataAsset defining enemy types, spawn triggers, total spawn counts, and per-location spawn quantities for each wave.
+                                It also listens for objective completion and broadcasts delegates for related gameplay events.
 
-                                <br></br> PopulatArraysInPatrolRouteManager calls RunEqsFindPatrolRoutes() which lives on another component. RunEqsFindActorSpawners lives on this component.
-
-                                <br></br> CanWaveSpawn and HasWaveSpawned are properties in the DataAsset not exposed to designers that are updated during gameplay. The for loop uses a reference
-                                of the wave data for each wave to reset the values to their default of false.
-                            </p>
-                            <p>
-                                3. Designers assign gameplay tags 'wave.#' to the children of the ActorSpawner. Each element in the dataAsset's array has a 'wave' tag.
-                                The CurrentlyActiveWave is the tag of current wave.
-
-                                <br></br> The CurrentlyActiveEncounterTrigger is a box that encloses the entire encounter space.
-                                The EQS query finds all the actors of the object ype 'ActorSpawner' within the bounds of the encounter.
-
-                                <br></br> If the returned actors have a tag that matches the
-                                current wave, then they are added to the array of possible spawn locations.
+                                <br></br>The EncounterManagerComponent, attached to the GameInstance, runs EQS queries to locate valid spawn points using gameplay tags, processes encounter data, tracks enemy deaths, and triggers subsequent waves when conditions are met.
 
                             </p>
                             <p>
-                                4. This EQS takes in the EncounterTrigger as the context. The dimensions of the trigger component are used to set the bounds for a Box Multi Trace.
+                                2. The trigger box binds functions that control when an encounter begins and ends.
 
-                                <br></br>ObjectTypesToSearchFor is an instance editable array that is exposed to the EQS. In this example, the object type passed in is ActorSpawner.
+                                <br></br>Objective tracking properties are reset and recalculated as the encounter starts.
 
-                                <br></br>Each ActorSpawner in the encounter is added to the AddGeneratedActors function, which is the array on actors the EQS returns.
+                                <br></br>Each ObjectiveActor can influence gameplay elements such as halting enemy spawns or unlocking doors.
+
+                                <br></br>The ObjectiveActor class uses an interface to efficiently communicate its properties to other systems.
+                            </p>
+                            <p>
+                                3. Even though the collision preset ignores all actors except the player, an exclusive interface ensures the overlapping actor is confirmed as the player.
+
+                                <br></br> RegisterEncounter then passes a reference to the EncounterTrigger into the EncounterManagerComponent.
+
+                                <br></br> The encounter concludes once all objectives are completed and the player exits the trigger box.
+                            </p>
+                            <p>
+                                4. EncounterData is a DataAsset defining per-wave spawn rules.
+
+                                <br></br> Two booleans—CanWaveSpawn and HasWaveSpawned—track whether a wave’s conditions are met and whether it has already spawned. These are reset at runtime and hidden from designers.
+
+                                <br></br> RunEqsFindPatrolRoutes and RunEqsFindActorSpawners populate arrays of valid actors, then trigger the first wave if Wave.1 is set to StartWithEncounterBegin.
+
+                                <br></br> The OnEncounterStartDelegate broadcasts events to other systems, such as activating progress lights when the encounter begins.
 
                             </p>
                             <p>
-                                5. For each encounter, could add up to ten waves to the array of a DA_Encounter. Each encounter trigger had one of these assets.
+                                5. StartObjectives sets _mHasObjectiveStarted to true for all objectives marked StartWithEncounter, initializing their logic immediately when the encounter begins. (See Objective System section for additional details.)
 
-                                <br></br>Quantity Spawned in Wave: total number of a given enemy type to spawn
 
-                                <br></br>Batch size: number of actors to spawn at a single spawn location (ActorSpawner class). If the Quanity=6 and the Batch-size = 2, then
-                                3 batches, each with 2 enemies, would spawn.
-
-                                <br></br> If there were 3 ActorSpawners with a match wave.# gameplaytag, the 3 batches would all spawn at different locations. If there were fewer than 3,
-                                the array of possible spawn locations loops back to index 0.
-
-                                <br></br>Wave Trigger: designers could chose between Encounter-Start, Objective or Enemy-Population as s means to trigger a wave.
                             </p>
                             <p>
-                                6. A unit test was used to automate the process of ensuring the correct data was entered.
+                                6. EQS queries use object types to locate PatrolRoutes and ActorSpawners whose gameplay tags match the current wave.
+
+                                <br></br>CurrentlyActiveWave stores the current wave tag, defaulting to Wave.1, and matching actors are added to the EncounterManagerComponent arrays.
+
+                                <br></br> Both EQS queries run in parallel and invoke OnEqsCompleteStartFirstSpawn with different parameters. Spawning begins only after both EQS calls finish running.
+                            </p>
+                            <p>
+                                7. To streamline iteration, EQS automatically populates PatrolRoute and ActorSpawner arrays instead of requiring manual designer updates.
 
                                 <br></br>When a new EncounterTrigger child was created, it couldn't be save until a DA_EncounterData was assigned to it's member variable.
 
                                 <br></br>When a new DA_EncounterData was created, it could be saved until the gameplay tags and values were properly set.
 
                             </p>
+
+                            <p>
+                                8. Each EQS uses the EncounterTrigger as its context, setting search bounds based on the trigger’s dimensions via a box multi-trace.
+
+                                <br></br> ObjectTypesToSearchFor is an exposed, editable array specifying which types to locate—ActorSpawner for EQS_FindSpawnLocations, and PatrolRoute for EQS_FindPatrolRoutes.
+
+                                <br></br> All found actors are added to the generated actor array through AddGeneratedActors.
+
+                            </p>
+
+                            <p>
+                                9. When both EQS_FindSpawnLocations and EQS_FindPatrolRoutes complete successfully, StartSpawningIfConditionsMet is called.
+
+                                <br></br> If Wave.1 uses the EncounterStart trigger, spawning begins immediately.
+
+                                <br></br> If Wave.1 is set to Objective, it waits until the corresponding ObjectiveActor with the matching gameplay tag is completed before initiating spawns.
+
+                            </p>
+                            <p>
+                                10. When a wave starts, the ActorSpawner array from the EQS defines all valid spawn points.
+
+                                <br></br> Enemies spawn from one spawner until BatchSize is reached, then rotate to the next spawner in the list.
+
+                                <br></br> Once the total spawn count for an enemy type equals QuantitySpawned, either the next enemy type begins spawning, or—if none remain—HasSpawned is set to true, signaling the system to evaluate conditions for the next wave.
+
+                            </p>
+
+                            <p>
+                                11. Automated unit tests ensured data validity during wave creation.
+
+
+                            </p>
+
+                            <p>
+                                12. Automated unit text ensure that every EncounterTrigger has a DA_EncounterData assigned to the EncounterData property.
+
+                            </p>
+
+                           
                         </div>
                     </div>
 
@@ -139,7 +544,7 @@
                     <div class="media-container-noborder">
                         <div class="video-container-full">
                             <video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
-                                <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
+                                <source src="videos/EncounterFrogsAndFreedom.mp4" type="video/mp4">
                             </video>
                         </div>
 
@@ -185,63 +590,64 @@
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  Get the TeamID of the possessed Character. The TeamID uses the IGenericTeamAgentInterface, with overridden functions shown in the next slide.
+                                1.  The AI Controller retrieves the TeamID from its possessed Character using the IGenericTeamAgentInterface, which defines team-based relationships between AI and player-controlled characters.
 
-                                <br></br>Bind to the OnTargetPerceptionUpdated delegate, which is fired when a stimulus is perceived.
+                                <br></br>The controller binds to OnTargetPerceptionUpdated, triggered when a stimulus is detected, and OnTargetPerceptionForgotten, which fires once a stimulus exceeds its MaxAge.
 
-                                <br></br>Bind to the delegate OnTargetPerceptionForgotten, which is fired when the stimulus age is greater than the maxAge property.
-
-                                <br></br>OnTargetPerceptionUpdated is only called if the property bForgetStaleActors is set to true. This is only accessible in the Default.ini
+                                <br></br>For these delegates to function properly, the bForgetStaleActors property must be enabled in the Default.ini file 
+                                — otherwise, stale perception data is never invalidated and OnTargetPerceptionUpdated will not be called consistently.
                             </p>
                             <p>
-                                2. The IGenericTeamAgentInterface is implemented on the ACharacterBase class, which the enemy class and player class both inherit from. The AIController class already has this interface.
+                                2. IGenericTeamAgentInterface is implemented in the ACharacterBase class, inherited by both the enemy and player character classes.
+                                Because AAIController already implements this interface, each AI Controller can identify friend or foe automatically.
 
-                                <br></br> GetTeamAttitudeTowards() is overriden to check if the AActor passed in from a perception source has the same TeamID as the ACharacterBase this controller possesses. It
-                                returns ETeamAttitude as either 'Hostile, Friendly or Neutral.'
+                                <br></br> GetTeamAttitudeTowards() is overridden to compare the perceived AActor’s TeamID against the one belonging to the AI’s currently possessed pawn. 
+                                The function returns an ETeamAttitude value — Hostile, Friendly, or Neutral — which informs downstream behavior logic such as targeting and aggression.
 
                                 <br></br>
                             </p>
                             <p>
-                                3. The AIPerceptionComponent is confirured to have sight, hearing, and damage senses. The ACharacterBasePlayer class is sensable using sight and damage sense, while AGeneratorBase is sensable over the hearing sense.
+                                3. The AIPerceptionComponent is configured with three active senses — Sight, Hearing, and Damage.
 
-                                <br></br>IsUpdatedSenseOfActorOfAGivenType() checks the type of stimulus and then calls the corresponding handle function for that sense.
+                                <br></br>Player characters (ACharacterBasePlayer) can be perceived through sight and damage, while objects such as generators (AGeneratorBase) are detectable via the hearing sense.
 
-
-                                <br></br>
-
-                            </p>
-                            <p>
-                                4. EAISense is a enum defined in the AAIControllerMobileFrogBase class which tracks the type of sense/stimulus. However, Stimulus.Type is a FAISenseID so the locally
-                                defined EAISense can't be used to check the stimulus type.
-
-                                <br></br>GetSenseIDofSenseAsEnum() converts the local enum EAISense to the unreal stimulus type FAISenseID so it can be compared to the Stimulus parameter.
+                                <br></br>IsUpdatedSenseOfActorOfAGivenType() evaluates the sense type of each new stimulus and delegates processing to the appropriate handler function, ensuring that every sense type (sight, sound, or damage) is interpreted correctly and efficiently.
 
                             </p>
                             <p>
-                                5. To avoid casting, the CharacterBasePlayer class implements the UPlayerCharacterable interface, which is used to check if an actor is the player.
+                                4. An internal enum EAISense is defined within AAIControllerMobileFrogBase to represent supported perception types (e.g., Sight, Hearing, Damage).
 
-                                <br></br>HandleSenseSight(), changes the 'state' blackboard-key to Attacking. A check on the current state is doen to avoid unnecessary changes. HandleSenseHearing() and HandleSenseDamage() work similiarly but set a different 'state.'
-
-                                <br></br>GetAICurrentState(), UEnums in the blackboard are stored as int8, a static_cast is used to cast to the EAIStates type.
-
-                                <br></br>SetBBkeyTargetAndState(), when NewState is EAIStates::Attacking or EAIStates::Investigate, it takes in the sensed AActor as the AttackTarget. When NewState is EAIStates::Passive, AttackTarget is nullptr.
-                            </p>
-                            <p>
-                                6. When the age of the AI's hearing or damage perception exceeds it's maxLife, it might still have sight perception. The player is the only AActor that can be perceived with the sight sense.
-
-                                <br></br> GetLastStimulus(), checks if the AI still has sight info on the player and if it doesn't, the 'state' is set to EAIState::Passive and the 'TargetObject' is set to nullptr.  This function is shown on the next slide
-
-                                <br></br> The token system is gone over in more detail in the 'Token System' section below. The enemy character class, CharacterBaseOwner, implements the IAttackTokenRequesterable interface and the
-                                player character class implements the IAttackTokenGivererable interface.
+                                <br></br>However, Unreal’s perception system uses FAISenseID internally, meaning EAISense cannot be compared directly to Stimulus.Type.
+                                GetSenseIDofSenseAsEnum() bridges this gap by converting the custom EAISense value into a valid FAISenseID, allowing one-to-one comparisons between local sense types and engine-level stimuli.
 
                             </p>
+                            <p>
+                                5. To eliminate the need for casting, ACharacterBasePlayer implements a lightweight interface, UPlayerCharacterable, enabling the AI to verify whether a perceived actor is the player.
+
+                                <br></br>HandleSenseSight() updates the AI’s Blackboard “State” key to Attacking, provided the current state is different — preventing redundant writes.
+
+                                <br></br>Similarly, HandleSenseHearing() and HandleSenseDamage() transition the AI into corresponding reactive states.
+
+                                <br></br>GetAICurrentState() converts the stored Blackboard int8 value back into the strongly typed EAIStates enum via a static_cast.
+                                <br></br>SetBBKeyTargetAndState() sets the TargetObject Blackboard key depending on the AI state — 
+                                assigning the sensed actor as the AttackTarget when entering Attacking or Investigate, and resetting it to nullptr when transitioning to Passive.
+                            </p>
+                            <p>
+                                6. When an AI’s hearing or damage perception expires (exceeding MaxLife), the AI may still retain visual contact if sight data remains active — since only the player is detectable via sight.
+
+                                <br></br> GetLastStimulus() verifies whether the AI still perceives the player visually; if not, it resets the Blackboard “State” key to Passive and clears TargetObject.
+
+                                <br></br> Additionally, the perception logic ties into the Token System: enemy characters implement the 
+                                IAttackTokenRequesterable interface to request attack authorization, while the player character implements IAttackTokenGiverable to manage which AI can engage simultaneously.
+
+                            </p>
 
                             <p>
-                                7. The perception info on the player character is searched for and returned in the references bSensedSuccessfully and OutStimulus.
+                                7. The AI retrieves its perception data on the player by querying GetActorsPerception(), which fills an FActorPerceptionBlueprintInfo structure with all current stimulus details.
 
-                                <br></br>GetActorsPerception() takes a reference of the struct FActorPerceptionBlueprintInfo which holds perception info for a sensed AActor.
+                                <br></br>The function outputs whether the player was successfully sensed (bSensedSuccessfully) and returns the corresponding FAIStimulus through OutStimulus.
 
-                                <br></br> GetSenseIDofSenseAsEnum(), checks if the AI has sight perception info on the player character.
+                                <br></br> etSenseIDofSenseAsEnum() is then used to confirm that the stored perception data corresponds to the sight sense, ensuring that subsequent behavior logic only executes for valid visual detections of the player.
 
                                 <br></br>
 
@@ -249,20 +655,14 @@
                         </div>
                     </div>
 
-
                     <h4></h4>
-                    <div class="video-container-full">
-                        <video class="autoplay-video-lower-threshhold" muted loop playsinline>
-                            <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
-                        </video>
-                    </div>
+                  
 
                     <h4>Tech </h4>
                     <div class="tech-skill">
-                        <div class="tech-box">Custom EQS Test</div>
-                        <div class="tech-box">Gameplay-tags</div>
-                        <div class="tech-box">Unit Tests</div>
-                        <div class="tech-box">Data Assets</div>
+                        <div class="tech-box">AI Perception</div>
+                        <div class="tech-box">EQS</div>
+                        <div class="tech-box">Blackboards</div>
                     </div>
 
                 </div>
@@ -293,72 +693,63 @@
 
                         <div class="codeDescription-container">
                             <p>
-                                1. To avoid casting, the interface IFrogAIable is used to call behaviour functions like attack and jump as well as bind and unbind events in
-                                Tasks.
+                                1. To eliminate casting between AI character classes, the IFrogAIable interface defines all key behavior functions — such as Attack(), JumpSpecialToDestination(), and event binding methods — that AI Tasks can call directly.
 
-                                <br></br> The behaviour tree is event driven. Execution is controlled by bind to events and only continuing once a message is received.
-                                Here, GetPatrolRouteAndSetDestinationLocation() is called when the enemy has landed, ensuring execution stop when the AI is jumping.
+                                <br></br> The behavior tree is event-driven, meaning nodes pause until specific messages or delegate broadcasts occur. For example, GetPatrolRouteAndSetDestinationLocation() executes only after the AI lands, ensuring the task chain halts during jumps.
 
-                                <br></br>Bind to the delegate OnTargetPerceptionForgotten, which is fired when the stimulus age is greater than the maxAge property.
-
-                                <br></br>OnTargetPerceptionUpdated is only called if the property bForgetStaleActors is set to true. This is only accessible in the Default.ini
+                                <br></br>This architecture allows reactive and modular control without continuous polling, as behavior tree progress is dictated entirely by delegate signals rather than tick-based checks.
                             </p>
                             <p>
-                                2. GetPatrolRoute() returns a spline that is assigned to AI when it's pulled from the pool.
+                                2. GetPatrolRoute() retrieves the spline path associated with the AI unit, assigned when that unit is spawned or retrieved from the object pool. See "Encounter System" for how patrol routes are assigned based on wave and enemy type.
 
-                                <br></br> To avoid collisions, an EQS is run at the world location of the current index along the spine. The EQS returns an unoccupied location that it has line of sight to.
-
-                                <br></br>
-                            </p>
-                            <p>
-                                3. UFrogDestinationTest gather the 'destination' positions stored in each AI's blackboard, then scores every EQS candidate point by the average distance from that point to all the current positions of AI's. The score is the
-                                mean distance to every enemy AI's location.
-
-                                <br></br>The bb_key 'DestinationLocation' is stored as the local variable, DestinationLocationName. The Position array is populated with the vector value held within each AI's blackboard.
-
-
-                                <br></br> FEnvQueryInstance::ItemIterator loops over each EQS candidate item being tested. GetItemLocation(QueryInstance, It.GetIndex() gets the world location of the EQS item. For every element in the Positions array, the
-                                distance is calculated and added to the DistanceLengths array.
-
-                                <br></br> It.SetScore() sets the score the EQS candidate based on the average distance.
+                                <br></br> Before movement begins, an EQS test executes at the current spline index, searching for a valid, unoccupied point with clear line of sight. This prevents multiple AI units from clustering or colliding along shared patrol paths, ensuring natural spacing and movement flow.
 
                             </p>
                             <p>
-                                4. OnLandedFinishedExecute() is bound to the LandedDelegate, meaning the behaviour tree stays in this task until the AI lands.
+                                3. UFrogDestinationTest is a custom EQS test designed to distribute AI movement targets dynamically along a spine while avoiding collisions and clumping.
 
-                                <br></br>JumpSpecialToDestination() is an interface function that calls a custom jump function, JumpToDestination().
+                                <br></br>It gathers each AI’s current “DestinationLocation” Blackboard value, then calculates a mean distance score for every candidate EQS point relative to all active AI positions.
 
-                                <br></br> JumpToDestination() finds the vector between the AI's current location and it's destination and launches the possessed character along that vector. The AI can jump to any location the EQS returns.
 
-                            </p>
-                            <p>
-                                5. The task, BTT_RequestAttackToken first checks if the controlled Pawn already has claimed a token from the AttackTarget. If it hasn't, then it request one via the interface function RequestAttackToken().
+                                <br></br> Each candidate’s world location is retrieved via GetItemLocation(QueryInstance, It.GetIndex()), and distances are accumulated in a temporary array.
 
-                                <br></br>See the 'Attack Token System' section for more details on the token system.
-
-                                <br></br>The behaviour tree shown here is the 'attack' state side of the tree. This slide shows the task BTT_RequestAttackToken and the next slide shows BTT_AttackFlusher.
+                                <br></br> It.SetScore() then assigns a normalized value based on average separation — ensuring AI spread evenly and avoid converging on identical destinations.
 
                             </p>
                             <p>
-                                6. AttackFinishedExecuteSuccessful() is bound to a delegate, AttackBehaviourFinishedDelegate, using a helper function on the FrogAIable interface, BindToAttackBehaviourFinishedDelegate().
+                                4. OnLandedFinishedExecute() is bound to the LandedDelegate, keeping the current Behavior Tree task active until the AI physically lands.
 
-                                <br></br> Functions controlling behaviour such as IdealBehaviour(), InvestigateBehaviour() and AttackBehaviour(), and functions for binding and unbinding to delegates that broadcast when this behaviour finishes is all owned by the
-                                FrogAIable interface. The base enemy class, ACharacterBaseFrog, implements the FrogAIable interface.
+                                <br></br>JumpSpecialToDestination()—an IFrogAIable interface function—invokes the AI’s custom jump logic through JumpToDestination().
+                                This function calculates the vector between the AI’s current position and its EQS-derived destination, then applies launch velocity along that vector.
 
-                                <br></br> AttackBehaviour() is called on the controlled pawn, which calls Attack() with the BP_CharacterFrogFlusher class, a child of ACharacterBaseFrog.
+                                <br></br> As a result, the AI can dynamically jump to any valid EQS target location, enabling traversal across uneven terrain or complex environments with natural, frog-like motion.
 
-                                <br></br> If the attack is successful, ReturnAttackTokens() is called and AttackBehaviourFinishedDelegate is broadcast.
+                            </p>
+                            <p>
+                                5. BTT_RequestAttackToken is the entry task for initiating combat. It first checks whether the AI’s controlled pawn has already secured an attack token from its target.
+                                If not, it requests one through the RequestAttackToken() function defined on the IFrogAIable interface.
+
+                                <br></br>This task belongs to the “Attack” branch of the Behavior Tree, managing regulated enemy aggression through the Attack Token System. Only AIs with valid tokens may engage, ensuring coordinated, staggered attacks instead of chaotic swarming.
+
+                                <br></br>The next task in this branch, BTT_AttackFlusher, executes once token possession is confirmed.
+
+                            </p>
+                            <p>
+                                6. AttackFinishedExecuteSuccessful() binds to the AttackBehaviourFinishedDelegate using a helper method from the IFrogAIable interface — BindToAttackBehaviourFinishedDelegate().
+
+                                <br></br> Core behavioral methods like IdealBehaviour(), InvestigateBehaviour(), and AttackBehaviour() — as well as delegate management — are all centralized within IFrogAIable, and implemented by the base enemy class ACharacterBaseFrog.
+
+                                <br></br> When AttackBehaviour() is executed, it triggers the child class (e.g. BP_CharacterFrogFlusher) to perform its unique Attack() animation or logic. 
+                                Upon a successful hit, the AI calls ReturnAttackTokens() to release its token and broadcasts AttackBehaviourFinishedDelegate, signaling the behavior tree to continue.
 
                             </p>
 
                             <p>
-                                7. The perception info on the player character is searched for and returned in the references bSensedSuccessfully and OutStimulus.
+                                7. The AI retrieves perception data about the player using GetActorsPerception(), which fills an FActorPerceptionBlueprintInfo struct containing all active stimuli for that actor.
+                                The function outputs whether the player is successfully perceived (bSensedSuccessfully) and provides the corresponding stimulus in OutStimulus.
 
-                                <br></br>GetActorsPerception() takes a reference of the struct FActorPerceptionBlueprintInfo which holds perception info for a sensed AActor.
+                                <br></br>GetSenseIDofSenseAsEnum() then confirms the data corresponds to the sight sense, ensuring behavior responses like attack or chase are triggered only by valid visual detection, not lingering auditory or damage stimuli.
 
-                                <br></br> GetSenseIDofSenseAsEnum(), checks if the AI has sight perception info on the player character.
-
-                                <br></br>
 
                             </p>
                         </div>
@@ -398,6 +789,7 @@
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/Tokens/TokensClassHeaderImg1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Tokens_InitializeComponent_Img2.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Tokens/Tokens_RequesterComponentInterfaceAndImplementationImg2.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_HasAttackTokenImg3.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_RequestAttackTokenImg4.png" alt=""></div>
@@ -940,6 +1332,95 @@
 
                             <p>
                                 7. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <h4>UI Display Objective Text</h4>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChild_HeaderGenTimeImg1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_StartObjectiveIsObjectiveCompletImg2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_UpdateTimeRemaingElaspedTimeDelegateImg3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_UpdateTimeRemainingAndBroadCastImg4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_DisplayTextImg5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_TimeManagerPauseTimerImg9.png" alt=""></div>
+                            </div>
+                            <button class="next">&#10095;</button>
+                        </div>
+
+                        <div class="codeDescription-container">
+                            <p>
+                                1.  .... Work in progress
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                2. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+                            </p>
+                            <p>
+                                3. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+
+                            </p>
+                            <p>
+                                4. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                            <p>
+                                5. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                                <br></br> ...
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                6. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                7. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                8. ...
 
                                 <br></br>...
 
@@ -1690,93 +2171,7 @@
                     </div>
 
 
-                    <h4>UI Display Objective Text</h4>
-                    <div class="media-container">
-
-                        <div class="image-container">
-                            <button class="prev">&#10094;</button>
-                            <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChild_HeaderGenTimeImg1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_StartObjectiveIsObjectiveCompletImg2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_UpdateTimeRemaingElaspedTimeDelegateImg3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_UpdateTimeRemainingAndBroadCastImg4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_DisplayTextImg5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_TimeManagerPauseTimerImg9.png" alt=""></div>
-                            </div>
-                            <button class="next">&#10095;</button>
-                        </div>
-
-                        <div class="codeDescription-container">
-                            <p>
-                                1.  .... Work in progress
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                2. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                            <p>
-                                5. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                7. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                8. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                        </div>
-                    </div>
+                    
 
 
                     <h4>Tech </h4>
@@ -1792,81 +2187,82 @@
 
 
 
+        <section id="Dialogue">
 
-
-        <section id="Shaders">
-            <h2></h2>
             <div class="projects-container">
                 <div class="project max-width">
-                    <h3>Shaders</h3>
-
-                    <h4>Game State Event Manager and Binding Component</h4>
+                    <h3>Encounter System</h3>
                     <div class="media-container">
 
                         <div class="image-container">
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_HeaderOverview_Img1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_BindingComponetBaseClass_Img2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_BindComponent_Generator_Img3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_GeneratorAddingBindingComponent_Img4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_GeneratorHealthWidget_Img5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_SetIDAndCheckForceFieldIDMatchesOwner_Img6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_ForceFieldHealthChangeAndDeath_Img7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_OnObjectiveTimerCompleteStopSoundTimer_Img8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_ForceFieldBinding_Img9.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/Objectives_CompleteObjectiveImg10.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/Objectives_IfAllObjectiveCompleteImg10.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Dialogue/Dialogue_DataTable_Example_img1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Dialogue/Dialogue_DataTable_StructClass_img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Dialogue/Dialogue_DataTable_GameInstanceSetDialogueTable_img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Dialogue/Dialogue_DialogueSubsystem_img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Dialogue/Dialogue_DialogueTrigger_img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Dialogue/Dialogue_DialogueSubsystem_AddToQueAndTriggerDialogue_img6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Dialogue/Dialogue_DialogueSubsystem_IterateDialogueQue_Img7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Dialogue/Dialogue_DialogueSubsystem_PlayDialogue_Img8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Dialogue/Dialogue_DialogueSubsystem_IterateDialogueText_Img9.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Dialogue/Dialogue_DialogueSubsystem_OnDialogueFinishedIterate_img10.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  .... Work in progress
+                                1.  Although the collision presets are set to ignore everything except the player, an interface that only the player has is used to confirm the overlapping actor is the player.
 
-                                <br></br>...
+                                <br></br>The EncounterData property is a data asset that contains the enemy type, quantity and event trigger for each wave of the encounter.
                             </p>
                             <p>
-                                2. ...
+                                2. Because designers were constantly iterating on the number of patrol routes and spawn locations, I used EQS instead of manually require designers to update arrays.
 
-                                <br></br> ...
+                                <br></br> PopulatArraysInPatrolRouteManager calls RunEqsFindPatrolRoutes() which lives on another component. RunEqsFindActorSpawners lives on this component.
 
-                                <br></br> ...
+                                <br></br> CanWaveSpawn and HasWaveSpawned are properties in the DataAsset not exposed to designers that are updated during gameplay. The for loop uses a reference
+                                of the wave data for each wave to reset the values to their default of false.
                             </p>
                             <p>
-                                3. ...
+                                3. Designers assign gameplay tags 'wave.#' to the children of the ActorSpawner. Each element in the dataAsset's array has a 'wave' tag.
+                                The CurrentlyActiveWave is the tag of current wave.
 
-                                <br></br> ...
+                                <br></br> The CurrentlyActiveEncounterTrigger is a box that encloses the entire encounter space.
+                                The EQS query finds all the actors of the object ype 'ActorSpawner' within the bounds of the encounter.
 
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> If the returned actors have a tag that matches the
+                                current wave, then they are added to the array of possible spawn locations.
 
                             </p>
                             <p>
-                                5. ...
+                                4. This EQS takes in the EncounterTrigger as the context. The dimensions of the trigger component are used to set the bounds for a Box Multi Trace.
 
-                                <br></br>...
+                                <br></br>ObjectTypesToSearchFor is an instance editable array that is exposed to the EQS. In this example, the object type passed in is ActorSpawner.
 
-                                <br></br>...
+                                <br></br>Each ActorSpawner in the encounter is added to the AddGeneratedActors function, which is the array on actors the EQS returns.
 
-                                <br></br> ...
-
-                                <br></br>...
                             </p>
                             <p>
-                                6. ...
+                                5. For each encounter, could add up to ten waves to the array of a DA_Encounter. Each encounter trigger had one of these assets.
 
-                                <br></br>...
+                                <br></br>Quantity Spawned in Wave: total number of a given enemy type to spawn
 
-                                <br></br>...
+                                <br></br>Batch size: number of actors to spawn at a single spawn location (ActorSpawner class). If the Quanity=6 and the Batch-size = 2, then
+                                3 batches, each with 2 enemies, would spawn.
+
+                                <br></br> If there were 3 ActorSpawners with a match wave.# gameplaytag, the 3 batches would all spawn at different locations. If there were fewer than 3,
+                                the array of possible spawn locations loops back to index 0.
+
+                                <br></br>Wave Trigger: designers could chose between Encounter-Start, Objective or Enemy-Population as s means to trigger a wave.
+                            </p>
+                            <p>
+                                6. A unit test was used to automate the process of ensuring the correct data was entered.
+
+                                <br></br>When a new EncounterTrigger child was created, it couldn't be save until a DA_EncounterData was assigned to it's member variable.
+
+                                <br></br>When a new DA_EncounterData was created, it could be saved until the gameplay tags and values were properly set.
 
                             </p>
 
@@ -1905,413 +2301,40 @@
                                 <br></br>...
 
                             </p>
-
-                            <p>
-                                11. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
                         </div>
                     </div>
 
 
+                    <h4></h4>
+                    <div class="media-container-noborder">
+                        <div class="video-container-full">
+                            <video class="autoplay-video-lower-threshhold" muted loop playsinline preload="auto">
+                                <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
+                            </video>
+                        </div>
 
+                        <div class="tech-container">
 
-                    <h4>Health Component</h4>
-                    <div class="media-container">
-
-                        <div class="image-container">
-                            <button class="prev">&#10094;</button>
-                            <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_InitAndTakeDamage_Img1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_RequestHealth_Img2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_TakeDamageUpdateHealthBar_Img3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_DamageInterface_Img4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_ForceField_Img5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_OnTimerFinishedSetToTrueImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_ForceFieldDeathReversalImg8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_BroadcastReversalAndUIWidgetImg9.png" alt=""></div>
+                            <h4>Tech </h4>
+                            <div class="tech-skill">
+                                <div class="tech-box">Custom EQS Test</div>
+                                <div class="tech-box">Gameplay-tags</div>
+                                <div class="tech-box">Unit Tests</div>
+                                <div class="tech-box">Data Assets</div>
                             </div>
-                            <button class="next">&#10095;</button>
-                        </div>
-
-                        <div class="codeDescription-container">
-                            <p>
-                                1.  .... Work in progress
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                2. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                            <p>
-                                5. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                7. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                8. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                9. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
                         </div>
                     </div>
 
-
-                    <h4>Game Events - Power Cords</h4>
-                    <div class="media-container">
-
-                        <div class="image-container">
-                            <button class="prev">&#10094;</button>
-                            <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_PowerMgmr_ArrayOfCordsImg1.gif" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_HeaderAndOnOffFunctions_Img2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_BindingComp_Img3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_UpdateTimeRemainingAndBroadCastImg4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_DisplayTextImg5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
-                            </div>
-                            <button class="next">&#10095;</button>
-                        </div>
-
-                        <div class="codeDescription-container">
-                            <p>
-                                1.  .... Work in progress
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                2. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                            <p>
-                                5. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                7. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                8. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                            <p>
-                                9. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                        </div>
-                    </div>
-
-
-
-                    <h4>Game Events - Progress Lights</h4>
-                    <div class="media-container">
-
-                        <div class="image-container">
-                            <button class="prev">&#10094;</button>
-                            <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_Img1.gif" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_LightData_Img2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_AddLightsToLightDatas_Img3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_OnEncounterStartDelegate_Img4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_SendTotalTimeAndAssignTime_Img5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_CheckIfLightCanTurnOn_Img6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/ObjectChidTime_TimeManagerPauseTimerImg9.png" alt=""></div>
-                            </div>
-                            <button class="next">&#10095;</button>
-                        </div>
-
-                        <div class="codeDescription-container">
-                            <p>
-                                1.  .... Work in progress
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                2. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                            <p>
-                                5. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                7. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                8. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                9. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                        </div>
-                    </div>
-
-
-                    <h4>UI Display Objective Text</h4>
-                    <div class="media-container">
-
-                        <div class="image-container">
-                            <button class="prev">&#10094;</button>
-                            <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChild_HeaderGenTimeImg1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_StartObjectiveIsObjectiveCompletImg2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_UpdateTimeRemaingElaspedTimeDelegateImg3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_UpdateTimeRemainingAndBroadCastImg4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_DisplayTextImg5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_TimeManagerPauseTimerImg9.png" alt=""></div>
-                            </div>
-                            <button class="next">&#10095;</button>
-                        </div>
-
-                        <div class="codeDescription-container">
-                            <p>
-                                1.  .... Work in progress
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                2. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                            <p>
-                                5. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                7. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                8. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                        </div>
-                    </div>
-
-
-                    <h4>Tech </h4>
-                    <div class="tech-skill">
-                        <div class="tech-box">Custom EQS Test</div>
-                        <div class="tech-box">Gameplay-tags</div>
-                        <div class="tech-box">Unit Tests</div>
-                        <div class="tech-box">Data Assets</div>
-                    </div>
 
                 </div>
+            </div>
         </section>
+
+
+
+
+
+
 
 
 
