@@ -675,81 +675,206 @@
             <div class="projects-container">
                 <div class="project max-width">
                     <h3>AI Behvaiour</h3>
+
+                    <h4>Behaviour Tree Overview and Passive State</h4>
                     <div class="media-container">
 
                         <div class="image-container">
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBehBehaviourTreeImg1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBehGetPatrolRouteRunEQSImg2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBehEQSFrogDestinationImg3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBehJumpToDestinationImg4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBehAttackTokenImg5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBehAttackFunctionImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIPerceptionGetLastStimulusImg7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_img1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_FrogAIAble_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_GetLocationFromPatrolRoute_img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_GetLocationFromPatrolRoute_RunEQS_img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_EQS_FindUnoccupiedLocationOnPatrolRoute_img6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_FrogDestinationTest_img7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_JumpToDestinationFlusher_img8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_JumpToDestinationFlusher_img9.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
                             <p>
-                                1. To eliminate casting between AI character classes, the IFrogAIable interface defines all key behavior functions — such as Attack(), JumpSpecialToDestination(), and event binding methods — that AI Tasks can call directly.
+                                1. The Blackboard key State, an UEnum, selects between Passive, Combat, and Investigate modes.
 
-                                <br></br> The behavior tree is event-driven, meaning nodes pause until specific messages or delegate broadcasts occur. For example, GetPatrolRouteAndSetDestinationLocation() executes only after the AI lands, ensuring the task chain halts during jumps.
+                                <br></br> When the AI sees the player or receives damage, it enters Combat and remains until sight/damage stimuli become stale.
 
-                                <br></br>This architecture allows reactive and modular control without continuous polling, as behavior tree progress is dictated entirely by delegate signals rather than tick-based checks.
+                                <br></br>If it only hears the Generator (and cannot see the player), it enters Investigate.
+                                <br></br>With no active stimuli, it defaults to Passive.
                             </p>
                             <p>
-                                2. GetPatrolRoute() retrieves the spline path associated with the AI unit, assigned when that unit is spawned or retrieved from the object pool. See "Encounter System" for how patrol routes are assigned based on wave and enemy type.
+                                2. IFrogAIable centralizes AI behavior calls (e.g., Attack(), JumpSpecialToDestination()) and delegate binding helpers so Tasks can invoke behavior without casting.
 
-                                <br></br> Before movement begins, an EQS test executes at the current spline index, searching for a valid, unoccupied point with clear line of sight. This prevents multiple AI units from clustering or colliding along shared patrol paths, ensuring natural spacing and movement flow.
+                                <br></br> Enemy-specific behaviors (attack logic, charge logic, etc.) are implemented in child classes or Blueprints
 
-                            </p>
-                            <p>
-                                3. UFrogDestinationTest is a custom EQS test designed to distribute AI movement targets dynamically along a spine while avoiding collisions and clumping.
-
-                                <br></br>It gathers each AI’s current “DestinationLocation” Blackboard value, then calculates a mean distance score for every candidate EQS point relative to all active AI positions.
-
-
-                                <br></br> Each candidate’s world location is retrieved via GetItemLocation(QueryInstance, It.GetIndex()), and distances are accumulated in a temporary array.
-
-                                <br></br> It.SetScore() then assigns a normalized value based on average separation — ensuring AI spread evenly and avoid converging on identical destinations.
+                                <br></br> Shared functionality—movement speed, common helpers, and delegate management—resides in the parent class for reuse and consistency.
 
                             </p>
                             <p>
-                                4. OnLandedFinishedExecute() is bound to the LandedDelegate, keeping the current Behavior Tree task active until the AI physically lands.
+                                3. When an enemy is spawned or retrieved from the pool, it is assigned a patrol route (see Encounter System slides 6–8).
 
-                                <br></br>JumpSpecialToDestination()—an IFrogAIable interface function—invokes the AI’s custom jump logic through JumpToDestination().
-                                This function calculates the vector between the AI’s current position and its EQS-derived destination, then applies launch velocity along that vector.
+                                <br></br>GetLocationFromPatrolRouteSpline() returns a spline point by index, runs an EQS to find a nearby unoccupied position, and writes the result to the DestinationLocation Blackboard key.
+
+                                <br></br> BTT_JumpToDestinationFlusher computes the launch vector from the AI’s current position to DestinationLocation and performs a physics-driven jump to that point.
+
+                            </p>
+                            <p>
+                                4. The Behavior Tree is event-driven: nodes wait for delegate broadcasts or messages before continuing.
+
+                                <br></br>For example, GetPatrolRouteAndSetDestinationLocation() runs only after a landing event if the AI is airborne, halting task progression during jumps.
+                                This design reduces polling and yields responsive, modular AI flow controlled by events rather than ticks.
 
                                 <br></br> As a result, the AI can dynamically jump to any valid EQS target location, enabling traversal across uneven terrain or complex environments with natural, frog-like motion.
 
                             </p>
                             <p>
-                                5. BTT_RequestAttackToken is the entry task for initiating combat. It first checks whether the AI’s controlled pawn has already secured an attack token from its target.
-                                If not, it requests one through the RequestAttackToken() function defined on the IFrogAIable interface.
+                                5. GetPatrolRoute() returns the spline assigned to the AI (assignment is done at spawn/pull from pool; see Encounter System for wave-based assignment).
 
-                                <br></br>This task belongs to the “Attack” branch of the Behavior Tree, managing regulated enemy aggression through the Attack Token System. Only AIs with valid tokens may engage, ensuring coordinated, staggered attacks instead of chaotic swarming.
+                                <br></br> SetPatrolPointQueryLocation() forwards the target vector to CharacterBaseFrog via the PatrolRouteable interface; that vector becomes the EQS query context.
 
-                                <br></br>The next task in this branch, BTT_AttackFlusher, executes once token possession is confirmed.
+                                <br></br>An EQS test at the current spline index finds a valid, unoccupied point with line of sight to avoid clustering.
+                                If EQS returns no point (e.g., AI jumped or was displaced off-nav), FindReachablePointWhenOffNav() searches locally for a reachable fallback location.
+
+                                <br></br> SetPatrolPointQueryLocation() forwards the target vector to CharacterBaseFrog via the PatrolRouteable interface; that vector becomes the EQS query context.
 
                             </p>
                             <p>
-                                6. AttackFinishedExecuteSuccessful() binds to the AttackBehaviourFinishedDelegate using a helper method from the IFrogAIable interface — BindToAttackBehaviourFinishedDelegate().
+                                6. SetPatrolPointQueryLocation() stores the query vector, which GetPatrolPointQueryLocation() later retrieves in the context function BTC_PatrolPointQueryLocation.
 
-                                <br></br> Core behavioral methods like IdealBehaviour(), InvestigateBehaviour(), and AttackBehaviour() — as well as delegate management — are all centralized within IFrogAIable, and implemented by the base enemy class ACharacterBaseFrog.
-
-                                <br></br> When AttackBehaviour() is executed, it triggers the child class (e.g. BP_CharacterFrogFlusher) to perform its unique Attack() animation or logic. 
-                                Upon a successful hit, the AI calls ReturnAttackTokens() to release its token and broadcasts AttackBehaviourFinishedDelegate, signaling the behavior tree to continue.
+                                <br></br> The EQS test checks for overlaps (walls/corners) and verifies path existence; NavLinks are considered to connect otherwise isolated navigation regions; test points are scored based on distance to CharacterBaseFrogs.
 
                             </p>
 
                             <p>
-                                7. The AI retrieves perception data about the player using GetActorsPerception(), which fills an FActorPerceptionBlueprintInfo struct containing all active stimuli for that actor.
-                                The function outputs whether the player is successfully perceived (bSensedSuccessfully) and provides the corresponding stimulus in OutStimulus.
+                                7. UFrogDestinationTest collects each AI’s DestinationLocation from the Blackboard,
+                                computes the average distance from each EQS candidate to all AI positions, and uses It.SetScore() to assign a normalized score based on mean separation—promoting even distribution across available points.
 
-                                <br></br>GetSenseIDofSenseAsEnum() then confirms the data corresponds to the sight sense, ensuring behavior responses like attack or chase are triggered only by valid visual detection, not lingering auditory or damage stimuli.
+                            </p>
 
+                            <p>
+                                8. After DestinationLocation is set, the JumpToPatrolLocation sequence runs.
+
+                                <br></br>BTT_JumpToDestinationFlusher binds OnLandedFinished to the landed delegate, suspending the task until landing occurs.
+                                As a fallback, StartTimerFailSafeInLandedNeverFires() starts a 3-second timer to complete the task if the delegate fails.
+
+                                <br></br>JumpSpecialToDestination() is the custom jump routine; a Z-axis offset is scaled by the horizontal distance to the target, increasing launch force for longer jumps.
+
+                            </p>
+
+                            <p>
+                                9. DestinationLocation.Z is increased by a ZaxisOffset to raise the launch target height.
+
+                                <br></br>JumpToDestination() uses UGameplayStatics::SuggestProjectileVelocity() to compute OutLaunchVelocity, producing a physics-consistent trajectory for the jump.
+
+                                <br></br>
+
+                            </p>
+
+                            <p>
+                                10.
+
+                                <br></br>
+
+                                <br></br>
+
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <h4>Attack State</h4>
+                    <div class="media-container">
+
+                        <div class="image-container">
+                            <button class="prev">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_Attack_Examples.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_FrogAIAble_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_GetLocationFromPatrolRoute_img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_GetLocationFromPatrolRoute_RunEQS_img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_EQS_FindUnoccupiedLocationOnPatrolRoute_img6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_FrogDestinationTest_img7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_JumpToDestinationFlusher_img8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_JumpToDestinationFlusher_img9.png" alt=""></div>
+                            </div>
+                            <button class="next">&#10095;</button>
+                        </div>
+
+                        <div class="codeDescription-container">
+                            <p>
+                                1.  .... Work in progress
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                2. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+                            </p>
+                            <p>
+                                3. ...
+
+                                <br></br> ...
+
+                                <br></br> ...
+
+                            </p>
+                            <p>
+                                4. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                            <p>
+                                5. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                                <br></br> ...
+
+                                <br></br>...
+                            </p>
+                            <p>
+                                6. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                7. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+
+                            <p>
+                                8. ...
+
+                                <br></br>...
+
+                                <br></br>...
+
+                            </p>
+                            <p>
+                                9. ...
+
+                                <br></br>...
+
+                                <br></br>...
 
                             </p>
                         </div>
@@ -788,122 +913,156 @@
                         <div class="image-container">
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/Tokens/TokensClassHeaderImg1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Tokens_InitializeComponent_Img2.gif" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Tokens_RequesterComponentInterfaceAndImplementationImg2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_HasAttackTokenImg3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_RequestAttackTokenImg4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_HandleReserveTokenRequestImg5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReserveAttackTokenAndStoreInMapIm6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReturnTokensPerceptionForgottenImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReturnTokensAttackFinishedImg8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReturnTokensAttackFinishedFunctionsImg9.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReturnAllTokensPoolActorDeactivatedImg10.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Tokens_Giver_HeaderAndTokenData_Img1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Tokens_Giver_InitializeComponent_Img2.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Tokens_Giver_SetUpAttachments_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Tokens_Giver_GiverInterfaceAndImplementation_Img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Tokens_Requester_HeaderAndData_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Tokens_Requester_InterfaceImplementation_Img6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_Requester_BTTHasAttackToken_HasAttackToken_Img7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_Requester_BTTHasAttackToken_RequestAttackToken_Img8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_Requester_BTTHasAttackToken_RequestAttackToken_HandleReserveTokenRequest_Img9.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_Requester_BTTHasAttackToken_RequestAttackToken_ReserveAttackAndStoreInMap_Img10.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReturnTokensPerceptionForgotten_img11.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReturnTokensPerceptionForgotten_ReturnTokens_img12.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReturnTokensAttackFinished_img13.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReturnTokensAttackFinished_img14.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
                             <p>
-                                1. To avoid casting, the interface IFrogAIable is used to call behaviour functions like attack and jump as well as bind and unbind events in
-                                Tasks.
+                                1. The Attack Token system consists of two core components: AttackTokenGiverComponent and AttackTokenRequesterComponent.
 
-                                <br></br> The behaviour tree is event driven. Execution is controlled by bind to events and only continuing once a message is received.
-                                Here, GetPatrolRouteAndSetDestinationLocation() is called when the enemy has landed, ensuring execution stop when the AI is jumping.
+                                <br></br> The GiverComponent is attached to any actor that can be attacked — typically ACharacterBasePlayer or AGenerator — and is responsible for distributing attack tokens.
 
-                                <br></br>Bind to the delegate OnTargetPerceptionForgotten, which is fired when the stimulus age is greater than the maxAge property.
+                                <br></br> Enemy classes that require a token to engage (such as Flushers and Pinners) use the RequesterComponent to request and return tokens.
 
-                                <br></br>OnTargetPerceptionUpdated is only called if the property bForgetStaleActors is set to true. This is only accessible in the Default.ini
+                                <br></br>Underlying data is defined in TokenData.h, which includes FGiverAttackTokenData — a struct describing attack locations, token counts, and availability.
+                                Each Giver maintains a map _mmTokenDataAttackLocations, which stores all token data indexed by attack location.
                             </p>
                             <p>
-                                2. GetPatrolRoute() returns a spline that is assigned to AI when it's pulled from the pool.
+                                2. To prevent enemy overlap during combat, six USceneComponent endpoints are positioned in front of each actor with an AttackTokenGiverComponent. These points define valid attack locations.
 
-                                <br></br> To avoid collisions, an EQS is run at the world location of the current index along the spine. The EQS returns an unoccupied location that it has line of sight to.
+                                <br></br> _mTotalAttackTokensFlusher and _mTotalAttackTokensPinner specify how many tokens each enemy type may occupy per endpoint.
+
+                                <br></br> The setup function SetUpAttachments() initializes and populates the _mmTokenDataAttackLocations map with these scene component references, forming the foundation for all future attack token allocation.
+                            </p>
+                            <p>
+                                3. SetUpAttachments() creates six keyed entries in _mmTokenDataAttackLocations: indices 0–2 for Flushers and 3–5 for Pinners.
+
+                                <br></br>AddAttackLocationToMap() then iterates over temporary arrays of these scene components, constructing a new FGiverAttackTokenData for each and setting its initial token capacity and availability.
+
+
+                                <br></br> This ensures every attack slot is defined, type-limited, and ready for runtime token assignment.
+
+                            </p>
+                            <p>
+                                4. An interface complements the AttackTokenGiverComponent, enabling enemies to request and return tokens or query valid attack locations without direct coupling.
+
+                                <br></br>ACharacterBasePlayer implements this interface, using its helper functions to call the GiverComponent’s internal logic directly.
+                                This interface-driven design ensures clean, modular communication between requesters and their attack targets.
 
                                 <br></br>
-                            </p>
-                            <p>
-                                3. UFrogDestinationTest gather the 'destination' positions stored in each AI's blackboard, then scores every EQS candidate point by the average distance from that point to all the current positions of AI's. The score is the
-                                mean distance to every enemy AI's location.
-
-                                <br></br>The bb_key 'DestinationLocation' is stored as the local variable, DestinationLocationName. The Position array is populated with the vector value held within each AI's blackboard.
-
-
-                                <br></br> FEnvQueryInstance::ItemIterator loops over each EQS candidate item being tested. GetItemLocation(QueryInstance, It.GetIndex() gets the world location of the EQS item. For every element in the Positions array, the
-                                distance is calculated and added to the DistanceLengths array.
-
-                                <br></br> It.SetScore() sets the score the EQS candidate based on the average distance.
 
                             </p>
                             <p>
-                                4. OnLandedFinishedExecute() is bound to the LandedDelegate, meaning the behaviour tree stays in this task until the AI lands.
+                                5. The AttackTokenRequesterComponent is attached to both Flusher and Pinner enemies. Each type has its own maRequestedTokenIndex array, defining which attack endpoints (0–2 or 3–5) it may use.
 
-                                <br></br>JumpSpecialToDestination() is an interface function that calls a custom jump function, JumpToDestination().
+                                <br></br>The component also maintains a map _mmTakenAttackTokens, keyed by the attack target AActor, storing an FRequesterGeneralTokenData struct with all tokens the requester currently holds.
 
-                                <br></br> JumpToDestination() finds the vector between the AI's current location and it's destination and launches the possessed character along that vector. The AI can jump to any location the EQS returns.
-
-                            </p>
-                            <p>
-                                5. The task, BTT_RequestAttackToken first checks if the controlled Pawn already has claimed a token from the AttackTarget. If it hasn't, then it request one via the interface function RequestAttackToken().
-
-                                <br></br>See the 'Attack Token System' section for more details on the token system.
-
-                                <br></br>The behaviour tree shown here is the 'attack' state side of the tree. This slide shows the task BTT_RequestAttackToken and the next slide shows BTT_AttackFlusher.
 
                             </p>
                             <p>
-                                6. AttackFinishedExecuteSuccessful() is bound to a delegate, AttackBehaviourFinishedDelegate, using a helper function on the FrogAIable interface, BindToAttackBehaviourFinishedDelegate().
+                                6.The RequesterComponent includes its own interface, used by both the Behavior Tree’s Blackboard tasks and the attack targets themselves.
 
-                                <br></br> Functions controlling behaviour such as IdealBehaviour(), InvestigateBehaviour() and AttackBehaviour(), and functions for binding and unbinding to delegates that broadcast when this behaviour finishes is all owned by the
-                                FrogAIable interface. The base enemy class, ACharacterBaseFrog, implements the FrogAIable interface.
-
-                                <br></br> AttackBehaviour() is called on the controlled pawn, which calls Attack() with the BP_CharacterFrogFlusher class, a child of ACharacterBaseFrog.
-
-                                <br></br> If the attack is successful, ReturnAttackTokens() is called and AttackBehaviourFinishedDelegate is broadcast.
+                                <br></br> This interface standardizes token request, reservation, and return workflows, streamlining AI communication during combat sequences.
 
                             </p>
 
                             <p>
-                                7. The perception info on the player character is searched for and returned in the references bSensedSuccessfully and OutStimulus.
+                                7. When an enemy successfully detects the player via sight, its Blackboard transitions to the Attack state.
+                                The Behavior Tree task BTT_RequestAttackToken first checks whether the AI already holds a token for its current attack target. If not, it issues a new token request.
 
-                                <br></br>GetActorsPerception() takes a reference of the struct FActorPerceptionBlueprintInfo which holds perception info for a sensed AActor.
+                                <br></br> If the request succeeds (or the AI already possesses a token), FinishExecute returns success, enabling the attack sequence.
+
+                                <br></br> Otherwise, the task fails, and the tree reverts to its default behavior until the cooldown decorator permits another request attempt.
+
+                                <br></br>
+
+                            </p>
+
+                            <p>
+                                8. FRequesterGeneralTokenData represents each requester’s stored token data within _mmTakenAttackTokens.
+
+                                <br></br>When a request is made, HandleReserveTokenRequest() processes the attempt and returns a success flag.
 
                                 <br></br> GetSenseIDofSenseAsEnum(), checks if the AI has sight perception info on the player character.
 
+                                <br></br>If successful, IsTokenRequestSuccessful() updates the requester’s FRequesterReservation struct with the new token’s index and attack location.
+                                <br></br>The updated reservation is then saved back into _mmTakenAttackTokens via ReserveAttackTokenAndStoreInMap(), synchronizing local and giver-side data.
+
+                            </p>
+
+                            <p>
+                                9. The attack target’s interface function HandleReserveTokenRequest() delegates to the GiverComponent’s internal method of the same name.
+
+                                <br></br>Flushers request attack indices 0–2, while Pinners use 3–5. Validation ensures team members never request invalid indices.
+
+                                <br></br> Each FGiverAttackTokenData entry stores a dereferenced pointer to its map data, allowing direct modification.
+
+                                <br></br>The Giver iterates through available slots, confirming capacity and token count.
+                                If tokens are available, both the Giver’s map and the Requester’s reservation data are updated, returning true on success or false if the request fails.
+
+                            </p>
+
+                            <p>
+                                10. Once a request succeeds, ReserveAttackTokenAndStoreInMap() records the AttackTarget, IndexOfReservationPoint, and LocationOfReservedPoint within _mmTakenAttackTokens.
+
+                                <br></br> The function either retrieves or creates a new entry for the AttackTarget, ensuring all token data is consistent.
+
+                                <br></br> RequestAttackToken() then returns a boolean result to the Behavior Tree task, which finishes execution based on whether the token was successfully reserved.
+
                                 <br></br>
 
                             </p>
 
                             <p>
-                                8. ...
+                                11. Tokens are returned either when an enemy completes its attack or when perception of the target becomes stale.
 
-                                <br></br>GetActorsPerception() takes a reference of the struct FActorPerceptionBlueprintInfo which holds perception info for a sensed AActor.
+                                <br></br> GetLastStimulus() checks whether the AI still perceives the player before clearing its state.
+                                For instance, if an enemy switches perception from the Generator to the Player mid-attack, it retains the token until all valid perception ends.
 
-                                <br></br> GetSenseIDofSenseAsEnum(), checks if the AI has sight perception info on the player character.
+                                <br></br> When perception fully fades, the AI resets its state to Passive, clears its target reference, and calls ReturnAllAttackTokensForAllTarget(), which iterates through all owned tokens and returns them to their respective givers.
 
                                 <br></br>
+
+                            <p>
+                                12. ReturnAttackTokens() retrieves the relevant FRequesterGeneralTokenData reference tied to the AttackTarget.
+
+                                <br></br> It then calls HandleReturningToken() on the target actor, specifying the index and quantity to return. The Giver’s map is updated accordingly.
+
+
+                                <br></br> Finally, the requester removes that token entry from its _mmTakenAttackTokens map, ensuring data integrity on both sides.
 
                             </p>
 
                             <p>
-                                9. ...
+                                13. Tokens are also returned when an enemy finishes its attack sequence.
 
-                                <br></br>GetActorsPerception() takes a reference of the struct FActorPerceptionBlueprintInfo which holds perception info for a sensed AActor.
+                                <br></br> BTT_AttackFlusher calls AttackBehaviour() — an IFrogAIable interface function implemented at the child-class level — which in turn executes the enemy’s specific Attack() logic.
 
-                                <br></br> GetSenseIDofSenseAsEnum(), checks if the AI has sight perception info on the player character.
-
-                                <br></br>
+                                <br></br> Once the attack concludes, the AI automatically returns its tokens before signaling completion through the appropriate delegate.
 
                             </p>
 
                             <p>
-                                10. ...
+                                14. After a Flusher successfully reaches its reserved attack location, it immediately returns its tokens via ReturnAttackTokens().
 
-                                <br></br>GetActorsPerception() takes a reference of the struct FActorPerceptionBlueprintInfo which holds perception info for a sensed AActor.
+                                <br></br> It then broadcasts AttackBehaviourFinishedDelegate to inform the Behavior Tree that the attack cycle is complete.
 
-                                <br></br> GetSenseIDofSenseAsEnum(), checks if the AI has sight perception info on the player character.
-
-                                <br></br>
+                                <br></br> The AI subsequently despawns and returns to the object pool, ready for reuse in future encounters.
 
                             </p>
                         </div>
@@ -2191,7 +2350,7 @@
 
             <div class="projects-container">
                 <div class="project max-width">
-                    <h3>Encounter System</h3>
+                    <h3>Dialogue Subsystem</h3>
                     <div class="media-container">
 
                         <div class="image-container">
