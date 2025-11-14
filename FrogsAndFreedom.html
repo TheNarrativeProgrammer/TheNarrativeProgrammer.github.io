@@ -1334,83 +1334,68 @@
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_DisplayText_Img5.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_TimerFinishedDelegateTimerManager_Img6.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_SetTimerFinished_Img7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_StopObjectivesCalledOnForceFieldDeath_Img8.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  .... Work in progress
+                                1.  DefendGenTime is a subobjective of TurnOnAllGenerators.
 
-                                <br></br>...
+                                <br></br> When all generators activate, it starts a countdown; if any generator loses power, the objective stops until all are active again.
+
+                                <br></br> A distinctive aspect of this objective is its once-per-second UI update, handled by a dedicated delegate that updates only its assigned UI slot, ensuring the countdown is responsive without affecting other objectives.
                             </p>
                             <p>
-                                2. ...
+                                2. The timer logic is handled by the GeneratorTimeManager, and the DefendGenTime objective stores a pointer to the instance associated with its sub-level.
 
-                                <br></br> ...
+                                <br></br> If the timer is uninitialized, it is set up and started; if the objective stops and later restarts, the timer unpauses accordingly. (See the Gen Time Manager subsection for full details.)
 
-                                <br></br> ...
+                                <br></br> When the timer begins, TurnPowerOn broadcasts a delegate that activates all connected power-cord visuals from the generators to the door.
                             </p>
                             <p>
-                                3. ...
+                                3. GeneratorTimeManager::InitializeAndStartTime sets two timers:
 
-                                <br></br> ...
+                                <br></br> -- one for the total duration required to complete the objective
 
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> -- one that fires every second to update UI state.
+                                <br></br> Each second, BroadcastOnSecondElapsedTimeRemainingDelegate triggers OnGeneratorTimerManagerSecondElapsedDelegate.
+                                <br></br> The binding component on DefendGenTime listens to this delegate and calls UpdateTimeRemainingAndBroadcastToUI.
 
                             </p>
                             <p>
-                                5. ...
+                                4. UpdateTimeRemainingAndBroadcastToUI constructs the updated display text and broadcasts the delegate responsible for updating the specific UI slot owned by this objective.
 
-                                <br></br>...
+                                <br></br> The OnTimerChangeUpdateUIDelegate includes a pointer to the objective.
 
-                                <br></br>...
+                                <br></br> Because the UI tracks which objective occupies each display slot, only the slot with a matching pointer updates, ensuring efficient per-second UI refreshes.
 
-                                <br></br> ...
-
-                                <br></br>...
                             </p>
                             <p>
-                                6. ...
+                                5. The TimeRemaining value provided by the TimerManagerDelegate is merged with the base ObjectiveDisplayText to produce the full UI string shown during the countdown.
 
-                                <br></br>...
+                            </p>
+                            <p>
+                                6. The second timer—responsible for detecting when the defense duration ends—fires BroadcastObjectiveCompleteGeneratorTimer once the required time elapses.
 
-                                <br></br>...
+                                <br></br> Both timers are then cleared, and OnGeneratorTimeManagerTimerFinishedDelegate is broadcast. DefendGenTime receives this delegate and calls OnTimerFinishedCompleteObjective.
 
                             </p>
 
                             <p>
-                                7. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                7. OnTimerFinishedCompleteObjective marks the objective as complete and triggers IfCompleteTriggerSubobjectiveAndWave, enabling any chained logic such as wave release or subobjective activation.
 
                             </p>
 
                             <p>
-                                8. ...
+                                8. If TurnOnAllGenerators is reversed, it calls StopSubobjectives, which iterates through all of its subobjectives—including DefendGenTime—and calls StopObjective.
 
-                                <br></br>...
+                                <br></br> DefendGenTime overrides StopObjective while still calling the Super implementation that sets HasObjectiveStarted to false.
 
-                                <br></br>...
+                                <br></br> It also pauses both timers and invokes TurnOffPower, broadcasting a delegate that disables the generator-to-door power-cord effects.
 
                             </p>
-                            <p>
-                                9. ...
-
-                                <br></br>...
-
-                                <br></br>...
 
                             </p>
                         </div>
