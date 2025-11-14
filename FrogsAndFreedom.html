@@ -1409,75 +1409,55 @@
                         <div class="image-container">
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_Header_Img1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_CallStartTimerOrRestartTimer_Img2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_InitializeAndStartTimerRestartTimer_Img3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_BroadcastOnSecondElapsedTimeRemaining_Img4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_TurnPowerOn_Img5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_TurnPowerOff_Img5pt5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_BroadcastObjectiveCompleteGeneratorTimer_Img6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_OnGameOverClearTimer_Img7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_InitializeAndStartTimerRestartTimer_Img1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_BroadcastOnSecondElapsedTimeRemaining_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_TurnPowerOn_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_TurnPowerOff_Img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_BroadcastObjectiveCompleteGeneratorTimer_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_OnGameOverClearTimer_Img6.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  .... Work in progress
+                                1.  InitializeAndStartTime in the GeneratorTimeManager sets up two timers: one for the total time required to complete the objective, and another that fires once per second.
 
-                                <br></br>...
+                                <br></br> The per-second timer calls BroadcastOnSeconElaspedTimeRemainingDelegate, which then broadcasts OnGeneratorTimerManagerSecondElapsedDelegate.
+                                <br></br> When the total duration defined in TimeLengthObjectiveGeneratorDefence expires, BroadcastObjectiveCompleteGeneratorTimer is triggered.
+                                <br></br> At initialization, two delegates are broadcast—one announcing that the timer has started and another providing the total time for the objective.
                             </p>
                             <p>
-                                2. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
+                                2. Each time BroadcastOnSeconElaspedTimeRemainingDelegate fires, it uses GetRemainingTime to retrieve the timer’s remaining duration and passes that value through the delegate for any listeners, typically the UI-related systems.
 
                             </p>
                             <p>
-                                4. ...
+                                3. TurnPowerOn broadcasts a delegate received by the binding component on the PowerCordManager.
 
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> The APowerCordMgmr maintains pointers to all power cords in the level and, when this delegate is received, activates them.
 
                             </p>
                             <p>
-                                5. ...
+                                4. When the DefendGenTime objective is stopped, both timers are paused and TurnOffPower is called.
 
-                                <br></br>...
+                                <br></br> This triggers a companion delegate to the power-on event, except this one instructs the PowerCordManager to switch all power cords off.
 
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
                             </p>
                             <p>
-                                6. ...
+                                5. When the total-time timer finishes and BroadcastObjectiveCompleteGeneratorTimer is fired, both timers are cleared and a completion delegate is broadcast.
 
-                                <br></br>...
-
-                                <br></br>...
-
+                                <br></br> The DefendGenTime objective is marked complete, and TurnOnAllGenerators is set to a permanently completed state, preventing any future reversals of its completion status.
                             </p>
-
                             <p>
-                                7. ...
+                                6. As a safety measure, all timers are cleared during level transitions, such as when moving from the Empty streaming level back to the main menu.
 
-                                <br></br>...
+                                <br></br> ReturnToMainMenuHost is overridden and triggered via HandleReturningToMainMenu, which broadcasts OnGameOverClearAllActiveTimerDelegate.
 
-                                <br></br>...
+                                <br></br> Any actor using timers—including the GeneratorTimeManager—listens for this event and calls GameOverClearTimer to cancel all active timers.
 
                             </p>
+
+                            
                         </div>
                     </div>
 
