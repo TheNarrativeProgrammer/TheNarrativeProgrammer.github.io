@@ -880,14 +880,6 @@
                         </div>
                     </div>
 
-
-                    <h4></h4>
-                    <div class="video-container-full">
-                        <video class="autoplay-video-lower-threshhold" muted loop playsinline>
-                            <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
-                        </video>
-                    </div>
-
                     <h4>Tech </h4>
                     <div class="tech-skill">
                         <div class="tech-box">Custom EQS Test</div>
@@ -1070,12 +1062,6 @@
 
 
                     <h4></h4>
-                    <div class="video-container-full">
-                        <video class="autoplay-video-lower-threshhold" muted loop playsinline>
-                            <source src="videos/EncounterWaveExample.mp4" type="video/mp4">
-                        </video>
-                    </div>
-
                     <h4>Tech </h4>
                     <div class="tech-skill">
                         <div class="tech-box">Custom EQS Test</div>
@@ -1101,116 +1087,131 @@
                         <div class="image-container">
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_EncounterTriggerImg1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_EncounterTriggerMultiObjectivesImg2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_RegisterEncounterAndCallStartObjectivesImg3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_StartObjectsInObjectiveCompleteImg4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_StartObjectsOverrideImg5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_CompleteObjectiveReachPointImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_CompleteObjectiveReachPointImg6pt5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_StartSubobjectivesImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_CompleteObjectiveBroadcastAndIfAllObjectiveCompleteImg8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_CompleteObjectiveImg10.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_IfAllObjectiveCompleteImg10.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_TriggerWavePt1_Img12.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_TriggerWavePt2_Img13.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/Objectives_OnObjectiveCompleteStartSpawningWave_Img14.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/ObjectiveGifExample_Img1.gif" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_EncounterTriggerAndObjectiveActorOverview_Img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_SubObjectivesAndActorsInfluencingObjective_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_RegisterEncounterAndCallStartObjectives_Img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_StartObjectsInObjectiveComplete_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_StartObjectsOverride_Img6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_CompleteObjectiveReachPoint_Img7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_IfCompleteTriggerSubObjectivesAndWave_StartSubobjectives_Img8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_CompleteObjectiveBroadcast_img9.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_CompleteObjectiveBroadcast_CompleteObjective_img10.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_EncounterTrigger_IfAllObjectiveCompleteThenBroadcast_Img11.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_TriggerWave_img12.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_TriggerWave_SpawnWave1_Img13.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_TriggerWave_IsNextWaveInQue_Img14.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  .... Work in progress
+                                1.  ObjectiveActor manages all core objective flow: determining start/completion, formatting UI text, sequencing follow-up objectives, and broadcasting start, update, and completion events.
 
-                                <br></br>...
+                                <br></br>Five child classes inherit from it:
+                                <br></br>--Reach Point
+                                <br></br>--Kill All Frogs
+                                <br></br>--Defend Generator for Time
+                                <br></br>--Turn On All Generators
+                                <br></br>--Destroy All Frog Spawners
+                                <br></br>Each implementing their own completion logic.
                             </p>
                             <p>
-                                2. ...
+                                2. Each sublevel’s EncounterTrigger owns an array of ObjectiveActors, representing all objectives within that encounter.
 
-                                <br></br> ...
+                                <br></br> ObjectiveActor provides shared properties such as display names, sequence management, and formatted UI text.
 
-                                <br></br> ...
+                                <br></br> -- ObjectiveDisplayName is shown at start;
+                                <br></br> -- CompletionDisplayName is shown on completion.
+                                <br></br> -- SubObjectives lists which objectives begin once this one completes
+                                <br></br> -- StartWithEncounter allows objectives to auto-start as soon as the player enters the trigger.
+                                <br></br> -- WaveToTriggerOnObjectiveComplete contains wave gameplay tags that activate once the objective finishes.
+                                <br></br> -- ObjectiveInfluenceOptions define whether completion contributes to opening progression doors or halting enemy spawns.
                             </p>
                             <p>
-                                3. ...
+                                3. At most two objectives can use StartWithEncounter = true. All others begin as subobjectives triggered when their parent objective completes, which sets IsStarted = true for each entry in its SubObjectives array.
 
-                                <br></br> ...
-
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> Child classes implement their own completion logic—for example, ObjectiveActorTurnOnAllGenerators tracks generator activation counts using an array of AGenerator references in the sublevel.
 
                             </p>
                             <p>
-                                5. ...
+                                4. When the player enters the EncounterTrigger, OnEncounterBegin registers the trigger with the EncounterManagerComponent in the GameMode.
 
-                                <br></br>...
-
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br>After patrol routes, spawn locations, and wave data are initialized (see Encounter System), the trigger calls StartObjectives() to begin any objectives flagged to start with the encounter.
 
                             </p>
-
                             <p>
-                                7. ...
+                                5. Objectives marked StartWithEncounter invoke StartObjective(), which sets HasObjectiveStarted = true and resets UI-related state.
 
-                                <br></br>...
+                                <br></br> Child classes override StartObjective() but still call Super, allowing them to dispatch the appropriate start delegates.
 
-                                <br></br>...
+                                <br></br> IsObjectiveComplete() provides base validation (checking if the objective has started), while each child overrides it with objective-specific completion logic.
+                            </p>
+                            <p>
+                                6. Objectives that update via a timer broadcast OnTimerChangeUpdateUIDelegate, which refreshes only the UI slot associated with timed objectives, avoiding unnecessary UI iteration.
+
+                                <br></br> All other objectives broadcast OnActorStateChangeUpdateUIDelegate for non-timer-based updates.
 
                             </p>
 
                             <p>
-                                8. ...
+                                7. ObjectiveActorReachPoint completes when the player overlaps its trigger volume after the objective has started.
 
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> Upon completion, IfCompleteTriggerSubobjectivesAndWave() starts any subobjectives that qualify, triggers related waves, and broadcasts the completion delegate.
 
                             </p>
 
                             <p>
-                                9. ...
+                                8. TriggerWave() starts the next wave if its gameplay tag matches the expected wave-in-queue and no wave is currently spawning; otherwise, it marks the wave as “released” for later spawning once the current wave finishes.
 
-                                <br></br>...
+                                <br></br> StartSubobjectives() iterates through the subobjective list and calls StartObjective() when requirements are met.
 
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                10. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> RequiredNumberOfPreObjectivesCompletedToStart determines how many parent objectives must complete before this objective may begin—typically one.
 
                             </p>
 
                             <p>
-                                11. ...
+                                9. CompleteObjectiveBroadcast() shows the completion display text and starts a timer.
 
-                                <br></br>...
+                                <br></br> When the timer expires, CompleteObjective() hides the text, broadcasts completion, and releases the objective so it no longer participates in completion checks.
 
-                                <br></br>...
+                                <br></br> Since ActorStateChangeUpdateUIDelegate fires when starting an objective, it is only sent on completion when no subobjectives will follow.
+                            </p>
 
+                            <p>
+                                10. CompleteObjective() disables the completion display text and broadcasts a delegate used both to refresh the UI and to notify the EncounterTrigger that objective totals must be recalculated.
+
+                            </p>
+
+                            <p>
+                                11. Upon receiving the completion delegate, IfAllObjectivesCompleteThenBroadcast() resets internal counters. This is necessary because some objectives—such as generator activation—can revert from completed to incomplete.
+
+                                <br></br> UpdateCountOfCompletedObjectives() iterates through all objectives, counting both total completions and those that influence door-opening or spawn-stopping.
+
+                                <br></br> BroadcastObjectiveCompletionGameEvents() compares required totals against current completion counts and fires appropriate delegates when all required objectives are fulfilled.
+
+                            </p>
+
+                            <p>
+                                12. TriggerWave() first checks whether the currently active wave is Wave 1 and whether Wave 1 is objective-triggered.
+
+                                <br></br> It then iterates through the objective’s gameplay tags, spawning the wave that matches NextWaveInQueue and marking the others as “released” for later spawning.
+                                <br></br> When multiple waves are listed, only one may spawn at a time; the rest are queued in the released-waves map.
+                            </p>
+
+                            <p>
+                                13. SpawnWave1IfStartIsObjectiveDependent() checks whether Wave 1 is active and whether this objective’s gameplay tags include Wave 1.
+
+                                <br></br> It then retrieves Wave 1’s data asset entry into a temporary EncounterWaveData struct and verifies that its trigger type is “Objective.” If so, Wave 1 begins spawning.
+                            </p>
+
+                            <p>
+                                14.When a wave begins spawning, it sets NextWaveInQueue numerically (e.g., Wave 1 → Wave 2) and marks IsSpawning = true. No subsequent wave can start until the current wave clears this flag.
+
+                                <br></br> IsNextInQueue() adds the wave’s gameplay tag to the released-wave map, then checks whether it matches NextWaveInQueue and whether no wave is currently spawning.
+                                If both conditions are met—and no EQS test is running—the wave begins spawning.
+                                <br></br> If spawning or EQS evaluation is already in progress, the wave waits until the current wave finishes and the released-waves map is reevaluated.
                             </p>
                         </div>
                     </div>
@@ -1224,101 +1225,96 @@
                         <div class="image-container">
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_HeaderTurnOnGeneratorsImg1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_HeaderTurnOnGeneratorsImg1.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_StartObjectiveIsObjectiveCompletImg2.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_OnIneractGeneratorImg3.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_SetIsFirstIterationCompleteAndBroadcastUIUpdateImg4.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_DisplayTextImg5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/Objectives_BasicVersionOfUIImg5p5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_OnTimerFinishedSetToTrueImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_ForceFieldDeathReversalImg8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_BroadcastReversalAndUIWidgetImg9.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/Objectives_BasicVersionOfUIImg_img6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_TimerFinishedDelegateTimerManager_img7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_OnTimerFinishedSetToTrue_img8.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_ForceFieldDeathReversal_img9.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_BroadcastReversalAndUIWidget_img10.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  .... Work in progress
+                                1.  ObjectiveActorTurnOnAllGenerators stores a set of all AGenerators in the sub-level set by the designer, using a set to avoid duplicates. The objective completes once every generator in the set reaches the “active” state.
 
-                                <br></br>...
+                                <br></br> Generators can activate automatically when the encounter begins (via an exposed bool set by the designer) or through player interaction by holding E near a generator.
                             </p>
                             <p>
-                                2. ...
+                                2. StartObjective calls Super to set HasObjectiveStarted to true and broadcast OnActorStateChangeUpdateUIDelegate, which informs the UI of state changes for non-timer-based objectives.
 
-                                <br></br> ...
-
-                                <br></br> ...
+                                <br></br> IsObjectiveComplete is kept const so the UI can poll it efficiently. The base implementation verifies the objective has started, then iterates through all stored generator references, returning false if any generator is inactive.
                             </p>
                             <p>
-                                3. ...
+                                3. BindingComponentBase caches a reference to the GameState and binds its delegates during InitializeComponent so all event links exist before BeginPlay. (See the EventBus section for details.)
 
-                                <br></br> ...
-
-                                <br></br> ...
+                                <br></br> The binding component on ObjectiveActorTurnOnAllGenerators binds two functions to the AGenerator’s OnGeneratorInteractDelegate, allowing the objective to react immediately when any generator is interacted with.
 
                             </p>
                             <p>
-                                4. ...
+                                4. IfCompleteTriggerWave determines whether the objective is both started and fully complete (all generators active).
 
-                                <br></br>...
+                                <br></br>If so, it triggers any associated waves, broadcasts the completion delegate, and begins subobjectives. (See slides 8–14 of the previous section for the full wave-triggering sequence.)
 
-                                <br></br>...
+
+                                <br></br> BroadcastUpdateUI triggers a delegate notifying the UI that the objective state changed and needs refreshing.
 
                             </p>
                             <p>
-                                5. ...
+                                5. The default GetObjectiveDisplayText returns ObjectiveDisplayText, and because it is const, no input pins are needed.
 
-                                <br></br>...
+                                <br></br>Each child objective overrides this function.
+                                ObjectiveActorTurnOnAllGenerators provides a secondary text variant used when completion is reversed. It formats the UI string by combining the base display text with the count of active generators versus total generators.
 
-                                <br></br>...
+                                <br></br> The UI receives fully formatted text, requiring no further processing.
 
-                                <br></br> ...
-
-                                <br></br>...
                             </p>
                             <p>
-                                6. ...
+                                6. This example illustrates the UI flow for each objective stage.
 
-                                <br></br>...
+                                <br></br>When an objective starts or completes, the UI displays the appropriate text, then hides the completion text once its timer ends. IsObjectiveFreed prevents further checks once an objective finishes.
 
-                                <br></br>...
+                                <br></br> IsStarted determines whether the UI should display ObjectiveDisplayText. It may be reset to false if the objective is a subobjective whose parent has had its completion reversed.
+                                <br></br> When the objective completes, IsObjectiveComplete becomes true and the UI shows CompletionDisplayText until its visibility timer ends, at which point the objective is freed.
 
                             </p>
 
                             <p>
-                                7. ...
+                                7. TurnOnAllGenerators pairs with the DefendGenTime objective, which always appears as its subobjective. If a generator becomes inactive, DefendGenTime stops and TurnOnAllGenerators reverts from complete to incomplete.
 
-                                <br></br>...
+                                <br></br>Once the generator-defense timer finishes, the GeneratorTimeManager broadcasts OnGeneratorTimerManagerFinishedDelegate, triggering OnTimerFinishedSetToTrue.\
+                                This locks the objective, preventing any further reversal of completion.
 
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                8. ...
-
-                                <br></br>...
-
-                                <br></br>...
 
                             </p>
 
                             <p>
-                                9. ...
+                                8. OnTimerFinished sets IsTimerFinished to true, immediately finalizing the TurnOnAllGenerators objective and preventing any further reversal. Generator activity is no longer checked once the timer has finished.
 
-                                <br></br>...
+                            </p>
 
-                                <br></br>...
+                            <p>
+                                9. TurnOnAllGenerators reverses completion if the force field protecting a generator is destroyed.
+
+                                <br></br> AForceFieldBase includes a HealthComponent that processes damage and broadcasts events such as health changes and death. When its health reaches zero, it broadcasts OnHealthDepleted.
+                                <br></br> AForceFieldBase binds its Death function to that delegate, which then fires OnForceFieldDeathDelegate.
+
+                                <br></br> BindingComponent listens for this delegate and triggers BroadcastCompletionReversedEvent, which handles reverting the objective’s completion state.
 
                             </p>
                             <p>
-                                10. ...
+                                10. Reversal only occurs if all generators were previously active and then one becomes inactive.
 
-                                <br></br>...
+                                <br></br> The system checks the active state of all generators, and only when one of them drops from active to inactive is the reversal broadcast and its logic executed.
 
-                                <br></br>...
+                                <br></br> StopSubobjectives sets HasObjectiveStarted to false for DefendGenTime and any additional subobjectives.
+                                <br></br> SetIsFirstIterationComplete updates the internal flag that determines which display text variant is shown.
+                                <br></br> OnActorObjectiveCompletionReversedUpdateUIDelegate notifies the UI to clear the slot and remove the reversed objective from the map that tracks completed objectives.
 
                             </p>
                         </div>
@@ -1331,13 +1327,13 @@
                         <div class="image-container">
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChild_HeaderGenTimeImg1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_StartObjectiveIsObjectiveCompletImg2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_UpdateTimeRemaingElaspedTimeDelegateImg3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_UpdateTimeRemainingAndBroadCastImg4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_DisplayTextImg5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChild_HeaderGenTime_Img1.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_StartObjectiveIsObjectiveComplet_img2.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_UpdateTimeRemaingElaspedTimeDelegate_Img3.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_UpdateTimeRemainingAndBroadCast_Img4.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_DisplayText_Img5.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_TimerFinishedDelegateTimerManager_Img6.png" alt=""></div>
+                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_SetTimerFinished_Img7.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
@@ -1501,93 +1497,7 @@
                     </div>
 
 
-                    <h4>UI Display Objective Text</h4>
-                    <div class="media-container">
-
-                        <div class="image-container">
-                            <button class="prev">&#10094;</button>
-                            <div class="carousel-track">
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChild_HeaderGenTimeImg1.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_StartObjectiveIsObjectiveCompletImg2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_UpdateTimeRemaingElaspedTimeDelegateImg3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_UpdateTimeRemainingAndBroadCastImg4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_DisplayTextImg5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_TimeManagerPauseTimerImg9.png" alt=""></div>
-                            </div>
-                            <button class="next">&#10095;</button>
-                        </div>
-
-                        <div class="codeDescription-container">
-                            <p>
-                                1.  .... Work in progress
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                2. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                            <p>
-                                5. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                7. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                8. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                        </div>
-                    </div>
+                    
 
                     <h4>Tech </h4>
                     <div class="tech-skill">
