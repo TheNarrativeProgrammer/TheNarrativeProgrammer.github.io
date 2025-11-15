@@ -771,15 +771,7 @@
                                 <br></br>
 
                             </p>
-
-                            <p>
-                                10.
-
-                                <br></br>
-
-                                <br></br>
-
-                            </p>
+>
                         </div>
                     </div>
 
@@ -791,92 +783,17 @@
                             <button class="prev">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_Attack_Examples.gif" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_FrogAIAble_Img2.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_img3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_GetLocationFromPatrolRoute_img4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_GetLocationFromPatrolRoute_RunEQS_img5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_EQS_FindUnoccupiedLocationOnPatrolRoute_img6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_FrogDestinationTest_img7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_JumpToDestinationFlusher_img8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_JumpToDestinationFlusher_img9.png" alt=""></div>
+
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  .... Work in progress
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                2. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
+                                1.  Example of enemy attacks. See AttackToken section for more details on the attack state. 
 
                             </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                            <p>
-                                5. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                7. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                8. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                            <p>
-                                9. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
+                           
                         </div>
                     </div>
 
@@ -884,8 +801,9 @@
                     <div class="tech-skill">
                         <div class="tech-box">Custom EQS Test</div>
                         <div class="tech-box">Gameplay-tags</div>
-                        <div class="tech-box">Unit Tests</div>
-                        <div class="tech-box">Data Assets</div>
+                        <div class="tech-box">AI Behaviour Tree</div>
+                        <div class="tech-box">Tasks and Decorators</div>
+                        <div class="tech-box">Event Driven Structure</div>
                     </div>
 
                 </div>
@@ -1064,10 +982,8 @@
                     <h4></h4>
                     <h4>Tech </h4>
                     <div class="tech-skill">
-                        <div class="tech-box">Custom EQS Test</div>
-                        <div class="tech-box">Gameplay-tags</div>
-                        <div class="tech-box">Unit Tests</div>
-                        <div class="tech-box">Data Assets</div>
+                        <div class="tech-box">Components</div>
+                        <div class="tech-box">Interfaces</div>
                     </div>
 
                 </div>
@@ -1466,9 +1382,7 @@
 
                     <h4>Tech </h4>
                     <div class="tech-skill">
-                        <div class="tech-box">Custom EQS Test</div>
-                        <div class="tech-box">Gameplay-tags</div>
-                        <div class="tech-box">Unit Tests</div>
+                        <div class="tech-box">Const Pure Functions</div>
                         <div class="tech-box">Data Assets</div>
                     </div>
 
@@ -1503,50 +1417,42 @@
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  .... Work in progress
+                                1.  The health bar consists of a progress slider paired with an image element.
 
-                                <br></br>...
+                                <br></br> No bindings are used for updates, preventing unnecessary per-frame ticks and ensuring all changes occur explicitly through delegate-driven events.
                             </p>
                             <p>
-                                2. ...
+                                2. On Construct, the widget caches a reference to the GameState, which serves as the mediator in the Event Bus system.
 
-                                <br></br> ...
+                                <br></br> BindResetDelegates listens for events that free objective slots at encounter start and reset the UI when transitioning between sub-levels.
 
-                                <br></br> ...
+                                <br></br> BindHealthDelegates connects the widget to broadcasts from the player's HealthComponent, enabling it to react to health initialization and health-changed events.
                             </p>
                             <p>
-                                3. ...
+                                3. At the start of an encounter, all objective slots are cleared, and the objectives provided to the EncounterManager become keys in a map that tracks whether each objective has been completed and freed.
 
-                                <br></br> ...
-
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> Freeing a slot checks if the slot is occupied; if so, it resets all tracking variables and clears the associated text and checkbox elements.
 
                             </p>
                             <p>
-                                5. ...
+                                4. HealthInitializationDelegate binds to OnRequestHealthSendHealthDelegate, then broadcasts OnRequestPlayerHealthDelegate.
 
-                                <br></br>...
+                                <br></br> The player’s HealthComponent receives this request and responds by broadcasting OnRequestHealthSendHealthDelegate with the player’s current health, allowing the UI to initialize the health bar correctly.
 
-                                <br></br>...
+                                <br></br> HealthUpdateDelegate listens for OnHealthChangePlayerSendHealthDataDelegate, fired whenever the player's HealthComponent updates due to damage or healing.
 
-                                <br></br> ...
-
-                                <br></br>...
                             </p>
                             <p>
-                                6. ...
+                                5. PlayHealthFeedbackAnim selects and plays one of two animations—one for taking damage and one for healing—ensuring the UI provides immediate feedback on health changes.
 
-                                <br></br>...
+                            </p>
+                            <p>
+                                6. StartTimerUpdatedHealthBar begins a timed lerp toward the new health value.
 
-                                <br></br>...
+                                <br></br> TimerHandleHealthAlpha progresses an alpha value from 0 to 1 over one second and triggers StopTimerHealthUpdate when complete, clearing the update loop.
+
+                                <br></br>Meanwhile, TimerHandleHealthUpdate runs every 0.02 seconds and calls LerpHealthBarPercentage, 
+                                interpolating from OldHealth to CurrentHealth using the alpha value and updating both the slider’s fill percentage and its color.
 
                             </p>
                         </div>
@@ -1577,85 +1483,84 @@
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  .... Work in progress
+                                1.  Text appears in three situations:
 
-                                <br></br>...
+                                <br></br> --  When the player overlaps an interactable actor, prompting them to hold E.
+                                <br></br> --  When a tutorial message provides additional information the first time a new objective appears.
+                                <br></br> --  When dialogue text accompanies spoken audio.
+                                <br></br> A Canvas Panel is used to allow multiple layered elements and dynamic resizing.
+                                <br></br> Interaction and tutorial messages update the Interact/TutorialTextBox, while dialogue text updates the DialogueTextBox.
                             </p>
                             <p>
-                                2. ...
+                                2. BindDialogueDelegates connects the widget to the DialogueSubsystem and GameStateEventManager delegates that announce dialogue start and dialogue end events.
 
-                                <br></br> ...
-
-                                <br></br> ...
+                                <br></br> BindSendPlayerGuiMessage registers callbacks for interaction and tutorial text updates, ensuring the UI reacts when the player enters or leaves interactable areas or when tutorial prompts are triggered.
                             </p>
                             <p>
-                                3. ...
+                                3. OnDialogueStartDelegate checks if dialogue text is currently displayed; if not, it sets IsTextDisplayedDialogue to true. Tutorial and interact messages set the parallel flag IsTextDisplayedInteractTutorial.
 
-                                <br></br> ...
+                                <br></br> When either category finishes, it clears its flag and checks the other; the display slides out only when both are false, handled by IfInteractionAndDialogueFreePlaySlideOut.
 
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> The DialogueSubsystem manages FMOD playback and provides queued text through OnDialogueTextChange, which updates the DialogueTextBox accordingly.
 
                             </p>
                             <p>
-                                5. ...
+                                4. IfInteractDialogueBoxOutThenSlideIn checks whether the Canvas Panel is already visible by tracking IsCanvasInteractDialogueTextBorderSlideIn.
 
-                                <br></br>...
-
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> If the panel has not yet slid in, the flag is set and the slide-in animation plays, canceling any opposing animation via StopAnimIfPlaying before starting.
 
                             </p>
-
                             <p>
-                                7. ...
+                                5. FreeDialogueSlot clears the dialogue text and sets IsTextDisplayedDialogue to false.
 
-                                <br></br>...
+                                <br></br>IfInteractionAndDialogueFreePlaySlideOut checks whether the Canvas Panel is currently slid in and whether both dialogue and interaction/tutorial text are cleared. 
+                                If so, it marks the panel as slid out and triggers the slide-out animation.
 
-                                <br></br>...
+                            </p>
+                            <p>
+                                6. SendPlayerGuiMessage is fired by two different actor types.
+
+                                <br></br>--ACharacterBasePlayer sends the message when overlapping an actor implementing IInteractable, passing IsInteractable = true,
+                                which sets IsInteractableOverlapped and prevents premature slot clearing if a tutorial message ends while the player is still overlapping.
+                                <br></br>--ATutorialMessage sends the same delegate but passes IsInteractable = false.
+
+                                <br></br> When player overlap ends, the player broadcasts OnInteractEndOverlapUpdateUIDelegate, clearing IsInteractableOverlapped and freeing the slot.
+                                <br></br> Tutorial trigger boxes start a timer, and when it finishes, they broadcast OnHideTutorialMessageUpdateUIDelegate to free the slot if interaction text is not active.
 
                             </p>
 
                             <p>
-                                8. ...
+                                7. UpdateInteractionSlotText sets IsInteractionOverlapped when the delegate reports an interactable overlap.
 
-                                <br></br>...
+                                <br></br> OccupiedInteractionSlot updates the displayed text and sets IsTextDisplayedInteractionTutorial to true.
 
-                                <br></br>...
+                                <br></br> IfInteractDialogueBoxOutThenSlideIn is used to ensure the text panel animates into view when interaction or tutorial messages appear.
 
                             </p>
 
                             <p>
-                                9. ...
+                                8. IfNotInteractionOverlapThenFreeSlot is triggered when the player stops overlapping an IInteractable actor or when a tutorial timer expires.
 
-                                <br></br>...
+                                <br></br>It checks whether the player is still overlapping any interactable; if not, it clears the text, 
+                                sets IsTextDisplayedInteractionTutorial to false, and then calls IfInteractionAndDialogueFreePlaySlideOut to hide the panel if both message types are finished.
 
-                                <br></br>...
+                            </p>
+
+                            <p>
+                                9. A DoOnce node ensures the tutorial delegate fires only a single time.
+
+                                <br></br> he overlapped actor is checked for the IPlayerCharacterable interface.
+
+                                <br></br> During testing, the player could overlap a TutorialMessage before obtaining a reference to the GameStateEventManager, so a validity check re-acquires the reference if needed.
+                                <br></br> SendPlayerGuiMessage is called with IsInteractable = false, and StartHideDisplayTimer begins a countdown that eventually triggers OnHideTutorialMessageUpdateUIDelegate, handled by the UI widget.
 
                             </p>
                             <p>
-                                10. ...
+                                10. The BoxComponentInteraction on BP_CharacterBasePlayer checks whether the overlapped actor implements IInteractable.
 
-                                <br></br>...
+                                <br></br> If so, it broadcasts SendPlayerGuiMessage with IsInteractable = true.
 
-                                <br></br>...
+                                <br></br> When overlap ends, it performs the same interface check and broadcasts OnInteractEndOverlapUpdateUIDelegate, allowing the UI to clear the interaction text.
 
                             </p>
                         </div>
@@ -1685,92 +1590,89 @@
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  .... Work in progress
+                                1.There are two objective slots, each able to hold one active objective.
 
-                                <br></br>...
+                                <br></br>  When an objective begins, it assigns its DisplayText to the TextNormalObjective field in the appropriate slot.
+                                <br></br>  Once the objective completes, the checkbox for that slot is checked and the TextCompleteObjective field is populated with the the DisplayText that can be animated idenpendently.
                             </p>
                             <p>
-                                2. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
+                                2. During Construct, BindObjectiveDelegates registers all UI handlers for objective-related events: action-based updates, timer-based updates, completion reversal, single-objective completion, and the event fired when all encounter objectives are finished.
 
                             </p>
                             <p>
-                                4. ...
+                                3. OnActorStateChange responds to any action-driven objective starting or being updated.
 
-                                <br></br>...
+                                <br></br> OnTimerChangeUpdateUI handles objectives driven by timers and receives their periodic updates.
 
-                                <br></br>...
+                                <br></br> OnActorObjectiveCompletionReversedUpdateUIDelegate triggers when an objective that had been completed and freed is reversed back to incomplete.
+                                <br></br> OnSingleObjectiveComplete is called after an objective has completed and its completion text has finished displaying for its allotted duration.
 
                             </p>
                             <p>
-                                5. ...
+                                4. UpdateUI first checks whether the UI is already mid-update to prevent conflicting writes during animations or state changes.
 
-                                <br></br>...
+                                <br></br> It retrieves the array of ObjectiveActors from the EncounterManager (populated by the EncounterTrigger) and iterates through them, calling ProcessObjectiveActor for each.
 
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> Once all iterations complete, IsUpdating is reset to false.
 
                             </p>
-
                             <p>
-                                7. ...
+                                5. ProcessObjectiveActor begins by ensuring no slide-in or slide-out animations are running, avoiding mid-animation state corruption.
 
-                                <br></br>...
+                                <br></br> It immediately exits if the objective is already freed (completed, stored in the completion map, and no longer visible).
 
-                                <br></br>...
+                                <br></br> For each iteration, the index is stored in IndexOfCurrentIterationObjectiveText.
+
+                                <br></br> If the objective has started but is not yet complete, it attempts to occupy a slot or updates its existing slot via AssignDisplayTextToObjectiveSlot, which ensures only the correct slot index is modified.
+
+                                <br></br> If the objective has started and is completed, AssignOrFreeCompleteObjective either applies completion text or frees the entry depending on visibility state.
+                            </p>
+                            <p>
+                                6. AssignIndexAndOccupySlot1 and Slot2 handle placing a new active objective into the first available slot.
+
+                                <br></br> They record the objective’s index, store its reference, and mark the slot as occupied.
+
+                                <br></br> The VisibleUncheckSlideInObjective functions configure the slot’s visibility state—showing the normal text, collapsing completion text, and ensuring the checkbox is unchecked.
+                                <br></br> PlaySlideInObj1 and Obj2 then animate the slot sliding in if it is not already visible.
 
                             </p>
 
                             <p>
-                                8. ...
+                                7. AssignOrFreeCompleteObjective determines whether completion text should be applied.
 
-                                <br></br>...
+                                <br></br> If the completion text is visible and the completion map already marks the objective as completed (value of true), no update is needed.
 
-                                <br></br>...
+                                <br></br> If not, the entry is marked complete and the checkbox for the slot with the matching index is checked.
+                                <br></br> Completion text is only displayed if the second slot is free; otherwise, only the checkbox is updated.
+
+                            </p>
+
+                            <p>
+                                8. Once an objective completes, a timer begins that eventually hides its completion text by setting IsCompletionTextVisible to false.
+
+                                <br></br> When the timer expires, FreeSlots marks the objective as freed and searches for the slot whose index matches the objective.
+
+                                <br></br> That slot’s TextNormalObjectiveText is transferred to TextCompleteObjectiveText to play a fade-out animation before the container is cleared.
 
                             </p>
                             <p>
-                                9. ...
+                                9. UpdateUIShowingTime receives a reference to the ticking timer objective and compares it against the objectives occupying each slot.
 
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> Only the slot containing that specific objective updates its displayed time.
 
                             </p>
                             <p>
-                                10. ...
+                                10. RemoveReversedObjectiveFromFreeSlot receives the reversed objective and updates the CompletedObjectiveMap entry to false.
 
-                                <br></br>...
+                                <br></br> If the reversal occurs before the objective was freed, each slot checks for a matching reference and clears it if found.
 
-                                <br></br>...
+                                <br></br> After reversing or completing cleanup, OnSingleObjectiveCompleteDelegate fires once IsCompletionTextVisible becomes true.
 
                             </p>
                             <p>
-                                11. ...
+                                11. Once all encounter objectives finish, OnAllObjectivesComplete starts a timer that triggers OnAllObjectCompleteHideDisplay.
 
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> This plays the slide-out animation for both objective slots, clearing the UI for the next encounter.
 
                             </p>
                         </div>
@@ -1782,10 +1684,8 @@
 
                     <h4>Tech </h4>
                     <div class="tech-skill">
-                        <div class="tech-box">Custom EQS Test</div>
-                        <div class="tech-box">Gameplay-tags</div>
-                        <div class="tech-box">Unit Tests</div>
-                        <div class="tech-box">Data Assets</div>
+                        <div class="tech-box">Widgets</div>
+                        <div class="tech-box">SubSystem</div>
                     </div>
 
                 </div>
@@ -1815,109 +1715,78 @@
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_ForceFieldHealthChangeAndDeath_Img7.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_OnObjectiveTimerCompleteStopSoundTimer_Img8.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_ForceFieldBinding_Img9.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/Objectives_CompleteObjectiveImg10.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/Objectives_IfAllObjectiveCompleteImg10.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  .... Work in progress
+                                1.  The GameStateEventManager inherits from AGameState and primarily serves as the central mediator for the event-bus system.
 
-                                <br></br>...
+                                <br></br> It defines nearly all delegate signatures used across the game, making it the ideal place for binding because it’s created early in the game's lifecycle.
+                                <br></br> By routing events through this class, actors never need direct references to each other, eliminating race-condition risks and simplifying communication.
                             </p>
                             <p>
-                                2. ...
+                                2. Because InitializeComponent runs before BeginPlay, it provides an early and reliable point for setting up bindings.
 
-                                <br></br> ...
+                                <br></br> The base DelegateBindingComponent enables this by setting bWantsInitializeComponent to true.
 
-                                <br></br> ...
+                                <br></br> During initialization, the component stores a pointer to the GameStateEventManager and calls BindDelegatesFromBP (for designers) and BindDelegates (for C++ bindings).
+                                <br></br> The C++ BindDelegates function is where most setup occurs in gameplay classes.
                             </p>
                             <p>
-                                3. ...
+                                3. Actors that need event binding have their own specialized binding component, derived from DelegateBindingComponent.
 
-                                <br></br> ...
-
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> Each component overrides BindDelegates, retrieves the owning actor, and binds the relevant actor functions to the appropriate delegate(s).
 
                             </p>
                             <p>
-                                5. ...
+                                4. AGeneratorBase includes a DelegateBindComponentGenerator that handles both binding and broadcasting.
 
-                                <br></br>...
+                                <br></br> When an encounter begins, the generator uses this component to broadcast that it is now active and safe to reference.
 
-                                <br></br>...
+                                <br></br> It also starts a looping noise-timer via SetSoundTimer, which calls PlayNoise every cycle. These noise events are picked up by AI and cause them to enter an Investigate state.
 
-                                <br></br> ...
-
-                                <br></br>...
                             </p>
                             <p>
-                                6. ...
+                                5. Each Generator has a UI marker that displays the health of its associated ForceField. Because multiple generators may exist, the widget tracks the ForceField using its UniqueID.
 
-                                <br></br>...
+                                <br></br> When health changes are broadcast, the widget updates only if the broadcast ID matches its stored ID.
 
-                                <br></br>...
+                                <br></br> The Generator spawns its ForceField and records the ID at BeginPlay. The marker assigns the ID when the encounter begins.
+                                <br></br> When the ForceField takes damage, it sends its ID so only the correct UI marker updates.
+                            </p>
+                            <p>
+                                6. At BeginPlay, the Generator spawns its ForceField and records its UniqueID.
+
+                                <br></br> When the ForceField's health reaches zero, it broadcasts OnForceFieldBaseDeathIDDelegate with that ID.
+
+                                <br></br> The Generator’s binding component listens for this event, verifies the ID, deactivates the ForceField, and stops the noise-timer that attracts AI.
 
                             </p>
 
                             <p>
-                                7. ...
+                                7. Any actor with a HealthComponent can receive broadcasts when health changes or reaches zero. These actors can forward that information through the GameStateEventManager.
 
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> ForceFieldBase also uses this pattern: when its HealthComponent fires OnHealthDepletedDelegate, it triggers its Death function and broadcasts OnForceFieldBaseDeathIDDelegate through its binding component.
 
                             </p>
 
                             <p>
-                                8. ...
+                                8. The Generator’s binding component also listens for completion of the defend-generator timer.
 
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> When OnGeneratorTimeManagerFinishedDelegate fires, it calls OnObjectiveTimerCompleteStopSoundTimer, stopping the looping noise-timer that AI use to detect the generator.
 
                             </p>
 
                             <p>
-                                9. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                9. Actors with occasional broadcasts may call the GameStateEventManager directly, but those that must bind before BeginPlay or broadcast often are given specialized binding components.
 
                             </p>
 
-                            <p>
-                                10. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                11. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
+                          
                         </div>
                     </div>
-
-
 
 
                     <h4>Health Component</h4>
@@ -1931,89 +1800,47 @@
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_TakeDamageUpdateHealthBar_Img3.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_DamageInterface_Img4.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_ForceField_Img5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_OnTimerFinishedSetToTrueImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_ForceFieldDeathReversalImg8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/ObjectivesChild_BroadcastReversalAndUIWidgetImg9.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  .... Work in progress
+                                1.  The HealthComponent manages all health-related functionality for an actor, including tracking health, applying damage, handling healing, and broadcasting both incremental health updates and full depletion.
 
-                                <br></br>...
+                                <br></br> During InitializeComponent, the component binds its TakeDamage function to the owning actor’s OnTakeDamage event.
+                                <br></br> TakeDamage updates CurrentHealth while saving OldHealth, then broadcasts both values.
+                                <br></br> If health reaches zero or below, the HealthComponent fires OnHealthDepletedDelegate.
                             </p>
                             <p>
-                                2. ...
+                                2. Only the owning actor binds directly to its HealthComponent’s delegates to avoid unnecessary coupling.
 
-                                <br></br> ...
+                                <br></br> Other systems listen through that actor’s binding component, which forwards health-related broadcasts.
 
-                                <br></br> ...
+                                <br></br> Because the UI needs initial health values before any damage occurs, the health widget binds to OnRequestHealthSendHealthDelegate, then immediately fires OnRequestPlayerHealthDelegate.
+                                <br></br> The player’s binding component—already initialized—receives this, calls OnHealthRequestSendHealth, and rebroadcasts the current and max health through OnRequestHealthSendHealthDelegate.
                             </p>
                             <p>
-                                3. ...
+                                3. The player binds OnHealthChangeSendHealth to the HealthComponent’s OnHealthChangeDelegate. When TakeDamage is triggered, the player forwards the update through OnHealthChangePlayerSendHealthDataDelegate.
 
-                                <br></br> ...
-
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> The UI listens for this broadcast and updates the health bar accordingly.
 
                             </p>
                             <p>
-                                5. ...
+                                4. Two interfaces determine which actors can damage which team. Player attacks look for IPlayerDamagable, while frog attacks check for IEnemyDamagable.
 
-                                <br></br>...
+                                <br></br> All frog characters implement IPlayerDamagable, and both ACharacterBasePlayer and AForceField implement IEnemyDamagable.
 
-                                <br></br>...
 
-                                <br></br> ...
-
-                                <br></br>...
                             </p>
                             <p>
-                                6. ...
+                                5. The ForceField binds to its HealthComponent’s OnHealthChangeDelegate and OnHealthDepletedDelegate. When triggered, it forwards these events through the GameStateEventManager.
 
-                                <br></br>...
+                                <br></br> OnHealthChangeSendIDAndHealth broadcasts the ForceField’s UniqueID along with its updated health via OnForceFieldHealthChangeIDHealthDelegate.
 
-                                <br></br>...
-
+                                <br></br> The generator widget listens for this and updates only when the broadcast ID matches its own stored ID.
                             </p>
-
-                            <p>
-                                7. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                8. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                9. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
+                          
                         </div>
                     </div>
 
@@ -2027,89 +1854,31 @@
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_PowerMgmr_ArrayOfCordsImg1.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_HeaderAndOnOffFunctions_Img2.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_BindingComp_Img3.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_UpdateTimeRemainingAndBroadCastImg4.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_DisplayTextImg5.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_TimerFinishedDelegateTimerManagerImg6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
+
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  .... Work in progress
+                                1.  The PowerCordManager maintains an array of APowerCord actors placed in the sub-level by designers.
 
-                                <br></br>...
+                                <br></br> Power cords visually connect Generators to a door and activate only when all Generators are active.
+                                <br></br> If any Generator becomes inactive—typically due to its associated ForceField reaching zero health—the cords are turned off.
                             </p>
                             <p>
-                                2. ...
+                                2. A binding component attached to the PowerCordManager listens for game events and triggers functions that iterate over all power cords, enabling or disabling them as needed.
 
-                                <br></br> ...
-
-                                <br></br> ...
+                                <br></br> TurnPowerCordsOn and TurnPowerCordsOff implement core logic in C++ but are declared as BlueprintNativeEvent, allowing designers to extend behavior in Blueprint.
                             </p>
                             <p>
-                                3. ...
+                                3. OnAllForceFieldActivatedTurnPowerOn is called by the GeneratorTimeManager whenever the generator-defense timer starts or resumes, indicating all ForceFields are active.
 
-                                <br></br> ...
+                                <br></br> OnForceFieldDeactivatedTurnPowerOff is triggered when any ForceField broadcasts its death. The GeneratorTimeManager pauses the timer and notifies the PowerCordManager to turn off all cords.
 
-                                <br></br> ...
-
-                            </p>
-                            <p>
-                                4. ...
-
-                                <br></br>...
-
-                                <br></br>...
 
                             </p>
-                            <p>
-                                5. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                                <br></br> ...
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                6. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                7. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                8. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
-                            <p>
-                                9. ...
-
-                                <br></br>...
-
-                                <br></br>...
-
-                            </p>
+                            
                         </div>
                     </div>
 
@@ -2127,88 +1896,51 @@
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_OnEncounterStartDelegate_Img4.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_SendTotalTimeAndAssignTime_Img5.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_CheckIfLightCanTurnOn_Img6.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/ObjectivesChildTime_SetTimerFinishedImg7.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/ObjectChidTime_StopObjectivesCalledOnForceFieldDeathImg8.png" alt=""></div>
-                                <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/ObjectChidTime_TimeManagerPauseTimerImg9.png" alt=""></div>
                             </div>
                             <button class="next">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  .... Work in progress
-
-                                <br></br>...
-                            </p>
-                            <p>
-                                2. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
-                            </p>
-                            <p>
-                                3. ...
-
-                                <br></br> ...
-
-                                <br></br> ...
+                                1.  Above each door are progress lights that visually represent how much power the door has accumulated and how close it is to opening. Each light corresponds to progress within the generator-defense time objective.
 
                             </p>
                             <p>
-                                4. ...
+                                2. Each light is represented by a FLightData struct that stores the Static Mesh reference, the time at which the light should activate, whether it has already activated, and comparison operators for sorting or evaluation.
 
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> All lights are stored in the LightDatas array.
 
                             </p>
                             <p>
-                                5. ...
+                                3. AddLightsToLightData is a Blueprint function that forwards to a C++ version with a different signature (accepting a Static Mesh component).
 
-                                <br></br>...
+                                <br></br> Designers can add more lights by calling this function multiple times in Blueprint.
 
-                                <br></br>...
+                                <br></br> The C++ AddLightToLightDatas creates a new FLightData, assigns the provided Static Mesh to its StaticMeshComponentLight field, and appends the struct to the LightDatas array.
 
-                                <br></br> ...
-
-                                <br></br>...
                             </p>
                             <p>
-                                6. ...
+                                4. OnEncounterStartDelegate fires when the player enters the EncounterTrigger, at which point all lights have their materials set to white.
 
-                                <br></br>...
+                                <br></br> When the GeneratorTimeManager initializes the defense timer, OnGeneratorTimerManagerTimeStartDelegate is broadcast, switching all lights to red to indicate the start of the power-up sequence.
 
-                                <br></br>...
 
                             </p>
-
                             <p>
-                                7. ...
+                                5. When the GeneratorTimeManager starts for the first time, it also broadcasts OnGeneratorTimeManagerTimerStartSendTotalTimeDelegate, which provides the TotalTime required to complete the objective.
 
-                                <br></br>...
-
-                                <br></br>...
-
+                                <br></br> AssignTimeToTurnOffLight uses this value to iterate over all lights and calculate the specific time at which each one should activate.
                             </p>
-
                             <p>
-                                8. ...
+                                6. While the timer is active, OnGeneratorTimeManagerSecondElaspedDelegate broadcasts every second, providing the current TimeRemaining.
 
-                                <br></br>...
+                                <br></br> IndexToCheck is reset to 0 at the start of the encounter and allows the system to update lights efficiently without scanning the entire array each second.
 
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                9. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> CheckIfLightCanTurnOn compares the TimeToTurnOn value of the indexed light against TimeRemaining; if the threshold is reached, the light is activated and IndexToCheck is incremented to evaluate the next light in sequence.
 
                             </p>
+
+                           
                         </div>
                     </div>
 
@@ -2218,10 +1950,9 @@
 
                     <h4>Tech </h4>
                     <div class="tech-skill">
-                        <div class="tech-box">Custom EQS Test</div>
-                        <div class="tech-box">Gameplay-tags</div>
-                        <div class="tech-box">Unit Tests</div>
-                        <div class="tech-box">Data Assets</div>
+                        <div class="tech-box">Programming Patterns</div>
+                        <div class="tech-box">Damage System</div>
+                        <div class="tech-box">Components</div>
                     </div>
 
                 </div>
@@ -2255,92 +1986,91 @@
 
                         <div class="codeDescription-container">
                             <p>
-                                1.  Although the collision presets are set to ignore everything except the player, an interface that only the player has is used to confirm the overlapping actor is the player.
+                                1.  The Dialogue System uses a Composite Data Table and a Dialogue Subsystem to broadcast, receive, and look up dialogue information.
 
-                                <br></br>The EncounterData property is a data asset that contains the enemy type, quantity and event trigger for each wave of the encounter.
+                                <br></br>Each dialogue event is stored as a row in a Data Table using a GameplayTag as its key. DialogueTriggerBoxes contain a GameplayTag that determines which row they enqueue when activated.
+                                <br></br>For example, a row may be named Dialogue.Level.1TutorialExchange.4Slamming.
                             </p>
                             <p>
-                                2. Because designers were constantly iterating on the number of patrol routes and spawn locations, I used EQS instead of manually require designers to update arrays.
+                                2. Each row contains a GameplayTag (the same as the row name), an FMOD event for the spoken audio, and an array of FDialogueTextData entries.
 
-                                <br></br> PopulatArraysInPatrolRouteManager calls RunEqsFindPatrolRoutes() which lives on another component. RunEqsFindActorSpawners lives on this component.
+                                <br></br>FDialogueTextData includes the dialogue text, display duration, and a GameplayTag identifying the speaker.
 
-                                <br></br> CanWaveSpawn and HasWaveSpawned are properties in the DataAsset not exposed to designers that are updated during gameplay. The for loop uses a reference
-                                of the wave data for each wave to reset the values to their default of false.
-                            </p>
-                            <p>
-                                3. Designers assign gameplay tags 'wave.#' to the children of the ActorSpawner. Each element in the dataAsset's array has a 'wave' tag.
-                                The CurrentlyActiveWave is the tag of current wave.
-
-                                <br></br> The CurrentlyActiveEncounterTrigger is a box that encloses the entire encounter space.
-                                The EQS query finds all the actors of the object ype 'ActorSpawner' within the bounds of the encounter.
-
-                                <br></br> If the returned actors have a tag that matches the
-                                current wave, then they are added to the array of possible spawn locations.
+                                <br></br>The FMOD event may represent a single speaker or a conversation. The DialogueTextData array mirrors the order of spoken lines:
+                                <br></br>-- 1 entry = one speaker
+                                <br></br>-- 2 entries = two-character single exchange
+                                <br></br>-- 3 or more entries = two-character multiple exchange
+                                <br></br> TimeToDisplay aligns the on-screen text timing with the FMOD audio playback.
 
                             </p>
                             <p>
-                                4. This EQS takes in the EncounterTrigger as the context. The dimensions of the trigger component are used to set the bounds for a Box Multi Trace.
+                                3. Dialogue is organized into three Data Tables: Dialogue, Oneliners, and Narrative, all merged into one Composite Data Table.
 
-                                <br></br>ObjectTypesToSearchFor is an instance editable array that is exposed to the EQS. In this example, the object type passed in is ActorSpawner.
+                                <br></br> The Composite Table is stored as a soft object pointer in the GameInstance and asynchronously loaded during initialization.
 
-                                <br></br>Each ActorSpawner in the encounter is added to the AddGeneratedActors function, which is the array on actors the EQS returns.
+                                <br></br> SetDialogueTable is then used to pass this Composite Table into the DialogueSubsystem.
 
                             </p>
                             <p>
-                                5. For each encounter, could add up to ten waves to the array of a DA_Encounter. Each encounter trigger had one of these assets.
+                                4. The DialogueSubsystem stores a pointer to the loaded Composite Data Table as DialogueTable.
 
-                                <br></br>Quantity Spawned in Wave: total number of a given enemy type to spawn
+                                <br></br> Dialogue rows are managed using a TQueue, ensuring efficient and safe enqueue/dequeue operations.
 
-                                <br></br>Batch size: number of actors to spawn at a single spawn location (ActorSpawner class). If the Quanity=6 and the Batch-size = 2, then
-                                3 batches, each with 2 enemies, would spawn.
 
-                                <br></br> If there were 3 ActorSpawners with a match wave.# gameplaytag, the 3 batches would all spawn at different locations. If there were fewer than 3,
-                                the array of possible spawn locations loops back to index 0.
-
-                                <br></br>Wave Trigger: designers could chose between Encounter-Start, Objective or Enemy-Population as s means to trigger a wave.
                             </p>
                             <p>
-                                6. A unit test was used to automate the process of ensuring the correct data was entered.
+                                5. DialogueTriggers contain a GameplayTag matching a row in the Data Table.
 
-                                <br></br>When a new EncounterTrigger child was created, it couldn't be save until a DA_EncounterData was assigned to it's member variable.
+                                <br></br> OnOverlapTriggerDialogue is bound in BeginPlay and unbound after the first overlap so it fires only once.
 
-                                <br></br>When a new DA_EncounterData was created, it could be saved until the gameplay tags and values were properly set.
+                                <br></br> When triggered, the DialogueSubsystem is accessed.
+
+                                <br></br> AddDialogueTextDataToQueue enqueues the corresponding row, and TriggerDialogueIfNonPlaying starts playback if no dialogue is currently active. Otherwise, the row waits in the queue.
+
+                            </p>
+                            <p>
+                                6. AddDialogueTextDataToQueue looks up the row matching the GameplayTag, stores it as DialogueData, and enqueues it into DialogueQueue.
+
+                                <br></br> TriggerDialogueIfNonPlaying checks IsDialogueCurrentlyPlaying and calls IterateDialogueQueue if dialogue is not currently running.
+
 
                             </p>
 
                             <p>
-                                7. ...
+                                7. IterateDialogueQueue dequeues a row into CurrentDialogueOfRow.
 
-                                <br></br>...
+                                <br></br> The row’s DialogueTextData is stored in CurrentDialogueTextDataOfRow.
 
-                                <br></br>...
-
-                            </p>
-
-                            <p>
-                                8. ...
-
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> IsDialogueCurrentlyPlaying is set to true, allowing more items to queue while preventing parallel iteration.
+                                <br></br> OnDialogueStartDelegate notifies the UI.
+                                <br></br> PlayDialogue handles FMOD audio playback.
+                                <br></br> IterateDialogueText steps through each FDialogueTextData entry as the audio progresses.
+                                <br></br> If the queue becomes empty, OnDialogueFinishedDelegate signals the UI to hide dialogue text.
 
                             </p>
 
                             <p>
-                                9. ...
+                                8. PlayDialogue uses the player’s root component as the audio location.
 
-                                <br></br>...
-
-                                <br></br>...
+                                <br></br> An UFmodAudioComponent pointer is stored so it can be released later. PlayEventAttached plays the FMOD event stored in the row struct, and the event is then released.
 
                             </p>
 
                             <p>
-                                10. ...
+                                9. IterateDialogueText steps through CurrentDialogueTextDataOfRow, which contains text, speaker tag, and display duration.
 
-                                <br></br>...
+                                <br></br> It broadcasts the active line to the UI and schedules the next iteration using a timer set to TimeToDisplayText.
 
-                                <br></br>...
+                                <br></br> The first element is removed, and recursion continues until the array is empty. When finished, OnDialogueFinishedIterate is called.
+
+                            </p>
+
+                            <p>
+                                10.  OnDialogueFinishedIterate checks the DialogueQueue:
+
+                                <br></br> If not empty, IterateDialogueQueue processes the next row.
+
+                                <br></br> If empty, IsDialogueCurrentlyPlaying is set to false, and the UI is notified that dialogue has finished.
 
                             </p>
                         </div>
@@ -2359,10 +2089,11 @@
 
                             <h4>Tech </h4>
                             <div class="tech-skill">
-                                <div class="tech-box">Custom EQS Test</div>
-                                <div class="tech-box">Gameplay-tags</div>
-                                <div class="tech-box">Unit Tests</div>
-                                <div class="tech-box">Data Assets</div>
+                                <div class="tech-box">Data Table</div>
+                                <div class="tech-box">Composite Data Table</div>
+                                <div class="tech-box">SubSystem</div>
+                                <div class="tech-box">FMOD Audio Events</div>
+                                <div class="tech-box">Soft Object Reference</div>
                             </div>
                         </div>
                     </div>
