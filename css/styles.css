@@ -51,17 +51,34 @@ button {
     box-shadow: 0 20px 30px rgba(0,0,0, 1);
     transition: background-color 0.6s ease, transform 0.2s ease, box-shadow 0.2s ease;
     z-index: 10;
+    /* Add pulse animation */
+    animation: pulse 1s infinite ease-in-out;
 }
 
     button:hover {
         background-color: #FFA780; /* lighter coral hover */
         transform: translateY(2px);
+        animation-play-state: paused;
     }
 
     button:active {
         transform: translateY(4px);
         box-shadow: 0 0 0 rgba(0, 0, 0, 0);
     }
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 15px rgba(255,145,95,0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 40px rgba(255,145,95,0.8);
+    }
+
+    100% {
+        box-shadow: 0 0 15px rgba(255,145,95,0.3);
+    }
+}
 
 .main-nav {
     width: 100%;
