@@ -569,20 +569,6 @@ footer {
     background-color: transparent;
 }
 
-@media (max-width: 1800px) {
-    .sidebar {
-        display: none;
-    }
-    .projects-container {
-        width: 100%;     /* Full viewport width */
-        max-width: none;  /* Remove the 1800px max */
-        padding: 0 1vh;  /* Optional: reduce side padding */
-        box-sizing: border-box;
-        min-width: 0;
-    }
-}
-
-
 .sidebar {
     position: fixed;
     top: 300px; /* adjust to match navbar height */
@@ -593,7 +579,6 @@ footer {
     border-radius: 10px;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
     z-index: 5;
-    
 }
 
     /* Sidebar list */
@@ -604,11 +589,12 @@ footer {
     }
 
         .sidebar ul li {
-            margin-bottom: 15px;
+            margin-bottom: 0;
         }
 
             /* Sidebar links */
             .sidebar ul li a {
+                margin: 0;
                 text-decoration: none;
                 color: #ffe183; /* default link color */
                 font-weight: bold;
@@ -640,6 +626,37 @@ footer {
         .sidebar a.active {
             color: #ff7f50; /* highlight when in section */
         }
+
+@media (max-width: 1024px) {
+    .sidebar {
+        
+        width: 90px; /* make smaller */
+    }
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        width: 80px; /* make smaller */
+    }
+}
+
+
+
+@media (max-width: 1800px) {
+    .sidebar {
+        width: 120px; /* make smaller */
+    }
+    .projects-container {
+        width: 100%;     /* Full viewport width */
+        max-width: none;  /* Remove the 1800px max */
+        padding: 0 1vh;  /* Optional: reduce side padding */
+        box-sizing: border-box;
+        min-width: 0;
+    }
+}
+
+
+
 
 .content {
     margin-left: 200px; /* leave space for sidebar */
