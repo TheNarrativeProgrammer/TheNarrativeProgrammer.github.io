@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* ---------------------------
+    /* ----------------------------
        GLOBAL STATE
     --------------------------- */
     let soundEnabled = false; // moved to top so handlers referencing it never see an uninitialized value
