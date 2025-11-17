@@ -2,10 +2,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const videos = document.querySelectorAll(".autoplay-video");
 
     videos.forEach(video => {
-        video.loop = true; // ensure looping
-        video.muted = true; // ensure muted for autoplay
-        video.playsInline = true; // for mobile
-        video.preload = "auto"; // preload for smooth start
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.preload = "auto";
     });
 
     window.addEventListener("scroll", function () {
@@ -15,16 +15,25 @@ document.addEventListener("DOMContentLoaded", function () {
             const rect = video.getBoundingClientRect();
             const videoCenter = rect.top + rect.height / 2;
 
-            if (Math.abs(videoCenter - screenCenter) < 200) {
+            if (Math.abs(videoCenter - screenCenter) < 400) {
                 video.classList.add("active");
                 video.play().catch(err => console.log("Autoplay blocked:", err));
+
+                // NEW: sound for active video
+                if (soundEnabled) {
+                    video.muted = false;
+                    video.volume = 1.0;
+                }
             } else {
                 video.classList.remove("active");
                 video.pause();
+
+                // NEW: always mute inactive videos
+                video.muted = true;
             }
-        });
-    });
-});
+        }); 
+    }); 
+}); 
 
 document.addEventListener("DOMContentLoaded", function () {
     const videos = document.querySelectorAll(".autoplay-video-lower-threshhold");
@@ -91,6 +100,29 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateActiveLink(activeLink) {
         sidebarLinks.forEach(link => link.classList.remove("active"));
         activeLink.classList.add("active");
+    }
+});
+
+let soundEnabled = false;
+
+const soundBtn = document.getElementById("unmuteBtn");
+soundBtn.textContent = "Enable Sound";
+
+soundBtn.addEventListener("click", () => {
+    soundEnabled = !soundEnabled;
+
+    // Update button label
+    soundBtn.textContent = soundEnabled ? "Disable Sound" : "Enable Sound";
+
+    // Apply sound state to currently active video
+    const active = document.querySelector(".autoplay-video.active, .autoplay-video-lower-threshhold.active");
+
+    if (active) {
+        active.muted = !soundEnabled;
+        if (soundEnabled) {
+            active.volume = 1.0;
+            active.play();
+        }
     }
 });
 
