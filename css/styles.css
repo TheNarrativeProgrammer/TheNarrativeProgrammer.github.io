@@ -83,7 +83,8 @@ video {
 /* top navbar styles */
 button {
     background-color: #FF915F; /* coral/orange button */
-    color: #1B2B34; /* dark text */
+    color: #fff;
+    /*color: #1B2B34;*/ /* dark text */
     font-size: 25px;
     padding: 10px 20px;
     border: none;
@@ -863,7 +864,7 @@ footer {
     border-radius: 10px;
     background: #ff915f;
     color: #fff;
-    font-size: 18px;
+    font-size: 25px;
     cursor: pointer;
     z-index: 9999;
 }
