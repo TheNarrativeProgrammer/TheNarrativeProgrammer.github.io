@@ -2,13 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* ----------------------------
        GLOBAL STATE
-    --------------------------- */
-    let soundEnabled = false; // moved to top so handlers referencing it never see an uninitialized value
+    ---------------------------- */
+    let soundEnabled = false;
 
     /* ============================================================
-       VIDEO AUTOPLAY (upper threshold + lower threshold combined)
+       VIDEO AUTOPLAY
     ============================================================ */
-
     const autoplayVideos = Array.from(document.querySelectorAll(".autoplay-video"));
     const autoplayVideosLower = Array.from(document.querySelectorAll(".autoplay-video-lower-threshhold"));
 
@@ -48,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // initial run in case some videos are already in view
+    // Initial check
     processVideoGroup(autoplayVideos, 400);
     processVideoGroup(autoplayVideosLower, 400);
 
@@ -58,16 +57,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { passive: true });
 
     window.addEventListener("resize", () => {
-        // Re-run sizing / active detection on resize
         processVideoGroup(autoplayVideos, 400);
         processVideoGroup(autoplayVideosLower, 400);
     });
 
-
     /* ============================================================
        SIDEBAR SCROLL + ACTIVE LINK HIGHLIGHT
     ============================================================ */
-
     const sections = Array.from(document.querySelectorAll("section"));
     const sidebarLinks = Array.from(document.querySelectorAll(".sidebar a"));
 
@@ -84,8 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (target) {
                 target.scrollIntoView({ behavior: "smooth", block: "start" });
                 updateActiveLink(link);
-            } else {
-                console.warn("Sidebar link target not found:", href);
             }
         });
     });
@@ -107,16 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }, { passive: true });
 
-
-
     /* ============================================================
        SOUND TOGGLE BUTTON
     ============================================================ */
-
     const soundBtn = document.getElementById("unmuteBtn");
-    if (!soundBtn) {
-        console.error("Sound button with id #unmuteBtn not found.");
-    } else {
+    if (soundBtn) {
         soundBtn.type = "button";
         soundBtn.textContent = "Enable Sound";
 
@@ -124,57 +113,29 @@ document.addEventListener("DOMContentLoaded", () => {
             soundEnabled = !soundEnabled;
             soundBtn.textContent = soundEnabled ? "Disable Sound" : "Enable Sound";
 
-            const active = document.querySelector(".autoplay-video.active, .autoplay-video-lower-threshhold.active");
-
-            if (active) {
-                active.muted = !soundEnabled;
-                if (soundEnabled) {
-                    active.volume = 1.0;
-                    active.play().catch(() => { });
-                }
-            } else {
-                // No active video — just toggle global state, future active videos will respect it
-                console.info("Sound toggled; no active video right now.");
+            const activeVideo = document.querySelector(".autoplay-video.active, .autoplay-video-lower-threshhold.active");
+            if (activeVideo) {
+                activeVideo.muted = !soundEnabled;
+                if (soundEnabled) activeVideo.volume = 1.0;
             }
         });
     }
 
-
-
     /* ============================================================
-       CAROUSELS (Robust, null-safe)
+       CAROUSELS
     ============================================================ */
-
     const carousels = Array.from(document.querySelectorAll(".image-container"));
-    if (carousels.length === 0) {
-        console.info("No .image-container carousels found on page.");
-    }
 
-    carousels.forEach((container, carouselIndex) => {
+    carousels.forEach(container => {
         const track = container.querySelector(".carousel-track");
-        if (!track) {
-            console.warn(`Carousel #${carouselIndex} missing .carousel-track — skipping.`);
-            return;
-        }
+        if (!track) return;
 
         const slides = Array.from(track.querySelectorAll(".carousel-slide"));
-        if (slides.length === 0) {
-            console.warn(`Carousel #${carouselIndex} has no .carousel-slide children — skipping.`);
-            return;
-        }
+        if (slides.length === 0) return;
 
         const prevBtn = container.querySelector(".prev");
         const nextBtn = container.querySelector(".next");
 
-        if (!prevBtn || !nextBtn) {
-            console.warn(`Carousel #${carouselIndex} missing prev or next buttons. prev: ${!!prevBtn}, next: ${!!nextBtn}`);
-            // still continue, but skip adding click listeners for missing buttons
-        } else {
-            prevBtn.type = "button";
-            nextBtn.type = "button";
-        }
-
-        // Descriptions (null-safe) — search in the nearest .media-container (if any)
         let descriptions = [];
         const mediaContainer = container.closest(".media-container");
         if (mediaContainer) {
@@ -189,12 +150,11 @@ document.addEventListener("DOMContentLoaded", () => {
             slides.forEach(s => { s.style.width = slideWidth + "px"; });
             track.style.width = (slideWidth * slides.length) + "px";
 
-            // enforce transform to current slide
             if (noTransition) {
                 const old = track.style.transition;
                 track.style.transition = "none";
                 track.style.transform = `translate3d(-${current * slideWidth}px, 0, 0)`;
-                track.getBoundingClientRect(); // force reflow
+                track.getBoundingClientRect();
                 track.style.transition = old || "transform 0.5s ease-in-out";
             } else {
                 track.style.transform = `translate3d(-${current * slideWidth}px, 0, 0)`;
@@ -202,39 +162,59 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         function updateDescription() {
-            if (!descriptions || descriptions.length === 0) return;
-            descriptions.forEach((p, i) => {
-                p.classList.toggle("active", i === current);
-            });
+            descriptions.forEach((p, i) => p.classList.toggle("active", i === current));
         }
 
         function goTo(index) {
-            if (slides.length === 0) return;
-            // normalize index
             current = (index + slides.length) % slides.length;
-            // ensure slideWidth is fresh (in case container width changed)
             if (!slideWidth) sizeSlides(true);
             track.style.transform = `translate3d(-${current * slideWidth}px, 0, 0)`;
             updateDescription();
         }
 
-        // attach handlers only if buttons exist
         if (prevBtn) prevBtn.addEventListener("click", () => goTo(current - 1));
         if (nextBtn) nextBtn.addEventListener("click", () => goTo(current + 1));
-
-        // handle keyboard accessibility (optional)
-        container.addEventListener("keydown", (e) => {
-            if (e.key === "ArrowLeft") { goTo(current - 1); }
-            if (e.key === "ArrowRight") { goTo(current + 1); }
+        container.addEventListener("keydown", e => {
+            if (e.key === "ArrowLeft") goTo(current - 1);
+            if (e.key === "ArrowRight") goTo(current + 1);
         });
 
-        // make sure the carousel reacts when the viewport changes
         window.addEventListener("resize", () => sizeSlides(true), { passive: true });
-
-        // init
         sizeSlides(true);
         updateDescription();
     });
 
-    // end DOMContentLoaded
+    /* ============================================================
+       ITCH.IO IFRAME PLAY & RESTART
+    ============================================================ */
+    const playBtn = document.getElementById("playBtn");
+    const iframeCover = document.getElementById("iframeCover");
+    const restartBtn = document.getElementById('restartBtn');
+    const iframeContainer = document.getElementById('iframeContainer');
+
+    if (playBtn && iframeCover) {
+        playBtn.addEventListener("click", () => {
+            iframeCover.style.display = "none";
+        });
+    }
+
+    if (restartBtn && iframeContainer) {
+        restartBtn.addEventListener("click", () => {
+            const oldIframe = document.getElementById('gameIframe');
+            if (oldIframe) oldIframe.remove();
+
+            const newIframe = document.createElement('iframe');
+            newIframe.id = 'gameIframe';
+            newIframe.src = "https://itch.io/embed-upload/10516719?color=000000";
+            newIframe.width = "100%";
+            newIframe.height = "600px";
+            newIframe.frameBorder = "0";
+            newIframe.allowFullscreen = true;
+
+            iframeContainer.appendChild(newIframe);
+
+            if (iframeCover) iframeCover.style.display = 'flex';
+        });
+    }
+
 });
