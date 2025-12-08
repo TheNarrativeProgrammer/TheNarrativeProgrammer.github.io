@@ -598,25 +598,54 @@ footer {
     }
 
 
-
-
-
 .image-container {
     position: relative;
-    min-width: 75%;
-    max-width: 70%;
-    aspect-ratio: 16 / 9; /* forces perfect 16:9 height */
+    width: 70%; /* let container width control scaling */
+    aspect-ratio: 16 / 9; /* keeps height in ratio */
     overflow: hidden;
-    /*border: 5px solid black;*/
     border-radius: 10px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: auto; /* important: track width is determined by slides */
+}
+
+.carousel-slide {
+    flex: 0 0 100%; /* each slide fills container width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* preserve aspect ratio */
+        display: block;
+    }
+
+
+
+/*.image-container {
+    position: relative;
+    min-width: 70%;
+    max-width: 70%;
+    aspect-ratio: 16 / 9;*/ /* forces perfect 16:9 height */
+    /*overflow: hidden;*/
+    /*border: 5px solid black;*/
+    /*border-radius: 10px;
     margin: 0 auto;
     box-sizing: border-box;
     display: flex;
     flex: 3;
-}
+}*/
 
 /* TRACK + SLIDES */
-.carousel-track {
+/*.carousel-track {
     display: flex;
     margin: 0;
     padding: 0;
@@ -626,26 +655,26 @@ footer {
 }
 
 .carousel-slide {
-    flex: 0 0 auto; /* don’t let flex shrink/grow */
-    width: 100%; /* JS will set exact pixel width */
-    height: 100%;
+    flex: 0 0 auto;*/ /* don’t let flex shrink/grow */
+    /*width: 100%;*/ /* JS will set exact pixel width */
+    /*height: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    display: flex; /* centers images nicely */
-    align-items: center;
+    display: flex;*/ /* centers images nicely */
+    /*align-items: center;
     justify-content: center;
-    pointer-events: auto; /* prevent them from stealing click */
-}
+    pointer-events: auto;*/ /* prevent them from stealing click */
+/*}
 
     .carousel-slide img {
         width: 100%;
         height: 100%;
-        object-fit: contain; /* no cropping */
-        image-rendering: -webkit-optimize-contrast; /* Chrome/Safari */
-        image-rendering: crisp-edges; /* Firefox */
-        display: block;
-    }
+        object-fit: contain;*/ /* no cropping */
+        /*image-rendering: -webkit-optimize-contrast;*/ /* Chrome/Safari */
+        /*image-rendering: crisp-edges;*/ /* Firefox */
+        /*display: block;
+    }*/
 
 /* ARROWS (unchanged) */
 .image-container .prev,

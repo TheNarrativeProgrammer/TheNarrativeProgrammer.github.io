@@ -114,29 +114,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     carousels.forEach(container => {
         const track = container.querySelector(".carousel-track");
-        if (!track) return;
-
         const slides = Array.from(track.querySelectorAll(".carousel-slide"));
         if (!slides.length) return;
 
         const prevBtn = container.querySelector(".prev.btn-type-2");
         const nextBtn = container.querySelector(".next.btn-type-2");
 
-        // **Scope code container to this media container**
         const codeContainer = container.querySelector(".codeDescription-container");
         const codeParagraphs = codeContainer ? Array.from(codeContainer.querySelectorAll("p")) : [];
 
         let current = 0;
-        let slideWidth = container.getBoundingClientRect().width;
-
-        function sizeSlides() {
-            slideWidth = container.getBoundingClientRect().width;
-           
-            track.style.width = slideWidth * slides.length + "px";
-            updateTrack();
-        }
 
         function updateTrack() {
+            const slideWidth = container.querySelector(".image-container").getBoundingClientRect().width;
             track.style.transform = `translateX(-${current * slideWidth}px)`;
             updateCode();
         }
@@ -156,11 +146,11 @@ document.addEventListener("DOMContentLoaded", () => {
         [prevBtn, nextBtn].forEach((btn, i) => {
             if (!btn) return;
             btn.addEventListener("click", e => {
-                e.stopPropagation();
                 e.preventDefault();
                 if (i === 0) goTo(current - 1);
                 else goTo(current + 1);
 
+                // subtle button press effect
                 btn.style.transform = "translateY(1.2px) scale(0.985)";
                 btn.style.boxShadow = "0 4px 8px rgba(0,0,0,0.25)";
                 setTimeout(() => {
@@ -170,11 +160,11 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        window.addEventListener("resize", sizeSlides);
-
-        sizeSlides();
+        window.addEventListener("resize", updateTrack);
+        updateTrack();
         updateCode();
     });
+
 
 
 
