@@ -21,13 +21,14 @@
     <div class="main-nav">
         <ul class="nav">
             <li class="name">Reid Gillis - Game Programmer // Technical Narrative Designer</li>
-          <li>
-            <a href="index.html">Home</a> - 
-            <a href="#portfolio">Portfolio</a> - 
-            <a href="#bio">About</a> -
-            <a href="docs/ReidGillisResumeBase.pdf" target="_blank">Resume</a> -
-            <a href="#contact">Contact</a>
-          </li>
+            <li>
+                <a href="index.html">Home</a> -
+                <a href="#portfolio">Portfolio</a> -
+                <a href="FrogsAndFreedom.html">Code Walkthrough</a> -
+                <a href="#bio">About</a> -
+                <a href="docs/ReidGillisResumeBase.pdf" target="_blank">Resume</a> -
+                <a href="#contact">Contact</a>
+            </li>
         </ul>
       </div>
 
@@ -81,7 +82,16 @@
                             </div>
 
                             <p>
-                                <button onclick="window.location.href='FrogsAndFreedom.html'">Code Walkthrough</button>
+                                <!--<button onclick="window.location.href='FrogsAndFreedom.html'">Code Walkthrough</button>-->
+                                <a href="FrogsAndFreedom.html" class="Button Button-large">
+                                    <svg class="Button-svg" viewBox="0 0 360 96">
+                                        <rect class="Button-line Button-line--outer" width="360" height="96" rx="8" ry="8" />
+                                        <rect class="Button-line Button-line--inner" width="360" height="96" rx="8" ry="8" />
+                                    </svg>
+                                    <span class="Button-content">Code Walkthrough</span>
+                                </a>
+
+                                
 
                             </p>
 
@@ -163,7 +173,17 @@
 
 
                             <p>
-                                <button id="unmuteBtn">Enable Sound</button>
+
+                                <button id="unmuteBtn" class="Button Button-type-1" type="button">
+                                    <svg class="Button-svg" viewBox="0 0 225 60">
+                                        <rect class="Button-line--outer" width="225" height="60" rx="8" ry="8" />
+                                        <rect class="Button-line--inner" width="225" height="60" rx="8" ry="8" />
+                                    </svg>
+                                    <span class="Button-content">Enable Sound</span>
+                                </button>
+
+
+
                             </p>
 
 
@@ -318,7 +338,15 @@
                         <div class="left-column">
                             <p>
                                 <!--<button onclick="window.location.href='FrogsAndFreedom.html'">More Details</button>-->
-                                <button id="restartBtn">Pause Game</button>
+
+                                <button id="restartBtn" class="Button Button-type-1" type="button">
+                                    <svg class="Button-svg" viewBox="0 0 225 60">
+                                        <rect class="Button-line--outer" width="225" height="60" rx="8" ry="8" />
+                                        <rect class="Button-line--inner" width="225" height="60" rx="8" ry="8" />
+                                    </svg>
+                                    <span class="Button-content">Pause Game</span>
+                                </button>
+
                             </p>
                             <div class="video-container">
                                 <video class="autoplay-video" muted loop playsinline preload="auto">
@@ -452,12 +480,12 @@
                     <div class="project-desktop-wrapper">
 
                         <div class="left-column">
-                            <!--<div class="video-container">
-        <video class="autoplay-video" muted loop playsinline preload="auto">
-            <source src="videos/EvasiveThoughtsWithCutScene480.mp4" type="video/mp4">
-        </video>
+                            <div class="video-container">
+                                <video class="autoplay-video" muted loop playsinline preload="auto">
+                                    <source src="videos/WitchsWand.mp4" type="video/mp4">
+                                </video>
 
-    </div>-->
+                             </div>
 
 
                             <p>
@@ -531,7 +559,7 @@
                     </p>
                     <ul>
                         <li>
-                            <b>Gameplay Programmer</b> for several indie projects.
+                            <b>Gameplay Programmer & Technical Narrative Designer</b> for several indie projects.
                         </li>
                         <li>
                             <b>Manager</b> at three Fortune 500 Companies.

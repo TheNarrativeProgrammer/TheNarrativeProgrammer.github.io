@@ -81,25 +81,25 @@ video {
 }
 
 /* top navbar styles */
-button {
-    background-color: #FF915F; /* coral/orange button */
-    color: #fff;
+/*button {
+    background-color: #FF915F;*/ /* coral/orange button */
+    /*color: #fff;*/
     /*color: #1B2B34;*/ /* dark text */
-    font-size: 25px;
+    /*font-size: 25px;
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     box-shadow: 0 20px 30px rgba(0,0,0, 1);
     transition: background-color 0.6s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    z-index: 10;
+    z-index: 10;*/
     /* Add pulse animation */
-    animation: pulse 1s infinite ease-in-out;
+    /*animation: pulse 1s infinite ease-in-out;
 }
 
     button:hover {
-        background-color: #FFA780; /* lighter coral hover */
-        transform: translateY(2px);
+        background-color: #FFA780;*/ /* lighter coral hover */
+        /*transform: translateY(2px);
         animation-play-state: paused;
     }
 
@@ -120,7 +120,214 @@ button {
     100% {
         box-shadow: 0 0 15px rgba(255,145,95,0.3);
     }
+}*/
+
+
+/* Animated button background gradient */
+.Button-type-1,
+.Button {
+    position: relative;
+    display: block;
+    width: 225px; /* 75% of 300px */
+    height: 60px; /* 75% of 80px */
+    margin: 10px auto; /* reduced space around button */
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #2B487E 0%, #FF915F 100%);
+    color: #fff;
+    font-size: 14px; /* slightly smaller for smaller button */
+    font-weight: bold;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.2s ease;
 }
+
+    .Button-type-1:hover,
+    .Button:hover {
+        transform: scale(1.05);
+    }
+
+    /* SVG wrapper */
+    .Button .Button-svg,
+    .Button-type-1 .Button-svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1; /* behind text */
+    }
+
+    /* Outer animated border */
+    .Button .Button-line--outer,
+    .Button-type-1 .Button-line--outer {
+        stroke: #FFA12B;
+        stroke-width: 8; /* slightly thinner for smaller button */
+        stroke-dasharray: 360px 270px;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+        animation: outer-dashoffset 5s alternate infinite;
+    }
+
+    /* Inner animated border */
+    .Button .Button-line--inner,
+    .Button-type-1 .Button-line--inner {
+        stroke: #FFD77A;
+        stroke-width: 8;
+        stroke-dasharray: 225px 450px;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+        animation: inner-dashoffset 4s  alternate-reverse infinite;
+    }
+
+    /* Text on top */
+    .Button .Button-content,
+    .Button-type-1 .Button-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        color: #fff;
+    }
+
+    /* Pause animation on hover */
+    .Button:hover .Button-line--outer,
+    .Button:hover .Button-line--inner,
+    .Button-type-1:hover .Button-line--outer,
+    .Button-type-1:hover .Button-line--inner {
+        animation-play-state: paused;
+    }
+
+@keyframes outer-dashoffset {
+    0% {
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 320px 520px;
+    }
+
+    100% {
+        stroke-dashoffset: 840px;
+    }
+}
+
+@keyframes inner-dashoffset {
+    0% {
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 200px 640px;
+    }
+
+    100% {
+        stroke-dashoffset: -840px;
+    }
+}
+
+.Button-large {
+    width: 360px; /* 120% of 300px */
+    height: 96px; /* 120% of 80px */
+    font-size: 20px; /* scale text proportionally */
+}
+
+    .Button-large .Button-svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .Button-large .Button-line--outer {
+        stroke-width: 14; /* slightly thicker for larger button */
+        stroke-dasharray: 576px 432px; /* adjust to perimeter */
+    }
+
+    .Button-large .Button-line--inner {
+        stroke-width: 21;
+        stroke-dasharray: 336px 672px;
+    }
+
+/* Button Type 2 */
+/* Button Type 2 */
+/* Button Type 2 */
+.btn-type-2 {
+    position: relative;
+    z-index: 1000;
+    pointer-events: auto;
+    color: #fff;
+    font-size: 25px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    animation: colorPulse 1.5s infinite ease-in-out; /* background pulse only */
+    transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.12s ease; /* smooth press/release */
+}
+
+.btn-type-2:hover {
+    box-shadow: 0 8px 16px rgba(255,161,43,0.5);
+}
+
+.btn-type-2:active {
+    transform: translateY(1.2px) scale(0.987); /* smaller press down */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+}
+
+/* Optional subtle bounce after release using JS */
+.btn-type-2.bounce {
+    animation: bounceRelease 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes bounceRelease {
+    0%   { transform: translateY(1.2px) scale(0.987); }
+    50%  { transform: translateY(-0.5px) scale(0.992); }
+    100% { transform: translateY(0px) scale(1); }
+}
+
+/* Color pulse */
+@keyframes colorPulse {
+    0% { background-color: rgba(255,145,95,0.65); }
+    50% { background-color: rgba(255,160,110,0.75); }
+    100% { background-color: rgba(255,145,95,0.65); }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}*/
+
+
+    .Button:hover,
+    .btn-type-2:hover {
+        box-shadow: 0 0 25px rgba(255, 161, 43, 0.8);
+    }
+
+    .Button:active{
+        transform: translateY(2px) scale(0.98);
+    }
 
 .main-nav {
     width: 100%;
@@ -133,7 +340,7 @@ button {
     background: #0F1A25; /* very dark blue navbar */
     font-family: 'VT323', monospace;
     font-size: 150%;
-    z-index: 10;
+    z-index: 1000;
 }
 
 .nav {
@@ -428,6 +635,7 @@ footer {
     display: flex; /* centers images nicely */
     align-items: center;
     justify-content: center;
+    pointer-events: auto; /* prevent them from stealing click */
 }
 
     .carousel-slide img {
@@ -452,7 +660,8 @@ footer {
     cursor: pointer;
     font-size: 1.3rem;
     border-radius: 999px;
-    z-index: 10;
+    z-index: 1001;
+    pointer-events: auto;
 }
 
 .image-container .prev {
@@ -462,6 +671,8 @@ footer {
 .image-container .next {
     right: 10px;
 }
+
+
 
 .media-container {
     display: flex;
@@ -860,13 +1071,6 @@ footer {
 }
 
 #unmuteBtn {
-    padding: 12px 18px;
-    border-radius: 10px;
-    background: #ff915f;
-    color: #fff;
-    font-size: 25px;
-    cursor: pointer;
-    z-index: 9999;
 }
 
 .iframe-container {

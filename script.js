@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* ----------------------------
+    /* ============================================================
        GLOBAL STATE
-    ---------------------------- */
+    ============================================================ */
     let soundEnabled = false;
 
     /* ============================================================
@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function processVideoGroup(videos, threshold = 400) {
         const screenCenter = window.innerHeight / 2;
-
         videos.forEach(video => {
             const rect = video.getBoundingClientRect();
             const videoCenter = rect.top + rect.height / 2;
@@ -33,8 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (isActive) {
                 video.classList.add("active");
-                video.play().catch(err => console.log("Autoplay blocked:", err));
-
+                video.play().catch(() => { });
                 if (soundEnabled && video.classList.contains("autoplay-video")) {
                     video.muted = false;
                     video.volume = 1.0;
@@ -47,22 +45,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Initial check
-    processVideoGroup(autoplayVideos, 400);
-    processVideoGroup(autoplayVideosLower, 400);
+    processVideoGroup(autoplayVideos);
+    processVideoGroup(autoplayVideosLower);
 
     window.addEventListener("scroll", () => {
-        processVideoGroup(autoplayVideos, 400);
-        processVideoGroup(autoplayVideosLower, 400);
+        processVideoGroup(autoplayVideos);
+        processVideoGroup(autoplayVideosLower);
     }, { passive: true });
 
     window.addEventListener("resize", () => {
-        processVideoGroup(autoplayVideos, 400);
-        processVideoGroup(autoplayVideosLower, 400);
+        processVideoGroup(autoplayVideos);
+        processVideoGroup(autoplayVideosLower);
     });
 
     /* ============================================================
-       SIDEBAR SCROLL + ACTIVE LINK HIGHLIGHT
+       SIDEBAR SCROLL + ACTIVE LINK
     ============================================================ */
     const sections = Array.from(document.querySelectorAll("section"));
     const sidebarLinks = Array.from(document.querySelectorAll(".sidebar a"));
@@ -75,146 +72,158 @@ document.addEventListener("DOMContentLoaded", () => {
     sidebarLinks.forEach(link => {
         link.addEventListener("click", e => {
             e.preventDefault();
-            const href = link.getAttribute("href");
-            const target = document.querySelector(href);
-            if (target) {
-                target.scrollIntoView({ behavior: "smooth", block: "start" });
-                updateActiveLink(link);
-            }
+            const target = document.querySelector(link.getAttribute("href"));
+            if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+            updateActiveLink(link);
         });
     });
 
     window.addEventListener("scroll", () => {
         let currentSection = null;
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
-            if (pageYOffset >= sectionTop) {
+            if (pageYOffset >= section.offsetTop - 100) {
                 currentSection = section.getAttribute("id");
             }
         });
-
         sidebarLinks.forEach(link => {
-            link.classList.remove("active");
-            if (link.getAttribute("href") === `#${currentSection}`) {
-                link.classList.add("active");
-            }
+            link.classList.toggle("active", link.getAttribute("href") === `#${currentSection}`);
         });
     }, { passive: true });
 
     /* ============================================================
-       SOUND TOGGLE BUTTON
+       SOUND TOGGLE
     ============================================================ */
     const soundBtn = document.getElementById("unmuteBtn");
-    if (soundBtn) {
-        soundBtn.type = "button";
-        soundBtn.textContent = "Enable Sound";
+    const btnText = soundBtn?.querySelector(".Button-content");
 
-        soundBtn.addEventListener("click", () => {
-            soundEnabled = !soundEnabled;
-            soundBtn.textContent = soundEnabled ? "Disable Sound" : "Enable Sound";
+    soundBtn?.addEventListener("click", () => {
+        soundEnabled = !soundEnabled;
+        if (btnText) btnText.textContent = soundEnabled ? "Disable Sound" : "Enable Sound";
 
-            const activeVideo = document.querySelector(".autoplay-video.active, .autoplay-video-lower-threshhold.active");
-            if (activeVideo) {
-                activeVideo.muted = !soundEnabled;
-                if (soundEnabled) activeVideo.volume = 1.0;
-            }
-        });
-    }
+        const activeVideo = document.querySelector(".autoplay-video.active, .autoplay-video-lower-threshhold.active");
+        if (activeVideo) {
+            activeVideo.muted = !soundEnabled;
+            if (soundEnabled) activeVideo.volume = 1.0;
+        }
+    });
 
     /* ============================================================
-       CAROUSELS
-    ============================================================ */
-    const carousels = Array.from(document.querySelectorAll(".image-container"));
+   CAROUSELS
+============================================================ */
+    const carousels = document.querySelectorAll(".media-container");
 
     carousels.forEach(container => {
         const track = container.querySelector(".carousel-track");
         if (!track) return;
 
         const slides = Array.from(track.querySelectorAll(".carousel-slide"));
-        if (slides.length === 0) return;
+        if (!slides.length) return;
 
-        const prevBtn = container.querySelector(".prev");
-        const nextBtn = container.querySelector(".next");
+        const prevBtn = container.querySelector(".prev.btn-type-2");
+        const nextBtn = container.querySelector(".next.btn-type-2");
 
-        let descriptions = [];
-        const mediaContainer = container.closest(".media-container");
-        if (mediaContainer) {
-            descriptions = Array.from(mediaContainer.querySelectorAll(".codeDescription-container p"));
-        }
+        // **Scope code container to this media container**
+        const codeContainer = container.querySelector(".codeDescription-container");
+        const codeParagraphs = codeContainer ? Array.from(codeContainer.querySelectorAll("p")) : [];
 
         let current = 0;
-        let slideWidth = 0;
+        let slideWidth = container.getBoundingClientRect().width;
 
-        function sizeSlides(noTransition = true) {
-            slideWidth = container.clientWidth || container.getBoundingClientRect().width;
-            slides.forEach(s => { s.style.width = slideWidth + "px"; });
-            track.style.width = (slideWidth * slides.length) + "px";
-
-            if (noTransition) {
-                const old = track.style.transition;
-                track.style.transition = "none";
-                track.style.transform = `translate3d(-${current * slideWidth}px, 0, 0)`;
-                track.getBoundingClientRect();
-                track.style.transition = old || "transform 0.5s ease-in-out";
-            } else {
-                track.style.transform = `translate3d(-${current * slideWidth}px, 0, 0)`;
-            }
+        function sizeSlides() {
+            slideWidth = container.getBoundingClientRect().width;
+           
+            track.style.width = slideWidth * slides.length + "px";
+            updateTrack();
         }
 
-        function updateDescription() {
-            descriptions.forEach((p, i) => p.classList.toggle("active", i === current));
+        function updateTrack() {
+            track.style.transform = `translateX(-${current * slideWidth}px)`;
+            updateCode();
+        }
+
+        function updateCode() {
+            if (!codeParagraphs.length) return;
+            codeParagraphs.forEach(p => p.classList.remove("active"));
+            const activePara = codeParagraphs.find(p => parseInt(p.dataset.slide) === current);
+            if (activePara) activePara.classList.add("active");
         }
 
         function goTo(index) {
             current = (index + slides.length) % slides.length;
-            if (!slideWidth) sizeSlides(true);
-            track.style.transform = `translate3d(-${current * slideWidth}px, 0, 0)`;
-            updateDescription();
+            updateTrack();
         }
 
-        if (prevBtn) prevBtn.addEventListener("click", () => goTo(current - 1));
-        if (nextBtn) nextBtn.addEventListener("click", () => goTo(current + 1));
-        container.addEventListener("keydown", e => {
-            if (e.key === "ArrowLeft") goTo(current - 1);
-            if (e.key === "ArrowRight") goTo(current + 1);
+        [prevBtn, nextBtn].forEach((btn, i) => {
+            if (!btn) return;
+            btn.addEventListener("click", e => {
+                e.stopPropagation();
+                e.preventDefault();
+                if (i === 0) goTo(current - 1);
+                else goTo(current + 1);
+
+                btn.style.transform = "translateY(1.2px) scale(0.985)";
+                btn.style.boxShadow = "0 4px 8px rgba(0,0,0,0.25)";
+                setTimeout(() => {
+                    btn.style.transform = "";
+                    btn.style.boxShadow = "";
+                }, 120);
+            });
         });
 
-        window.addEventListener("resize", () => sizeSlides(true), { passive: true });
-        sizeSlides(true);
-        updateDescription();
+        window.addEventListener("resize", sizeSlides);
+
+        sizeSlides();
+        updateCode();
     });
 
+
+
+
     /* ============================================================
-       ITCH.IO IFRAME PLAY & RESTART
+       ITCH.IO EMBED
     ============================================================ */
     const playBtn = document.getElementById("playBtn");
     const iframeCover = document.getElementById("iframeCover");
     const restartBtn = document.getElementById('restartBtn');
     const iframeContainer = document.getElementById('iframeContainer');
 
-    if (playBtn && iframeCover) {
-        playBtn.addEventListener("click", () => {
-            iframeCover.style.display = "none";
+    playBtn?.addEventListener("click", () => {
+        if (iframeCover) iframeCover.style.display = "none";
+    });
+
+    restartBtn?.addEventListener("click", () => {
+        const oldIframe = document.getElementById('gameIframe');
+        if (oldIframe) oldIframe.remove();
+
+        const newIframe = document.createElement('iframe');
+        newIframe.id = 'gameIframe';
+        newIframe.src = "https://itch.io/embed-upload/10516719?color=000000";
+        newIframe.width = "100%";
+        newIframe.height = "600px";
+        newIframe.frameBorder = "0";
+        newIframe.allowFullscreen = true;
+
+        iframeContainer?.appendChild(newIframe);
+        if (iframeCover) iframeCover.style.display = 'flex';
+    });
+
+    /* ============================================================
+       BUTTON TYPE-2 CLICK ANIMATION
+    ============================================================ */
+    buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const origTransform = btn.style.transform || "";
+            const origBoxShadow = btn.style.boxShadow || "";
+
+            btn.style.transition = "transform 0.12s cubic-bezier(0.4,0,0.2,1), box-shadow 0.12s ease";
+            btn.style.transform = "translateY(1.2px) scale(0.985)";
+            btn.style.boxShadow = "0 4px 8px rgba(0,0,0,0.25)";
+
+            setTimeout(() => {
+                btn.style.transform = origTransform;
+                btn.style.boxShadow = origBoxShadow;
+            }, 120); // matches the transition duration
         });
-    }
-
-    if (restartBtn && iframeContainer) {
-        restartBtn.addEventListener("click", () => {
-            const oldIframe = document.getElementById('gameIframe');
-            if (oldIframe) oldIframe.remove();
-
-            const newIframe = document.createElement('iframe');
-            newIframe.id = 'gameIframe';
-            newIframe.src = "https://itch.io/embed-upload/10516719?color=000000";
-            newIframe.width = "100%";
-            newIframe.height = "600px";
-            newIframe.frameBorder = "0";
-            newIframe.allowFullscreen = true;
-
-            iframeContainer.appendChild(newIframe);
-
-            if (iframeCover) iframeCover.style.display = 'flex';
-        });
-    }
+    });
 
 });

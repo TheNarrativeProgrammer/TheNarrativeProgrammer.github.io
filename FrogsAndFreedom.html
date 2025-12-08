@@ -64,7 +64,8 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
+                            <!--<button class="prev">&#10094;</button>-->
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_Example_Img1.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_Overview_Img2.png" alt=""></div>
@@ -80,43 +81,43 @@
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_EmissiveAndOpacity_img12.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/TankLaser/Shaders_TankLaser_FinalAndMesh_Img13.gif" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
+                            <!--<button class="next">&#10095;</button>-->
                         </div>
 
                         <div class="codeDescription-container">
-                            <p>
+                            <p data-slide="0">
                                 1.The Tank Frog’s laser uses a custom vertex and pixel shader applied to a high-poly static mesh composed of three cylinders.
 
                                 <br></br>Each cylinder uses a unique material instance for visual variation. The beam’s length is dynamically scaled along the X-axis through a parameter controlled by the particle system.
                             </p>
-                            <p>
+
+                            <p data-slide="1">
                                 2. The vertex shader uses two panning gradient masks to control displacement—one along the Y-axis for horizontal movement and one along the Z-axis for vertical motion.
 
                                 <br></br>Additional masking restricts motion to the beam’s center, keeping the ends stable.
 
                                 <br></br>The pixel shader applies three blended colors to create the appearance of a glowing, high-energy beam with translucent edges that prevent visual obstruction.
                             </p>
-                            <p>
+
+                            <p data-slide="2">
                                 3.The Params section organizes shader inputs for clarity and modularity. TexCoord offsets adjust which parts of the gradient masks are used.
 
                                 <br></br>Time scaling controls the beam’s wave frequency, while UVScalar fine-tunes the sharpness of the waveform—lower values produce smoother “U”-shaped motion, and higher values yield sharper “V”-shaped displacement.
-
-
                             </p>
-                            <p>
+
+                            <p data-slide="3">
                                 4.Offset TexCoords are fed into two gradient textures—one for vertical and one for horizontal displacement.
                                 NoiseScale parameters determine where the distortion occurs: values near 1 isolate movement to one side of the beam, while higher values spread the effect symmetrically.
 
                                 <br></br>This allows flexible artistic control over the laser’s directional distortion.
-
-
                             </p>
-                            <p>
+
+                            <p data-slide="4">
                                 5.DisplacementAmounts generate axis-specific Vector3 values, isolating movement to a single axis for precise directional control.
-
-
                             </p>
-                            <p>
+
+                            <p data-slide="5">
                                 6.The vertical and horizontal displacement gradients are normalized to a -1 to 1 range to match standard normal map values.
                                 These gradients are multiplied by their respective Vector3 masks, isolating movement along the Z-axis (blue channel) and Y-axis (green channel).
 
@@ -125,43 +126,43 @@
 
                             </p>
 
-                            <p>
+                            <p data-slide="6">
                                 7. The axis masks are combined with a center-weighted mask that restricts displacement to the beam’s middle. The resulting local-space displacement data is converted to world-space and output as the final vertex offset.
 
                             </p>
 
-                            <p>
+                            <p data-slide="7">
                                 8.Two gradients are multiplied to produce a mask that transitions from black edges to a bright center.
                                 This mask drives a lerp between EndScale (edge darkness) and CentreSwell (center brightness), allowing independent control of how much the center and edges animate.
-
                             </p>
 
-                            <p>
-                                8.CentreSwell and DisplacementAmounts define the scale and direction of displacement. CentreSwell determines how much of the mask is affected (0 disables movement).
-                                
+                            <p data-slide="8">
+                                9.CentreSwell and DisplacementAmounts define the scale and direction of displacement. CentreSwell determines how much of the mask is affected (0 disables movement).
+
                                 DisplacementAmounts generate axis-specific Vector3 values, isolating movement to a single axis for precise directional control.
 
                             </p>
 
-                            <p>
-                                9. Three separate masks control the beam’s color layers. An inverted mask corrects the texture format, while Fresnel and inverse Fresnel effects assign distinct colors to the beam’s edges and center.
+                            <p data-slide="9">
+                                10. Three separate masks control the beam’s color layers. An inverted mask corrects the texture format, while Fresnel and inverse Fresnel effects assign distinct colors to the beam’s edges and center.
                                 The SizeOfCentreColor parameter adjusts color dominance, blending between center-heavy or edge-heavy illumination.
 
                             </p>
 
-                            <p>
-                                10. Each mask feeds into color parameters defining the beam’s primary hues. The colors are blended and normalized for the base color output.
+                            <p data-slide="10">
+                                11. Each mask feeds into color parameters defining the beam’s primary hues. The colors are blended and normalized for the base color output.
 
                             </p>
 
-                            <p>
-                                11. An enhanced mask refines emissive intensity and opacity for a luminous effect.
+                            <p data-slide="11">
+                                12. An enhanced mask refines emissive intensity and opacity for a luminous effect with a hot white centre.
 
                             </p>
 
-                            <p>
-                                12. Each cylinder in the static mesh uses a unique material instance to create the final stylized, Ghostbusters-inspired laser beam.
+                            <p data-slide="12">
+                                13. Each cylinder in the static mesh uses a unique material instance to create the final stylized, Ghostbusters-inspired laser beam.
                             </p>
+
 
                         </div>
                     </div>
@@ -170,54 +171,53 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneShader/Shaders_TuneShader_BeforeAfter_Img1.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneShader/Shaders_TuneShader_ShaderOverview_Img2.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneShader/Shaders_TuneShader_Phong_Img3.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneShader/Shaders_TuneShader_Stripes_Img4.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneShader/Shaders_TuneShader_TextureParams_Img5.gif" alt=""></div>
-                                
+
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
-                            <p>
+                            <p data-slide="0" class="active">
                                 1. A toon-style pixel shader was developed to create consistent material instances across multiple environment actors. 
                                 This unified visual style maintained artistic cohesion and supported flexible parameter adjustments for different materials.
                             </p>
-                            <p>
+
+                            <p data-slide="1">
                                 2. The shader combines a Phong lighting calculation with a greyscale striping function.
 
                                 <br></br> These two layers are summed and then multiplied by a base texture, allowing lighting and shading variations to dynamically influence the final texture output.
                             </p>
-                            <p>
+
+                            <p data-slide="2">
                                 3. A standard Phong model computes diffuse, ambient, and specular components, giving the surface its stylized lighting response while maintaining a simplified, toon-inspired look.
                             </p>
-                            <p>
+
+                            <p data-slide="3">
                                 4.A dot product is used to calculate light direction and shadow falloff.
 
                                 <br></br>The range is adjusted so the darkest shadows fall near the object’s base. By flooring the range and scaling by a fractional constant (e.g., 0.16), the shader creates discrete grey bands, producing the stylized cel-shaded striping effect.
-
-
                             </p>
-                            <p>
-                                5. The resulting striped mask is applied to the material’s texture parameter, allowing each material instance to define its own variation while maintaining the same toon-shaded lighting structure.
 
+                            <p data-slide="4">
+                                5. The resulting striped mask is applied to the material’s texture parameter, allowing each material instance to define its own variation while maintaining the same toon-shaded lighting structure.
                             </p>
                             
                         </div>
                     </div>
 
 
-
-
                     <h4>Postprocessing Tune Outline</h4>
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneOutline/Shaders_TuneOutline_BeforeAfter_Img1.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneOutline/Shaders_TuneOutline_Overview_Img2.png" alt=""></div>
@@ -229,11 +229,11 @@
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneOutline/Shaders_TuneOutline_FoundEdgesDepth_Img8.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/TuneOutline/Shaders_TuneOutline_Final_Img9.png" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
-                            <p>
+                            <p data-slide="0">
                                 1. A black outline effect is achieved through a post-processing pixel shader using two edge detection techniques.
                                 The first compares normal differences between neighboring pixels, and the second measures variations in scene depth.
 
@@ -297,7 +297,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_ShaderExample_Img1.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_Overview_Img2.png" alt=""></div>
@@ -312,7 +312,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_PurpleWeb_Img11.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Shaders/AcidBubbleAttack/Shaders_PinnerBubble_Final_Img12.gif" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -423,7 +423,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_EncounterTrigger_Img1.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Encounter/Encounter_EncounterTrigger_BindTriggerBoxAndSetCount_Img2.png" alt=""></div>
@@ -438,7 +438,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/Encounter/Encoutner_EncounterDataUnitTest_Img9.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Encounter/Encoutner_EncounterTriggerUnitTest_Img10.png" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -575,7 +575,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/AI/AIPerceptionOnPossessImg1.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/AI/AIPerceptionGetTeamAttitudeImg2.png" alt=""></div>
@@ -585,7 +585,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/AI/AIPerceptionTargetPerceptionForgottenImg6.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/AI/AIPerceptionGetLastStimulusImg7.png" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -680,7 +680,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_img1.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_FrogAIAble_Img2.png" alt=""></div>
@@ -692,7 +692,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_JumpToDestinationFlusher_img8.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_PassiveState_JumpToDestinationFlusher_img9.png" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -780,12 +780,12 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/AIBehaviour/AIBeh_BehaviourTree_Attack_Examples.gif" alt=""></div>
 
                             </div>
-                            <button class="next">&#10095;</button>
+                            
                         </div>
 
                         <div class="codeDescription-container">
@@ -821,7 +821,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/Tokens/Tokens_Giver_HeaderAndTokenData_Img1.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Tokens/Tokens_Giver_InitializeComponent_Img2.gif" alt=""></div>
@@ -838,7 +838,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReturnTokensAttackFinished_img13.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Tokens/Token_ReturnTokensAttackFinished_img14.png" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -1001,7 +1001,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/ObjectiveGifExample_Img1.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_EncounterTriggerAndObjectiveActorOverview_Img2.png" alt=""></div>
@@ -1018,7 +1018,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_TriggerWave_SpawnWave1_Img13.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/BasicLogic/Objectives_TriggerWave_IsNextWaveInQue_Img14.png" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -1139,7 +1139,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_HeaderTurnOnGeneratorsImg1.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_StartObjectiveIsObjectiveCompletImg2.png" alt=""></div>
@@ -1152,7 +1152,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_ForceFieldDeathReversal_img9.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildTurnOnGen/ObjectivesChild_BroadcastReversalAndUIWidget_img10.png" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -1241,7 +1241,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChild_HeaderGenTime_Img1.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_StartObjectiveIsObjectiveComplet_img2.png" alt=""></div>
@@ -1252,7 +1252,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectivesChildTime_SetTimerFinished_Img7.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/ChildDefendGenTime/ObjectChidTime_StopObjectivesCalledOnForceFieldDeath_Img8.png" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -1323,7 +1323,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_InitializeAndStartTimerRestartTimer_Img1.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_BroadcastOnSecondElapsedTimeRemaining_Img2.png" alt=""></div>
@@ -1332,7 +1332,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_BroadcastObjectiveCompleteGeneratorTimer_Img5.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Objectives/GenTimeMgmt/GenTimeMgmt_OnGameOverClearTimer_Img6.png" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -1403,7 +1403,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/UI/UI_Layout_Health_Img1.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/UI/UI_Health_EventConstruct_Img2.png" alt=""></div>
@@ -1412,7 +1412,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/UI/UI_Health_PlayHealthFeedbackAnim_Img5.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/UI/UI_Health_StartTimerUpdateHealthBar_Img6.gif" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -1465,7 +1465,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/UI/UI_Layout_InteractDialogue_Img1.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/UI/UI_EventConstruct_InteractDialogue_Img2.png" alt=""></div>
@@ -1478,7 +1478,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/UI/UI_PlayerGuiMessage_TutorialMessage_Img9.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/UI/UI_PlayerGuiMessage_Interact_Img10.gif" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -1571,7 +1571,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/UI/UI_Layout_Objectives_Img1.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/UI/UI_EventConstruct_Objectives_Img2.png" alt=""></div>
@@ -1585,7 +1585,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/UI/UI_Objectives_SingleObjectiveCompletionAndReversal_Img10.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/UI/UI_Objectives_AllObjectiveComplete_Img11.png" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -1704,7 +1704,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_HeaderOverview_Img1.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_BindingComponetBaseClass_Img2.png" alt=""></div>
@@ -1716,7 +1716,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_OnObjectiveTimerCompleteStopSoundTimer_Img8.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/EventBus_ForceFieldBinding_Img9.png" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -1793,7 +1793,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_InitAndTakeDamage_Img1.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_RequestHealth_Img2.png" alt=""></div>
@@ -1801,7 +1801,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_DamageInterface_Img4.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/HealthComp/EventBus_HealthComp_ForceField_Img5.png" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -1849,14 +1849,14 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_PowerMgmr_ArrayOfCordsImg1.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_HeaderAndOnOffFunctions_Img2.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/PowerCord/EventBus_PowerCords_BindingComp_Img3.png" alt=""></div>
 
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
@@ -1888,7 +1888,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_Img1.gif" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_LightData_Img2.png" alt=""></div>
@@ -1897,7 +1897,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_SendTotalTimeAndAssignTime_Img5.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/EventBus/ProgressLights/EventBus_ProgressLights_CheckIfLightCanTurnOn_Img6.png" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>>
                         </div>
 
                         <div class="codeDescription-container">
@@ -1968,7 +1968,7 @@
                     <div class="media-container">
 
                         <div class="image-container">
-                            <button class="prev">&#10094;</button>
+                            <button class="prev btn-type-2">&#10094;</button>
                             <div class="carousel-track">
                                 <div class="carousel-slide"><img src="images/Frogs/Dialogue/Dialogue_DataTable_Example_img1.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Dialogue/Dialogue_DataTable_StructClass_img2.png" alt=""></div>
@@ -1981,7 +1981,7 @@
                                 <div class="carousel-slide"><img src="images/Frogs/Dialogue/Dialogue_DialogueSubsystem_IterateDialogueText_Img9.png" alt=""></div>
                                 <div class="carousel-slide"><img src="images/Frogs/Dialogue/Dialogue_DialogueSubsystem_OnDialogueFinishedIterate_img10.png" alt=""></div>
                             </div>
-                            <button class="next">&#10095;</button>
+                            <button class="next btn-type-2">&#10095;</button>
                         </div>
 
                         <div class="codeDescription-container">
